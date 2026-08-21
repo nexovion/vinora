@@ -1,423 +1,555 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-  document.getElementById('year').textContent =
-    new Date().getFullYear();
+  const year = document.getElementById("year");
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
 
-  const cart = {
-    service: '',
-    price: 0
-  };
+  const cfg = window.VIONORA_CONFIG || {};
+  const msg = document.getElementById("authMessage");
 
-  const orders = JSON.parse(
-    localStorage.getItem('vionoraOrders') || '[]'
-  );
-
-  const session = JSON.parse(
-    localStorage.getItem('vionoraSession') || 'null'
-  );
-
-  // -------------------------
-  // CART
-  // -------------------------
-
-  const updateCart = () => {
-
-    document.getElementById('cartService').textContent =
-      cart.service || 'No service selected';
-
-    document.getElementById('cartAmount').textContent =
-      `₹${cart.price}`;
-
-    document.getElementById('cartTotal').textContent =
-      `₹${cart.price}`;
-  };
-
-
-  // -------------------------
-  // ORDER HISTORY
-  // -------------------------
-
-  const renderOrders = () => {
-
-    const list = document.getElementById('orderList');
-    const count = document.getElementById('orderCount');
-
-    count.textContent = orders.length;
-
-    if (!orders.length) {
-
-      list.className = 'orders-empty';
-
-      list.textContent =
-        'No demo orders yet.';
-
-      return;
+  if (
+    !cfg.SUPABASE_URL ||
+    !cfg.SUPABASE_ANON_KEY ||
+    cfg.SUPABASE_URL.includes("PASTE_") ||
+    cfg.SUPABASE_ANON_KEY.includes("PASTE_")
+  ) {
+    if (msg) {
+      msg.textContent =
+        "Supabase URL and ANON key are not configured yet.";
     }
+    return;
+  }
 
-    list.className = '';
+  const client = window.supabase.createClient(
+    cfg.SUPABASE_URL,
+    cfg.SUPABASE_ANON_KEY
+  );
 
-    list.innerHTML = orders.map(order => `
+  const loginForm =
+    document.getElementById("loginForm");
 
-      <div class="order-item">
+  const signupForm =
+    document.getElementById("signupForm");
 
-        <div>
-          <strong>${order.service}</strong>
-          <br>
-          <small>${order.date}</small>
-        </div>
+  const authCard =
+    document.getElementById("authCard");
 
-        <div>
-          <strong>₹${order.amount}</strong>
-          <br>
-          <small>${order.status}</small>
-        </div>
+  const dashboardCard =
+    document.getElementById("dashboardCard");
 
-      </div>
+  const loginTab =
+    document.getElementById("loginTab");
 
-    `).join('');
-  };
+  const signupTab =
+    document.getElementById("signupTab");
 
 
-  // -------------------------
-  // EXISTING LOGIN SESSION
-  // -------------------------
+  function showTab(type) {
 
-  if (session?.name) {
+    const isLogin = type === "login";
 
-    document.getElementById('dashUser').textContent =
-      session.name;
+    loginForm.classList.toggle(
+      "hidden",
+      !isLogin
+    );
+
+    signupForm.classList.toggle(
+      "hidden",
+      isLogin
+    );
+
+    loginTab.classList.toggle(
+      "active",
+      isLogin
+    );
+
+    signupTab.classList.toggle(
+      "active",
+      !isLogin
+    );
+
+    if (msg) {
+      msg.textContent = "";
+    }
   }
 
 
-  // -------------------------
-  // DOMAIN SEARCH DEMO
-  // -------------------------
+  loginTab.addEventListener(
+    "click",
+    () => showTab("login")
+  );
 
-  document
-    .getElementById('domainForm')
-    .addEventListener('submit', event => {
+  signupTab.addEventListener(
+    "click",
+    () => showTab("signup")
+  );
+
+
+  async function loadDashboard(user) {
+
+    authCard.classList.add("hidden");
+
+    dashboardCard.classList.remove(
+      "hidden"
+    );
+
+    const profileEmail =
+      document.getElementById(
+        "profileEmail"
+      );
+
+    const profileId =
+      document.getElementById(
+        "profileId"
+      );
+
+    if (profileEmail) {
+      profileEmail.textContent =
+        user.email || "-";
+    }
+
+    if (profileId) {
+      profileId.textContent =
+        user.id || "-";
+    }
+
+
+    const { data: profile } =
+      await client
+        .from("profiles")
+        .select(
+          "full_name, phone"
+        )
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    const welcomeName =
+      document.getElementById(
+        "welcomeName"
+      );
+
+    if (welcomeName) {
+      welcomeName.textContent =
+        `Welcome, ${
+          profile?.full_name ||
+          user.email?.split("@")[0] ||
+          "Customer"
+        }`;
+    }
+
+
+    const profilePhone =
+      document.getElementById(
+        "profilePhone"
+      );
+
+    if (profilePhone) {
+      profilePhone.textContent =
+        profile?.phone || "-";
+    }
+
+
+    const {
+      count: orderCount
+    } = await client
+      .from("orders")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      );
+
+
+    const {
+      count: domainCount
+    } = await client
+      .from("orders")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .eq(
+        "service_type",
+        "domain"
+      );
+
+
+    const {
+      count: hostingCount
+    } = await client
+      .from("orders")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .eq(
+        "service_type",
+        "hosting"
+      );
+
+
+    const {
+      count: tmCount
+    } = await client
+      .from("orders")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .eq(
+        "service_type",
+        "trademark"
+      );
+
+
+    const orderEl =
+      document.getElementById(
+        "orderCount"
+      );
+
+    const domainEl =
+      document.getElementById(
+        "domainCount"
+      );
+
+    const hostingEl =
+      document.getElementById(
+        "hostingCount"
+      );
+
+    const tmEl =
+      document.getElementById(
+        "tmCount"
+      );
+
+
+    if (orderEl) {
+      orderEl.textContent =
+        orderCount || 0;
+    }
+
+    if (domainEl) {
+      domainEl.textContent =
+        domainCount || 0;
+    }
+
+    if (hostingEl) {
+      hostingEl.textContent =
+        hostingCount || 0;
+    }
+
+    if (tmEl) {
+      tmEl.textContent =
+        tmCount || 0;
+    }
+  }
+
+
+  async function showAuth() {
+
+    dashboardCard.classList.add(
+      "hidden"
+    );
+
+    authCard.classList.remove(
+      "hidden"
+    );
+  }
+
+
+  signupForm.addEventListener(
+    "submit",
+    async (event) => {
 
       event.preventDefault();
 
-      const name = document
-        .getElementById('domainInput')
-        .value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, '');
+      if (msg) {
+        msg.textContent =
+          "Creating account...";
+      }
 
-      const tld =
-        document.getElementById('tldSelect').value;
 
-      const result =
-        document.getElementById('domainResult');
+      const fullName =
+        document
+          .getElementById(
+            "signupName"
+          )
+          .value
+          .trim();
 
-      result.classList.remove('hidden');
+      const email =
+        document
+          .getElementById(
+            "signupEmail"
+          )
+          .value
+          .trim();
 
-      if (!name) {
+      const phone =
+        document
+          .getElementById(
+            "signupPhone"
+          )
+          .value
+          .trim();
 
-        result.textContent =
-          'Enter a domain name to search.';
+      const password =
+        document
+          .getElementById(
+            "signupPassword"
+          )
+          .value;
+
+
+      const {
+        data,
+        error
+      } =
+        await client.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName,
+              phone: phone
+            }
+          }
+        });
+
+
+      if (error) {
+
+        if (msg) {
+          msg.textContent =
+            error.message;
+        }
 
         return;
       }
 
-      result.innerHTML =
-        `<strong>${name}${tld}</strong> looks available in this demo.`;
 
-      cart.service =
-        `Domain: ${name}${tld}`;
+      if (msg) {
+        msg.textContent =
+          "Account created. Check your email if confirmation is enabled.";
+      }
 
-      if (tld === '.in') {
 
-        cart.price = 599;
+      if (data.user) {
 
-      } else if (tld === '.co.in') {
+        await client
+          .from("profiles")
+          .upsert({
+            id: data.user.id,
+            full_name: fullName,
+            phone: phone
+          });
+      }
+    }
+  );
 
-        cart.price = 499;
+
+  loginForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+      if (msg) {
+        msg.textContent =
+          "Logging in...";
+      }
+
+
+      const email =
+        document
+          .getElementById(
+            "loginEmail"
+          )
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById(
+            "loginPassword"
+          )
+          .value;
+
+
+      const {
+        data,
+        error
+      } =
+        await client.auth
+          .signInWithPassword({
+            email,
+            password
+          });
+
+
+      if (error) {
+
+        if (msg) {
+          msg.textContent =
+            error.message;
+        }
+
+        return;
+      }
+
+
+      if (msg) {
+        msg.textContent = "";
+      }
+
+
+      if (data.user) {
+
+        await loadDashboard(
+          data.user
+        );
+      }
+    }
+  );
+
+
+  const forgotBtn =
+    document.getElementById(
+      "forgotBtn"
+    );
+
+
+  if (forgotBtn) {
+
+    forgotBtn.addEventListener(
+      "click",
+      async () => {
+
+        const email =
+          document
+            .getElementById(
+              "loginEmail"
+            )
+            .value
+            .trim() ||
+          prompt(
+            "Enter your email:"
+          );
+
+
+        if (!email) {
+          return;
+        }
+
+
+        const {
+          error
+        } =
+          await client.auth
+            .resetPasswordForEmail(
+              email,
+              {
+                redirectTo:
+                  window.location.origin +
+                  window.location.pathname
+              }
+            );
+
+
+        if (msg) {
+
+          msg.textContent =
+            error
+              ? error.message
+              : "Password reset email sent.";
+        }
+      }
+    );
+  }
+
+
+  const logoutBtn =
+    document.getElementById(
+      "logoutBtn"
+    );
+
+
+  if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+      "click",
+      async () => {
+
+        await client.auth.signOut();
+
+        await showAuth();
+      }
+    );
+  }
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await client.auth.getSession();
+
+
+  if (session?.user) {
+
+    await loadDashboard(
+      session.user
+    );
+  }
+
+
+  client.auth.onAuthStateChange(
+    async (
+      _event,
+      session
+    ) => {
+
+      if (session?.user) {
+
+        await loadDashboard(
+          session.user
+        );
 
       } else {
 
-        cart.price = 899;
+        await showAuth();
       }
-
-      updateCart();
-    });
-
-
-  // -------------------------
-  // SERVICE SELECTION
-  // -------------------------
-
-  document
-    .querySelectorAll('.choose-service')
-    .forEach(button => {
-
-      button.addEventListener('click', () => {
-
-        cart.service =
-          button.dataset.service;
-
-        cart.price =
-          Number(button.dataset.price || 0);
-
-        updateCart();
-
-        document
-          .getElementById('checkout')
-          .scrollIntoView({
-            behavior: 'smooth'
-          });
-      });
-    });
-
-
-  // -------------------------
-  // AI WEBSITE BUILDER DEMO
-  // -------------------------
-
-  document
-    .getElementById('generateDemo')
-    .addEventListener('click', () => {
-
-      document
-        .getElementById('builderMsg')
-        .textContent =
-        'Demo generated: Home • About • Services • Gallery • Contact';
-    });
-
-
-  // -------------------------
-  // CHECKOUT / DEMO PAYMENT
-  // -------------------------
-
-  document
-    .getElementById('checkoutForm')
-    .addEventListener('submit', event => {
-
-      event.preventDefault();
-
-      if (!cart.service) {
-
-        document
-          .getElementById('paymentMsg')
-          .textContent =
-          'Please select a service first.';
-
-        return;
-      }
-
-      const order = {
-
-        service: cart.service,
-
-        amount: cart.price,
-
-        status:
-          'Demo payment successful',
-
-        date:
-          new Date().toLocaleString()
-      };
-
-      orders.unshift(order);
-
-      localStorage.setItem(
-        'vionoraOrders',
-        JSON.stringify(orders)
-      );
-
-      document
-        .getElementById('paymentMsg')
-        .textContent =
-        'Demo payment successful. No real money was charged.';
-
-      renderOrders();
-    });
-
-
-  // -------------------------
-  // LOGIN / SIGNUP MODAL
-  // -------------------------
-
-  const modal =
-    document.getElementById('authModal');
-
-  const openModal = type => {
-
-    modal.classList.remove('hidden');
-
-    document
-      .querySelectorAll('.tab')
-      .forEach(tab => {
-
-        tab.classList.toggle(
-          'active',
-          tab.dataset.tab === type
-        );
-      });
-
-    document
-      .getElementById('loginForm')
-      .classList.toggle(
-        'hidden',
-        type !== 'login'
-      );
-
-    document
-      .getElementById('signupForm')
-      .classList.toggle(
-        'hidden',
-        type !== 'signup'
-      );
-  };
-
-
-  document
-    .getElementById('loginOpen')
-    .addEventListener(
-      'click',
-      () => openModal('login')
-    );
-
-
-  document
-    .getElementById('openSignup')
-    .addEventListener(
-      'click',
-      () => openModal('signup')
-    );
-
-
-  document
-    .getElementById('modalClose')
-    .addEventListener('click', () => {
-
-      modal.classList.add('hidden');
-    });
-
-
-  document
-    .querySelectorAll('.tab')
-    .forEach(tab => {
-
-      tab.addEventListener('click', () => {
-
-        openModal(tab.dataset.tab);
-      });
-    });
-
-
-  // -------------------------
-  // SIGN UP DEMO
-  // -------------------------
-
-  document
-    .getElementById('signupForm')
-    .addEventListener('submit', event => {
-
-      event.preventDefault();
-
-      const name =
-        document
-          .getElementById('signupName')
-          .value
-          .trim();
-
-      const email =
-        document
-          .getElementById('signupEmail')
-          .value
-          .trim();
-
-      localStorage.setItem(
-        'vionoraSession',
-        JSON.stringify({
-          name,
-          email
-        })
-      );
-
-      document
-        .getElementById('dashUser')
-        .textContent =
-        name || 'Demo User';
-
-      modal.classList.add('hidden');
-
-      document
-        .getElementById('dashboard')
-        .scrollIntoView({
-          behavior: 'smooth'
-        });
-    });
-
-
-  // -------------------------
-  // LOGIN DEMO
-  // -------------------------
-
-  document
-    .getElementById('loginForm')
-    .addEventListener('submit', event => {
-
-      event.preventDefault();
-
-      const email =
-        document
-          .getElementById('loginEmail')
-          .value
-          .trim();
-
-      const name =
-        email.split('@')[0] ||
-        'Demo User';
-
-      localStorage.setItem(
-        'vionoraSession',
-        JSON.stringify({
-          name,
-          email
-        })
-      );
-
-      document
-        .getElementById('dashUser')
-        .textContent = name;
-
-      modal.classList.add('hidden');
-
-      document
-        .getElementById('dashboard')
-        .scrollIntoView({
-          behavior: 'smooth'
-        });
-    });
-
-
-  // -------------------------
-  // LOGOUT
-  // -------------------------
-
-  document
-    .getElementById('logoutBtn')
-    .addEventListener('click', () => {
-
-      localStorage.removeItem(
-        'vionoraSession'
-      );
-
-      document
-        .getElementById('dashUser')
-        .textContent =
-        'Demo User';
-    });
-
-
-  // INITIAL LOAD
-
-  updateCart();
-
-  renderOrders();
+    }
+  );
 
 });
