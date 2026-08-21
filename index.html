@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VIONORA — Domains • Hosting • AI Websites • Email • Trademark</title>
+  <title>VIONORA V3 — Business Launch Platform</title>
+  <meta name="description" content="VIONORA V3 demo: domains, hosting, AI websites, business email, trademark, login, checkout and dashboard." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container">
-      <span>Domains • Hosting • AI Websites • Business Email • Trademark Services</span>
-      <span>Sales: +91 72009 12224</span>
+      <span>Domains • Hosting • AI Websites • Business Email • Trademark</span>
+      <span>Support: +91 87781 91458</span>
     </div>
   </header>
 
@@ -26,8 +27,10 @@
         <a href="#builder">AI Builder</a>
         <a href="#email">Email</a>
         <a href="#trademark">Trademark</a>
-        <a href="#support">Support</a>
+        <a href="#checkout">Checkout</a>
+        <a href="#dashboard">Dashboard</a>
       </div>
+      <button class="btn ghost" id="loginOpen">Login</button>
     </div>
   </nav>
 
@@ -35,12 +38,12 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
-          <div class="pill">Launch. Protect. Grow.</div>
-          <h1>Build your business with <span>VIONORA.</span></h1>
-          <p>Domains, hosting, AI websites, business email and trademark assistance in one place.</p>
+          <div class="pill">Launch • Protect • Grow • Manage</div>
+          <h1>Your complete business stack with <span>VIONORA.</span></h1>
+          <p>Search domains, choose hosting, build a website, add business email, submit trademark enquiries and manage orders from one platform.</p>
           <div class="actions">
-            <a class="btn primary" href="#domains">Search Domain</a>
-            <a class="btn" href="#trademark">Trademark Service</a>
+            <a class="btn primary" href="#domains">Start with a Domain</a>
+            <button class="btn" id="openSignup">Create Account</button>
           </div>
         </div>
 
@@ -56,30 +59,48 @@
             </div>
           </form>
           <div id="domainResult" class="result hidden"></div>
-          <small>Demo search only. Live availability comes with registrar API integration.</small>
+          <small>Demo availability only. Live registrar API will replace this in production.</small>
         </div>
       </div>
     </section>
 
     <section class="section" id="hosting">
       <div class="container">
-        <h2>Cloud Hosting</h2>
-        <p class="muted">Simple plans for startups, creators and businesses.</p>
+        <div class="section-head">
+          <div class="eyebrow">Hosting</div>
+          <h2>Choose a plan that fits your business.</h2>
+        </div>
         <div class="cards">
-          <article><h3>Launch</h3><div class="price">₹99<small>/mo</small></div><p>1 Website • 10GB SSD • SSL</p></article>
-          <article class="featured"><h3>Grow</h3><div class="price">₹199<small>/mo</small></div><p>5 Websites • 50GB SSD • Daily backup</p></article>
-          <article><h3>Scale</h3><div class="price">₹399<small>/mo</small></div><p>20 Websites • 150GB SSD • Priority support</p></article>
+          <article>
+            <h3>Launch</h3><div class="price">₹99<small>/mo</small></div>
+            <p>1 Website • 10GB SSD • SSL</p>
+            <button class="btn choose-service" data-service="Launch Hosting" data-price="99">Choose</button>
+          </article>
+          <article class="featured">
+            <h3>Grow</h3><div class="price">₹199<small>/mo</small></div>
+            <p>5 Websites • 50GB SSD • Daily backup</p>
+            <button class="btn primary choose-service" data-service="Grow Hosting" data-price="199">Choose</button>
+          </article>
+          <article>
+            <h3>Scale</h3><div class="price">₹399<small>/mo</small></div>
+            <p>20 Websites • 150GB SSD • Priority support</p>
+            <button class="btn choose-service" data-service="Scale Hosting" data-price="399">Choose</button>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="section alt" id="builder">
       <div class="container split">
-        <div><h2>AI Website Builder</h2><p class="muted">Describe your business and generate a starter website structure.</p></div>
+        <div>
+          <div class="eyebrow">AI Website Builder</div>
+          <h2>Generate a starter website structure.</h2>
+          <p class="muted">This is a front-end demo. Real AI generation will be handled securely by a backend service later.</p>
+        </div>
         <div class="builder">
-          <input value="Music Academy">
-          <select><option>Premium Dark</option><option>Clean Light</option></select>
-          <textarea rows="4">Show classes, branches, gallery and admissions.</textarea>
+          <input id="builderBusiness" value="Music Academy">
+          <select id="builderStyle"><option>Premium Dark</option><option>Clean Light</option><option>Modern Minimal</option></select>
+          <textarea id="builderGoal" rows="4">Show classes, branches, gallery and admissions.</textarea>
           <button id="generateDemo" class="btn primary">Generate Demo</button>
           <p id="builderMsg"></p>
         </div>
@@ -88,11 +109,11 @@
 
     <section class="section" id="email">
       <div class="container">
-        <h2>Business Email</h2>
+        <div class="section-head"><div class="eyebrow">Business Email</div><h2>Professional email for your domain.</h2></div>
         <div class="email-card">
           <strong>hello@yourbrand.com</strong>
           <span>₹49/user/mo</span>
-          <button class="btn">Add Email</button>
+          <button class="btn choose-service" data-service="Business Email" data-price="49">Add Email</button>
         </div>
       </div>
     </section>
@@ -102,83 +123,127 @@
         <div class="section-head">
           <div class="eyebrow">Trademark Services</div>
           <h2>Protect your brand name and logo.</h2>
-          <p class="muted">VIONORA can provide trademark search and application-assistance workflows for businesses.</p>
+          <p class="muted">Search and application-assistance workflow only. No registration guarantee is made.</p>
         </div>
-
         <div class="tm-grid">
-          <article class="tm-card">
-            <div class="tm-icon">⌕</div>
-            <h3>Trademark Search</h3>
-            <p>Check a proposed brand name or logo before filing.</p>
-            <button class="btn" data-service="Trademark Search">Start Search</button>
-          </article>
-
-          <article class="tm-card featured">
-            <div class="tm-icon">™</div>
-            <h3>Name Trademark</h3>
-            <p>Application assistance for protecting a business or brand name.</p>
-            <button class="btn primary" data-service="Name Trademark">Apply for Name</button>
-          </article>
-
-          <article class="tm-card">
-            <div class="tm-icon">◈</div>
-            <h3>Logo Trademark</h3>
-            <p>Application assistance for protecting a business logo or visual mark.</p>
-            <button class="btn" data-service="Logo Trademark">Apply for Logo</button>
-          </article>
-
-          <article class="tm-card">
-            <div class="tm-icon">✓</div>
-            <h3>Application Status</h3>
-            <p>Customer dashboard space for future filing/status tracking.</p>
-            <button class="btn" data-service="Trademark Status">Track Status</button>
-          </article>
+          <article class="tm-card"><div class="tm-icon">⌕</div><h3>Trademark Search</h3><p>Initial brand-name or logo search assistance.</p><button class="btn choose-service" data-service="Trademark Search" data-price="499">Select</button></article>
+          <article class="tm-card featured"><div class="tm-icon">™</div><h3>Name Trademark</h3><p>Application-assistance workflow for a brand or business name.</p><button class="btn primary choose-service" data-service="Name Trademark Assistance" data-price="1499">Select</button></article>
+          <article class="tm-card"><div class="tm-icon">◈</div><h3>Logo Trademark</h3><p>Application-assistance workflow for a logo or visual mark.</p><button class="btn choose-service" data-service="Logo Trademark Assistance" data-price="1499">Select</button></article>
+          <article class="tm-card"><div class="tm-icon">✓</div><h3>Status Tracking</h3><p>Future customer dashboard space for tracking progress.</p><button class="btn choose-service" data-service="Trademark Status Tracking" data-price="0">Select</button></article>
         </div>
+      </div>
+    </section>
 
-        <div class="tm-form-card">
-          <div>
-            <div class="eyebrow">Trademark Enquiry</div>
-            <h3>Tell us what you want to protect.</h3>
-            <p class="muted">This demo sends the enquiry to WhatsApp. Real filing, government fees and professional review are not yet automated.</p>
+    <section class="section alt" id="checkout">
+      <div class="container checkout-grid">
+        <div>
+          <div class="eyebrow">Checkout</div>
+          <h2>Review your order.</h2>
+          <p class="muted">Payment is simulated in this demo. Real payment gateway keys must never be stored in public GitHub code.</p>
+
+          <div class="checkout-card">
+            <div class="cart-row"><span>Selected service</span><strong id="cartService">No service selected</strong></div>
+            <div class="cart-row"><span>Amount</span><strong id="cartAmount">₹0</strong></div>
+            <div class="cart-row"><span>Taxes / fees</span><strong>Calculated at payment</strong></div>
+            <hr>
+            <div class="cart-row total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
           </div>
-          <form id="trademarkForm">
-            <div class="form-row">
-              <input id="tmName" type="text" placeholder="Your Name" required>
-              <input id="tmPhone" type="tel" placeholder="Phone Number" required>
-            </div>
-            <div class="form-row">
-              <input id="brandName" type="text" placeholder="Brand / Trademark Name" required>
-              <select id="tmType" required>
-                <option value="">Select Service</option>
-                <option>Trademark Search</option>
-                <option>Name Trademark</option>
-                <option>Logo Trademark</option>
-                <option>Trademark Status</option>
-              </select>
-            </div>
-            <textarea id="tmMessage" rows="4" placeholder="Business details / message"></textarea>
-            <button class="btn primary" type="submit">Send Trademark Enquiry</button>
-          </form>
         </div>
 
-        <div class="notice">
-          <strong>Important:</strong> Trademark registration is subject to legal eligibility, classification, examination and approval by the relevant authority. VIONORA should present this as search/application assistance unless and until licensed/qualified legal filing support is formally arranged.
+        <form class="checkout-card" id="checkoutForm">
+          <h3>Customer details</h3>
+          <input id="customerName" placeholder="Full Name" required>
+          <input id="customerEmail" type="email" placeholder="Email Address" required>
+          <input id="customerPhone" type="tel" placeholder="Phone Number" required>
+          <select id="paymentMethod" required>
+            <option value="">Select Payment Method</option>
+            <option>UPI</option>
+            <option>Card</option>
+            <option>Net Banking</option>
+          </select>
+          <label class="consent"><input type="checkbox" id="termsCheck" required> I agree to Terms, Privacy and Refund Policy.</label>
+          <button class="btn primary full" type="submit">Proceed to Demo Payment</button>
+          <div id="paymentMsg" class="success-msg"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="container dashboard-demo">
+        <div>
+          <div class="eyebrow">Customer Dashboard</div>
+          <h2>Manage everything in one place.</h2>
+          <p class="muted">Demo data is stored only in your browser. Production will use secure authentication and a database.</p>
+        </div>
+        <div class="dash">
+          <div class="dash-top"><strong id="dashUser">Demo User</strong><button class="btn ghost" id="logoutBtn">Logout</button></div>
+          <div class="dash-grid">
+            <div><span>Domains</span><strong>0</strong></div>
+            <div><span>Websites</span><strong>0</strong></div>
+            <div><span>Hosting</span><strong>0</strong></div>
+            <div><span>Orders</span><strong id="orderCount">0</strong></div>
+          </div>
+          <div id="orderList" class="orders-empty">No demo orders yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section security">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Security & Trust</div>
+          <h2>Security is part of the architecture.</h2>
+        </div>
+        <div class="security-grid">
+          <article><h3>Secure Backend</h3><p>Production secrets, API keys and payment credentials belong on the server, never in public JavaScript.</p></article>
+          <article><h3>Authentication</h3><p>Use hashed passwords, secure sessions, email verification and optional 2FA in production.</p></article>
+          <article><h3>Payment Safety</h3><p>Card and UPI handling should be delegated to a compliant payment gateway.</p></article>
+          <article><h3>Brand & Copyright</h3><p>Use Terms, Privacy, Refund and IP notices. Public HTML/CSS cannot be made impossible to copy, so protect backend logic and trademarks instead.</p></article>
         </div>
       </div>
     </section>
 
     <section class="section" id="support">
       <div class="container support">
-        <div><h2>Need help?</h2><p class="muted">Talk to VIONORA for domains, hosting, websites, email or trademark enquiries.</p></div>
+        <div><h2>Need help?</h2><p class="muted">Talk to VIONORA support.</p></div>
         <div>
-          <a class="btn primary" href="https://wa.me/917200912224" target="_blank">WhatsApp</a>
-          <a class="btn" href="tel:+917200912224">Call</a>
+          <a class="btn primary" href="https://wa.me/918778191458" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn" href="tel:+918778191458">Call</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer><div class="container">© <span id="year"></span> VIONORA™. All Rights Reserved.</div></footer>
+  <div class="modal hidden" id="authModal">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="signup">Sign Up</button>
+      </div>
+      <form id="loginForm" class="auth-pane">
+        <input id="loginEmail" type="email" placeholder="Email" required>
+        <input id="loginPassword" type="password" placeholder="Password" required>
+        <button class="btn primary full" type="submit">Login Demo</button>
+      </form>
+      <form id="signupForm" class="auth-pane hidden">
+        <input id="signupName" placeholder="Full Name" required>
+        <input id="signupEmail" type="email" placeholder="Email" required>
+        <input id="signupPassword" type="password" placeholder="Create Password" required>
+        <button class="btn primary full" type="submit">Create Demo Account</button>
+      </form>
+      <small>This demo never sends passwords anywhere. Production login must use a secure backend.</small>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer">
+      <div><strong>VIONORA™</strong><span>Business Launch Platform</span></div>
+      <div>© <span id="year"></span> VIONORA™. All Rights Reserved.</div>
+      <div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Refund Policy</a><a href="#">Security</a></div>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
