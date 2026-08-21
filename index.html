@@ -3,15 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VIONORA — Domains • Cloud • Websites • AI</title>
+  <title>VIONORA — Domains • Hosting • AI Websites • Email • Trademark</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="topbar"><div class="container"><span>Affordable Domains • Transparent Pricing</span><span>Sales: +91 72009 12224</span></div></header>
+  <header class="topbar">
+    <div class="container">
+      <span>Domains • Hosting • AI Websites • Business Email • Trademark Services</span>
+      <span>Sales: +91 72009 12224</span>
+    </div>
+  </header>
+
   <nav class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="#home"><div class="mark">V</div><div><strong>VIONORA</strong><small>Domains • Cloud • Websites • AI</small></div></a>
-      <div class="links"><a href="#domains">Domains</a><a href="#hosting">Hosting</a><a href="#builder">Website Builder</a><a href="#email">Email</a><a href="#support">Support</a></div>
+      <a class="brand" href="#home">
+        <div class="mark">V</div>
+        <div><strong>VIONORA</strong><small>Business Launch Platform</small></div>
+      </a>
+      <div class="links">
+        <a href="#domains">Domains</a>
+        <a href="#hosting">Hosting</a>
+        <a href="#builder">AI Builder</a>
+        <a href="#email">Email</a>
+        <a href="#trademark">Trademark</a>
+        <a href="#support">Support</a>
+      </div>
     </div>
   </nav>
 
@@ -19,58 +35,150 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
-          <div class="pill">Simple. Affordable. Built for growth.</div>
-          <h1>Build your digital home with <span>VIONORA.</span></h1>
-          <p>Search domains, launch websites, buy hosting and manage everything from one clean dashboard.</p>
-          <div class="actions"><a class="btn primary" href="#domains">Search Domain</a><a class="btn" href="#hosting">View Hosting</a></div>
+          <div class="pill">Launch. Protect. Grow.</div>
+          <h1>Build your business with <span>VIONORA.</span></h1>
+          <p>Domains, hosting, AI websites, business email and trademark assistance in one place.</p>
+          <div class="actions">
+            <a class="btn primary" href="#domains">Search Domain</a>
+            <a class="btn" href="#trademark">Trademark Service</a>
+          </div>
         </div>
+
         <div class="search-card" id="domains">
           <h2>Find your domain</h2>
           <form id="domainForm">
             <div class="domain-row">
               <input id="domainInput" placeholder="yourbrand" />
-              <select id="tldSelect"><option>.com</option><option>.in</option><option>.co.in</option><option>.net</option><option>.org</option></select>
+              <select id="tldSelect">
+                <option>.com</option><option>.in</option><option>.co.in</option><option>.net</option>
+              </select>
               <button class="btn primary" type="submit">Search</button>
             </div>
           </form>
           <div id="domainResult" class="result hidden"></div>
-          <div class="prices"><div><b>.com</b><span>₹899/yr*</span></div><div><b>.in</b><span>₹599/yr*</span></div><div><b>.co.in</b><span>₹499/yr*</span></div></div>
-          <small>*Demo prices only. Live API pricing comes later.</small>
+          <small>Demo search only. Live availability comes with registrar API integration.</small>
         </div>
       </div>
     </section>
 
     <section class="section" id="hosting">
-      <div class="container"><h2>Cloud Hosting</h2><p class="muted">Start small and upgrade when your business grows.</p>
+      <div class="container">
+        <h2>Cloud Hosting</h2>
+        <p class="muted">Simple plans for startups, creators and businesses.</p>
         <div class="cards">
-          <article><h3>Launch</h3><div class="price">₹99<small>/mo</small></div><p>1 Website • 10GB SSD • SSL • Weekly backup</p><button class="btn">Choose</button></article>
-          <article class="featured"><h3>Grow</h3><div class="price">₹199<small>/mo</small></div><p>5 Websites • 50GB SSD • SSL • Daily backup</p><button class="btn primary">Choose</button></article>
-          <article><h3>Scale</h3><div class="price">₹399<small>/mo</small></div><p>20 Websites • 150GB SSD • SSL • Daily backup</p><button class="btn">Choose</button></article>
+          <article><h3>Launch</h3><div class="price">₹99<small>/mo</small></div><p>1 Website • 10GB SSD • SSL</p></article>
+          <article class="featured"><h3>Grow</h3><div class="price">₹199<small>/mo</small></div><p>5 Websites • 50GB SSD • Daily backup</p></article>
+          <article><h3>Scale</h3><div class="price">₹399<small>/mo</small></div><p>20 Websites • 150GB SSD • Priority support</p></article>
         </div>
       </div>
     </section>
 
     <section class="section alt" id="builder">
       <div class="container split">
-        <div><h2>AI Website Builder</h2><p class="muted">Describe your business, choose a style, edit the result, and publish.</p></div>
-        <div class="builder"><input value="Music Academy"><select><option>Premium Dark</option><option>Clean Light</option></select><textarea rows="4">Get more admissions and show classes, branches and contact details.</textarea><button id="generateDemo" class="btn primary">Generate Demo Site</button><p id="builderMsg"></p></div>
+        <div><h2>AI Website Builder</h2><p class="muted">Describe your business and generate a starter website structure.</p></div>
+        <div class="builder">
+          <input value="Music Academy">
+          <select><option>Premium Dark</option><option>Clean Light</option></select>
+          <textarea rows="4">Show classes, branches, gallery and admissions.</textarea>
+          <button id="generateDemo" class="btn primary">Generate Demo</button>
+          <p id="builderMsg"></p>
+        </div>
       </div>
     </section>
 
     <section class="section" id="email">
-      <div class="container"><h2>Business Email</h2><div class="email-card"><strong>hello@yourbrand.com</strong><span>₹49/user/mo</span><button class="btn">Add Email</button></div></div>
+      <div class="container">
+        <h2>Business Email</h2>
+        <div class="email-card">
+          <strong>hello@yourbrand.com</strong>
+          <span>₹49/user/mo</span>
+          <button class="btn">Add Email</button>
+        </div>
+      </div>
     </section>
 
-    <section class="section alt">
-      <div class="container"><h2>Customer Dashboard Demo</h2><div class="dash"><div><span>Domains</span><strong>3</strong></div><div><span>Websites</span><strong>2</strong></div><div><span>Hosting</span><strong>1</strong></div><div><span>Invoices</span><strong>4</strong></div></div></div>
+    <section class="section trademark" id="trademark">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Trademark Services</div>
+          <h2>Protect your brand name and logo.</h2>
+          <p class="muted">VIONORA can provide trademark search and application-assistance workflows for businesses.</p>
+        </div>
+
+        <div class="tm-grid">
+          <article class="tm-card">
+            <div class="tm-icon">⌕</div>
+            <h3>Trademark Search</h3>
+            <p>Check a proposed brand name or logo before filing.</p>
+            <button class="btn" data-service="Trademark Search">Start Search</button>
+          </article>
+
+          <article class="tm-card featured">
+            <div class="tm-icon">™</div>
+            <h3>Name Trademark</h3>
+            <p>Application assistance for protecting a business or brand name.</p>
+            <button class="btn primary" data-service="Name Trademark">Apply for Name</button>
+          </article>
+
+          <article class="tm-card">
+            <div class="tm-icon">◈</div>
+            <h3>Logo Trademark</h3>
+            <p>Application assistance for protecting a business logo or visual mark.</p>
+            <button class="btn" data-service="Logo Trademark">Apply for Logo</button>
+          </article>
+
+          <article class="tm-card">
+            <div class="tm-icon">✓</div>
+            <h3>Application Status</h3>
+            <p>Customer dashboard space for future filing/status tracking.</p>
+            <button class="btn" data-service="Trademark Status">Track Status</button>
+          </article>
+        </div>
+
+        <div class="tm-form-card">
+          <div>
+            <div class="eyebrow">Trademark Enquiry</div>
+            <h3>Tell us what you want to protect.</h3>
+            <p class="muted">This demo sends the enquiry to WhatsApp. Real filing, government fees and professional review are not yet automated.</p>
+          </div>
+          <form id="trademarkForm">
+            <div class="form-row">
+              <input id="tmName" type="text" placeholder="Your Name" required>
+              <input id="tmPhone" type="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="form-row">
+              <input id="brandName" type="text" placeholder="Brand / Trademark Name" required>
+              <select id="tmType" required>
+                <option value="">Select Service</option>
+                <option>Trademark Search</option>
+                <option>Name Trademark</option>
+                <option>Logo Trademark</option>
+                <option>Trademark Status</option>
+              </select>
+            </div>
+            <textarea id="tmMessage" rows="4" placeholder="Business details / message"></textarea>
+            <button class="btn primary" type="submit">Send Trademark Enquiry</button>
+          </form>
+        </div>
+
+        <div class="notice">
+          <strong>Important:</strong> Trademark registration is subject to legal eligibility, classification, examination and approval by the relevant authority. VIONORA should present this as search/application assistance unless and until licensed/qualified legal filing support is formally arranged.
+        </div>
+      </div>
     </section>
 
     <section class="section" id="support">
-      <div class="container support"><div><h2>Need help?</h2><p class="muted">Sales and onboarding support for domains, hosting and websites.</p></div><div><a class="btn primary" href="https://wa.me/917200912224" target="_blank">WhatsApp</a><a class="btn" href="tel:+917200912224">Call</a></div></div>
+      <div class="container support">
+        <div><h2>Need help?</h2><p class="muted">Talk to VIONORA for domains, hosting, websites, email or trademark enquiries.</p></div>
+        <div>
+          <a class="btn primary" href="https://wa.me/917200912224" target="_blank">WhatsApp</a>
+          <a class="btn" href="tel:+917200912224">Call</a>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer><div class="container">© <span id="year"></span> VIONORA Demo</div></footer>
+  <footer><div class="container">© <span id="year"></span> VIONORA™. All Rights Reserved.</div></footer>
   <script src="script.js"></script>
 </body>
 </html>

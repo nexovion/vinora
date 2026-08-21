@@ -1,20 +1,17 @@
-VIONORA DEMO
-Front-end prototype only.
+VIONORA V2 - TRADEMARK SERVICE DEMO
 
-Included:
-- Domain search demo
-- Hosting plans
-- AI website builder demo
-- Business email
-- Customer dashboard demo
-- WhatsApp/call support
-- Mobile responsive design
+Added:
+- Trademark navigation item
+- Trademark Search card
+- Name Trademark card
+- Logo Trademark card
+- Trademark Status card
+- Trademark enquiry form
+- WhatsApp enquiry workflow
+- Legal/eligibility disclaimer
+- VIONORA™ footer
 
-Production phase:
-- Live reseller/domain API
-- Real availability and renewals
-- Login/accounts
-- Payment gateway
-- Invoices
-- Domain and hosting provisioning
-- Admin dashboard
+Important:
+This is still a front-end demo.
+No government trademark search or filing API is connected.
+No payment gateway or customer authentication is connected yet.
