@@ -1,38 +1,34 @@
-VIONORA V3 DEMO
+VIONORA V4 — REAL LOGIN + DATABASE STARTER
 
-Added in V3:
-- Login / Sign Up demo modal
-- Customer dashboard
-- Service selection
-- Checkout flow
-- Demo payment flow
-- Demo order history
-- Security & Trust section
-- Trademark services
-- Support number updated to +91 87781 91458
-- WhatsApp and Call buttons
-- Terms / Privacy / Refund / Security placeholders
-- VIONORA™ copyright footer
+WHAT IS REAL IN THIS VERSION
+- Supabase email/password authentication
+- Real PostgreSQL database schema
+- Customer profiles table
+- Orders table
+- Row Level Security (RLS)
+- Forgot password email flow
+- Persistent login session
+- User-specific dashboard counts
 
-IMPORTANT:
-This is still a front-end demo.
-No real passwords are stored on a server.
-No real payment gateway is connected.
-No live domain registrar API is connected.
-No production database is connected.
-No real hosting, email or trademark filing is automated.
+WHAT YOU MUST DO
+1. Create a Supabase project.
+2. Open SQL Editor and run supabase-schema.sql.
+3. In Supabase Project Settings > API, copy:
+   - Project URL
+   - anon/public key
+4. Paste ONLY those two public values into config.js.
+5. NEVER paste the service_role key into GitHub or browser code.
+6. Upload index.html, style.css, script.js, config.js to GitHub Pages.
 
-Production security requirements:
-- Backend server/API
-- Database with strict access rules
-- Password hashing
-- Secure sessions / JWT strategy
-- Email verification / password reset
-- Optional 2FA
-- Payment gateway server-side verification
-- Rate limiting
-- Input validation
-- CSRF/XSS protections
-- Security headers
-- Secrets stored outside public GitHub
-- Audit logs and backups
+SECURITY
+- Passwords are handled by Supabase Auth.
+- RLS prevents users from reading other customers' records.
+- Browser users cannot freely insert paid orders.
+- Real payment orders must be created by a secure backend/webhook after payment verification.
+
+NEXT PRODUCTION STEP
+- Payment gateway server-side integration
+- Domain registrar API
+- Admin dashboard/backend
+- Government/third-party fee updater
+- Hosting/email provisioning
