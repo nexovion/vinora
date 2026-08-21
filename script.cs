@@ -1,28 +1,72 @@
-document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener("DOMContentLoaded", () => {
 
-const form = document.getElementById('domainForm');
+  // VIONORA Domain Search
+  const searchBtn = document.querySelector("#domainSearchBtn");
+  const domainInput = document.querySelector("#domainName");
+  const extension = document.querySelector("#domainExtension");
+  const result = document.querySelector("#domainResult");
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      const name = domainInput?.value.trim();
+      const ext = extension?.value || ".com";
 
-  const name = document
-    .getElementById('domainInput')
-    .value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, '');
+      if (!name) {
+        alert("Please enter a domain name.");
+        return;
+      }
 
-  const tld = document.getElementById('tldSelect').value;
-  const result = document.getElementById('domainResult');
+      const domain = name.replace(/\s+/g, "").toLowerCase() + ext;
 
-  result.classList.remove('hidden');
+      if (result) {
+        result.innerHTML = `
+          <div class="domain-result">
+            <strong>${domain}</strong>
+            <p>Domain availability checking will be connected soon.</p>
+          </div>
+        `;
+      } else {
+        alert(`Searching for ${domain}`);
+      }
+    });
+  }
 
-  result.innerHTML = name
-    ? `<strong>${name}${tld}</strong> looks available in this demo. Live reseller/API verification will be added in production.`
-    : 'Enter a domain name to search.';
-});
+  // Hosting Plan Buttons
+  document.querySelectorAll(".choose-plan").forEach(button => {
+    button.addEventListener("click", () => {
+      const plan = button.dataset.plan || "Hosting";
+      alert(`${plan} plan selected. Checkout will be added soon.`);
+    });
+  });
 
-document.getElementById('generateDemo').addEventListener('click', () => {
-  document.getElementById('builderMsg').textContent =
-    'Demo generated: Home • About • Services • Gallery • Contact';
+  // AI Website Builder Demo
+  const generateBtn = document.querySelector("#generateSite");
+
+  if (generateBtn) {
+    generateBtn.addEventListener("click", () => {
+      alert(
+        "VIONORA AI Website Builder demo started. Full AI generation will be connected later."
+      );
+    });
+  }
+
+  // Business Email
+  const emailBtn = document.querySelector("#addEmail");
+
+  if (emailBtn) {
+    emailBtn.addEventListener("click", () => {
+      alert("Business Email setup will be available soon.");
+    });
+  }
+
+  // Trademark Service
+  const trademarkBtn = document.querySelector("#trademarkBtn");
+
+  if (trademarkBtn) {
+    trademarkBtn.addEventListener("click", () => {
+      alert("VIONORA Trademark Service request started.");
+    });
+  }
+
+  console.log("VIONORA website loaded successfully.");
 });
