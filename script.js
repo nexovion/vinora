@@ -610,5 +610,77 @@ if (createOrderBtn) {
 
     await loadDashboard(user);
   });
+}const generateDomainsBtn =
+  document.getElementById("generateDomainsBtn");
+
+if (generateDomainsBtn) {
+  generateDomainsBtn.addEventListener("click", () => {
+
+    const input =
+      document.getElementById("domainSearchInput");
+
+    const result =
+      document.getElementById("domainSuggestions");
+
+    let name = input.value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]/g, "");
+
+    if (!name) {
+      result.innerHTML =
+        "<p>Please enter a business or brand name.</p>";
+      return;
+    }
+
+    const domains = [
+      `${name}.com`,
+      `${name}.in`,
+      `${name}.net`,
+      `${name}.co.in`,
+      `${name}.org`,
+      `get${name}.com`,
+      `${name}online.com`,
+      `${name}india.com`
+    ];
+
+    result.innerHTML =
+      "<h4>Domain Suggestions</h4>" +
+      domains
+        .map(domain => `
+          <div class="domain-result">
+            <span>${domain}</span>
+            <button
+              type="button"
+              class="select-domain-btn"
+              data-domain="${domain}">
+              Select
+            </button>
+          </div>
+        `)
+        .join("");
+
+    document
+      .querySelectorAll(".select-domain-btn")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          document.getElementById("serviceType").value =
+            "domain";
+
+          document.getElementById("serviceName").value =
+            button.dataset.domain;
+
+          document
+            .getElementById("serviceName")
+            .scrollIntoView({
+              behavior: "smooth"
+            });
+        });
+
+      });
+
+  });
 }
 })();
