@@ -610,11 +610,12 @@ if (createOrderBtn) {
 
     await loadDashboard(user);
   });
-}const generateDomainsBtn =
+}
+  const generateDomainsBtn =
   document.getElementById("generateDomainsBtn");
 
 if (generateDomainsBtn) {
-  generateDomainsBtn.addEventListener("click", () => {
+  generateDomainsBtn.addEventListener("click", async () => {
 
     const input =
       document.getElementById("domainSearchInput");
@@ -645,19 +646,67 @@ if (generateDomainsBtn) {
     ];
 
     result.innerHTML =
-      "<h4>Domain Suggestions</h4>" +
-      domains
-        .map(domain => `
-          <div class="domain-result">
-            <span>${domain}</span>
-            <button
-              type="button"
-              class="select-domain-btn"
-              data-domain="${domain}">
-              Select
-            </button>
-          </div>
-        `)
+      "<h4>Checking Domain Availability...</h4>";
+
+    const checkedDomains = [];
+
+    for (const domain of domains) {
+
+      const { data, error } =
+        await client.functions.invoke(
+          "check-domain",
+          {
+            body: { domain }
+          }
+        );
+
+      if (error) {
+        checkedDomains.push({
+          domain,
+          status: "error",
+          available: null
+        });
+      } else {
+        checkedDomains.push(data);
+      }
+    }
+
+    result.innerHTML =
+      "<h4>Domain Availability</h4>" +
+      checkedDomains
+        .map(item => {
+
+          if (item.available === true) {
+            return `
+              <div class="domain-result">
+                <span>${item.domain}</span>
+                <strong>✅ Available</strong>
+                <button
+                  type="button"
+                  class="select-domain-btn"
+                  data-domain="${item.domain}">
+                  Select
+                </button>
+              </div>
+            `;
+          }
+
+          if (item.available === false) {
+            return `
+              <div class="domain-result">
+                <span>${item.domain}</span>
+                <strong>❌ Registered</strong>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="domain-result">
+              <span>${item.domain}</span>
+              <strong>⚠️ Unable to check</strong>
+            </div>
+          `;
+        })
         .join("");
 
     document
@@ -681,6 +730,7 @@ if (generateDomainsBtn) {
 
       });
 
-  });
+  });})();
+}
 }
 })();
