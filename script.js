@@ -554,5 +554,61 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   );
+const createOrderBtn = document.getElementById("createOrderBtn");
 
-});
+if (createOrderBtn) {
+  createOrderBtn.addEventListener("click", async () => {
+
+    const serviceType =
+      document.getElementById("serviceType").value;
+
+    const serviceName =
+      document.getElementById("serviceName").value.trim();
+
+    const orderMessage =
+      document.getElementById("orderMessage");
+
+    if (!serviceType || !serviceName) {
+      orderMessage.textContent =
+        "Please select a service and enter details.";
+      return;
+    }
+
+    const {
+      data: { user }
+    } = await client.auth.getUser();
+
+    if (!user) {
+      orderMessage.textContent =
+        "Please login first.";
+      return;
+    }
+
+    orderMessage.textContent =
+      "Creating order...";
+
+    const { error } = await client
+      .from("orders")
+      .insert({
+        user_id: user.id,
+        service_type: serviceType,
+        service_name: serviceName
+      });
+
+    if (error) {
+      console.error(error);
+      orderMessage.textContent =
+        "Order failed: " + error.message;
+      return;
+    }
+
+    orderMessage.textContent =
+      "Order created successfully!";
+
+    document.getElementById("serviceName").value = "";
+    document.getElementById("serviceType").value = "";
+
+    await loadDashboard(user);
+  });
+}
+})();
