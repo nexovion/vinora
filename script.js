@@ -731,7 +731,6 @@ if (generateDomainsBtn) {
       }); 
   });
 }
-
-})();
+});
 
   
