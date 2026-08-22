@@ -29,8 +29,23 @@
         </div>
 
         <form id="loginForm">
-          <input id="loginEmail" type="email" placeholder="Email" required>
-          <input id="loginPassword" type="password" placeholder="Password" required minlength="8">
+          <input
+  id="loginEmail"
+  name="email"
+  type="email"
+  placeholder="Email"
+  autocomplete="username"
+  required
+>
+
+<input
+  id="loginPassword"
+  name="password"
+  type="password"
+  placeholder="Password"
+  autocomplete="current-password"
+  required
+>
           <button class="btn primary" type="submit">Login</button>
         </form>
 
