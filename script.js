@@ -131,13 +131,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
     if (welcomeName) {
-      welcomeName.textContent =
-        `Welcome, ${
-          profile?.full_name ||
-          user.email?.split("@")[0] ||
-          "Customer"
-        }`;
-    }
+  welcomeName.textContent =
+    `Welcome, ${
+      profile?.full_name ||
+      user.user_metadata?.full_name ||
+      user.email?.split("@")[0] ||
+      "Customer"
+    }`;
+}
 
 
     const profilePhone =
@@ -146,9 +147,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
     if (profilePhone) {
-      profilePhone.textContent =
-        profile?.phone || "-";
-    }
+  profilePhone.textContent =
+    profile?.phone ||
+    user.user_metadata?.phone ||
+    "-";
+}
 
 
     const {
