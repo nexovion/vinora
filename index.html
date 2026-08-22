@@ -67,9 +67,35 @@
           <p><b>Email:</b> <span id="profileEmail">-</span></p>
           <p><b>Phone:</b> <span id="profilePhone">-</span></p>
           <p><b>User ID:</b> <span id="profileId">-</span></p>
-        </div>
-      </div>
-    </section>
+        </div>    
+   
+
+    <div class="order-box">
+      <h3>Place New Order</h3>
+
+      <select id="serviceType">
+        <option value="">Select Service</option>
+        <option value="domain">Domain</option>
+        <option value="hosting">Hosting</option>
+        <option value="trademark">Trademark</option>
+      </select>
+
+      <input
+        id="serviceName"
+        type="text"
+        placeholder="Enter domain / hosting / trademark name"
+      >
+
+      <button id="createOrderBtn" class="btn primary" type="button">
+        Create Order
+      </button>
+
+      <p id="orderMessage" class="message"></p>
+    </div>
+
+  </div>  <!-- Dashboard ends -->
+</section>
+      
 
     <section class="card security">
       <p class="eyebrow">Security</p>
