@@ -660,6 +660,13 @@ razorpay.open();
     await loadDashboard(user);
   });
 }
+        const DOMAIN_PRICES = {
+  ".com": 1199,
+  ".in": 699,
+  ".co.in": 599,
+  ".net": 1299,
+  ".org": 1099
+};
   const generateDomainsBtn =
   document.getElementById("generateDomainsBtn");
 
@@ -721,42 +728,58 @@ if (generateDomainsBtn) {
     }
 
     result.innerHTML =
-      "<h4>Domain Availability</h4>" +
-      checkedDomains
-        .map(item => {
+  "<h4>Domain Availability</h4>" +
+  checkedDomains
+    .map(item => {
 
-          if (item.available === true) {
-            return `
-              <div class="domain-result">
-                <span>${item.domain}</span>
-                <strong>✅ Available</strong>
-                <button
-                  type="button"
-                  class="select-domain-btn"
-                  data-domain="${item.domain}">
-                  Select
-                </button>
-              </div>
-            `;
-          }
+      let price = 0;
 
-          if (item.available === false) {
-            return `
-              <div class="domain-result">
-                <span>${item.domain}</span>
-                <strong>❌ Registered</strong>
-              </div>
-            `;
-          }
+      if (item.domain.endsWith(".co.in")) {
+        price = DOMAIN_PRICES[".co.in"];
+      } else if (item.domain.endsWith(".com")) {
+        price = DOMAIN_PRICES[".com"];
+      } else if (item.domain.endsWith(".in")) {
+        price = DOMAIN_PRICES[".in"];
+      } else if (item.domain.endsWith(".net")) {
+        price = DOMAIN_PRICES[".net"];
+      } else if (item.domain.endsWith(".org")) {
+        price = DOMAIN_PRICES[".org"];
+      }
 
-          return `
-            <div class="domain-result">
-              <span>${item.domain}</span>
-              <strong>⚠️ Unable to check</strong>
-            </div>
-          `;
-        })
-        .join("");
+      if (item.available === true) {
+        return `
+          <div class="domain-result">
+            <span>${item.domain}</span>
+            <strong>₹${price}/year</strong>
+            <strong>✅ Available</strong>
+            <button
+              type="button"
+              class="select-domain-btn"
+              data-domain="${item.domain}">
+              Select
+            </button>
+          </div>
+        `;
+      }
+
+      if (item.available === false) {
+        return `
+          <div class="domain-result">
+            <span>${item.domain}</span>
+            <strong>❌ Registered</strong>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="domain-result">
+          <span>${item.domain}</span>
+          <strong>⚠️ Unable to check</strong>
+        </div>
+      `;
+    })
+    .join("");
+    
 
     document
       .querySelectorAll(".select-domain-btn")
