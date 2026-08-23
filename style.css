@@ -303,3 +303,23 @@
     height: 23px;
   }
 }
+/* Profile Email & Phone */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Check Order title - always one line */
+.check-order-title {
+  white-space: nowrap;
+  font-size: 28px;
+  font-weight: 700;
+}
