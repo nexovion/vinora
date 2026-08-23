@@ -587,13 +587,15 @@ if (createOrderBtn) {
     orderMessage.textContent =
       "Creating order...";
 
-    const { error } = await client
-      .from("orders")
-      .insert({
-        user_id: user.id,
-        service_type: serviceType,
-        service_name: serviceName
-      });
+    const { data: newOrder, error } = await client
+  .from("orders")
+  .insert({
+    user_id: user.id,
+    service_type: serviceType,
+    service_name: serviceName
+  })
+  .select("id, total_amount, payment_status, order_status")
+  .single();
 
     if (error) {
       console.error(error);
