@@ -1,1 +1,32 @@
 *{box-sizing:border-box}body{margin:0;background:#06070a;color:#f4f7fb;font-family:Arial,sans-serif;line-height:1.55}.container{width:min(1100px,92%);margin:auto}.topbar{border-bottom:1px solid #202938;background:#0a0d12}.topbar .container{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:20px}.main{padding:56px 0}.hero{margin-bottom:28px}.eyebrow{color:#45d4ff;text-transform:uppercase;letter-spacing:1.7px;font-size:12px;font-weight:800}.hero h1{font-size:44px;margin:6px 0 10px}.hero p{color:#aab4c3}.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}.card{background:#0e131b;border:1px solid #222d3d;border-radius:20px;padding:24px}.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{flex:1;border:1px solid #293547;border-radius:10px;background:#0a0e14;color:white;padding:11px;font-weight:800}.tab.active{background:linear-gradient(135deg,#8a7cff,#45d4ff);color:#071018;border:0}form{display:grid;gap:12px}input{width:100%;background:#090c11;color:white;border:1px solid #273243;border-radius:12px;padding:14px;font:inherit}.btn{border:1px solid #293547;border-radius:12px;padding:12px 18px;background:#111722;color:white;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,#8a7cff,#45d4ff);color:#071018;border:0}.link-btn{margin-top:12px;background:none;border:0;color:#45d4ff;cursor:pointer}.hidden{display:none!important}.message{min-height:20px;color:#49d59b}.dash-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.stats div{background:#090c11;border:1px solid #222d3d;border-radius:12px;padding:14px;display:grid}.stats span{font-size:12px;color:#99a5b5}.stats strong{font-size:28px}.profile{border-top:1px solid #222d3d;padding-top:16px}.profile p{color:#c7cfda}.security{margin-top:22px}.security li{margin:8px 0;color:#b8c1ce}footer{border-top:1px solid #202938;color:#98a3b5;padding:24px 0}@media(max-width:800px){.grid{grid-template-columns:1fr}.hero h1{font-size:36px}.stats{grid-template-columns:1fr 1fr}}
+#generateDomainsBtn,
+#createOrderBtn {
+  margin-top: 14px;
+  margin-bottom: 18px;
+}
+
+.domain-result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+}
+
+.domain-result span {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.domain-result strong {
+  margin-right: 8px;
+}
+
+.select-domain-btn {
+  margin-left: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
