@@ -159,3 +159,35 @@
     font-size: 15px;
   }
 }
+/* ===== PLACE NEW ORDER LAYOUT ===== */
+
+.order-box {
+  position: relative;
+  margin-top: 30px;
+}
+
+/* Select Service - right side */
+#serviceType {
+  display: block;
+  width: 48%;
+  min-width: 170px;
+  margin: 16px 0 16px auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #0b1018;
+  color: #ffffff;
+  border: 1px solid #2c3444;
+  font-size: 16px;
+}
+
+/* Service name input */
+#serviceName {
+  width: 100%;
+  margin-top: 14px;
+}
+
+/* Create Order button - right side below input */
+#createOrderBtn {
+  display: block;
+  margin: 22px 0 10px auto;
+}
