@@ -660,13 +660,58 @@ razorpay.open();
     await loadDashboard(user);
   });
 }
-        const DOMAIN_PRICES = {
+      const DOMAIN_PRICES = {
   ".com": 1199,
   ".in": 699,
   ".co.in": 599,
   ".net": 1299,
-  ".org": 1099
-};
+  ".org": 1099,
+  ".ai": 6999,
+  ".io": 4999,
+  ".co": 2499,
+  ".info": 1499,
+  ".biz": 1599,
+  ".online": 999,
+  ".store": 1299,
+  ".shop": 1299,
+  ".site": 899,
+  ".website": 899,
+  ".tech": 1999,
+  ".app": 1799,
+  ".dev": 1599,
+  ".cloud": 1999,
+  ".digital": 1499,
+  ".agency": 1499,
+  ".company": 1299,
+  ".services": 1499,
+  ".solutions": 1699,
+  ".world": 1299,
+  ".live": 1199,
+  ".me": 1799,
+  ".xyz": 999,
+  ".pro": 1399,
+  ".space": 999,
+  ".club": 1299,
+  ".business": 1399,
+  ".email": 1199,
+  ".life": 1399,
+  ".today": 1299,
+  ".news": 1499,
+  ".media": 1599,
+  ".studio": 1699,
+  ".design": 1999,
+  ".network": 1499,
+  ".systems": 1599,
+  ".technology": 1799,
+  ".global": 1699,
+  ".center": 1399,
+  ".expert": 1799,
+  ".care": 1499,
+  ".academy": 1499,
+  ".education": 1599,
+  ".international": 1799,
+  ".ventures": 1999
+};  
   const generateDomainsBtn =
   document.getElementById("generateDomainsBtn");
 
@@ -690,16 +735,9 @@ if (generateDomainsBtn) {
       return;
     }
 
-    const domains = [
-      `${name}.com`,
-      `${name}.in`,
-      `${name}.net`,
-      `${name}.co.in`,
-      `${name}.org`,
-      `get${name}.com`,
-      `${name}online.com`,
-      `${name}india.com`
-    ];
+    const domains = Object.keys(DOMAIN_PRICES).map(
+  extension => `${name}${extension}`
+);
 
     result.innerHTML =
       "<h4>Checking Domain Availability...</h4>";
