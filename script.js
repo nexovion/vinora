@@ -617,7 +617,7 @@ if (!accessToken) {
 orderMessage.textContent = "Opening payment...";
 
 const paymentResponse = await fetch(
-  `${SUPABASE_URL}/functions/v1/create-razorpay-order`,
+  `${window.VIONORA_CONFIG.SUPABASE_URL}/functions/v1/create-razorpay-order`,
   {
     method: "POST",
     headers: {
