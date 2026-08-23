@@ -263,17 +263,35 @@
     let allOrders = [];
 
     async function checkAdminLogin() {
-      const {
-        data: { session }
-      } = await supabaseClient.auth.getSession();
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
 
-      if (!session) {
-        window.location.href = "index.html";
-        return false;
-      }
+  if (!session) {
+    window.location.href = "index.html";
+    return false;
+  }
 
-      return true;
-    }
+  const { data: profile, error } = await supabaseClient
+    .from("profiles")
+    .select("role")
+    .eq("id", session.user.id)
+    .single();
+
+  if (error) {
+    alert("Unable to verify admin access.");
+    window.location.href = "index.html";
+    return false;
+  }
+
+  if (!profile || profile.role !== "admin") {
+    alert("Access denied. Admin only.");
+    window.location.href = "index.html";
+    return false;
+  }
+
+  return true;
+}
 
     async function loadOrders() {
       const loggedIn = await checkAdminLogin();
