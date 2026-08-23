@@ -845,4 +845,4 @@ if (generateDomainsBtn) {
       });
   });
 }
-  
+ }); 
