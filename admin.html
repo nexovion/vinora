@@ -256,9 +256,9 @@
 
   <script>
     const supabaseClient = supabase.createClient(
-      window.SUPABASE_URL,
-      window.SUPABASE_ANON_KEY
-    );
+  window.VIONORA_CONFIG.SUPABASE_URL,
+  window.VIONORA_CONFIG.SUPABASE_ANON_KEY
+);
 
     let allOrders = [];
 
