@@ -606,7 +606,54 @@ if (createOrderBtn) {
 
     orderMessage.textContent =
       "Order created successfully!";
+const { data: sessionData } = await client.auth.getSession();
+const accessToken = sessionData?.session?.access_token;
 
+if (!accessToken) {
+  orderMessage.textContent = "Please login first.";
+  return;
+}
+
+orderMessage.textContent = "Opening payment...";
+
+const paymentResponse = await fetch(
+  `${SUPABASE_URL}/functions/v1/create-razorpay-order`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    },
+    body: JSON.stringify({
+      order_id: newOrder.id
+    })
+  }
+);
+
+const paymentData = await paymentResponse.json();
+
+if (!paymentResponse.ok || !paymentData.success) {
+  console.error(paymentData);
+  orderMessage.textContent =
+    "Payment setup failed: " + (paymentData.error || "Unknown error");
+  return;
+}
+
+const razorpayOptions = {
+  key: paymentData.key_id,
+  amount: paymentData.amount,
+  currency: paymentData.currency || "INR",
+  name: "VIONORA",
+  description: serviceName,
+  order_id: paymentData.razorpay_order_id,
+  handler: function (response) {
+    console.log("Payment successful:", response);
+    orderMessage.textContent = "Payment successful!";
+  }
+};
+
+const razorpay = new Razorpay(razorpayOptions);
+razorpay.open();
     document.getElementById("serviceName").value = "";
     document.getElementById("serviceType").value = "";
 
