@@ -742,10 +742,10 @@ if (generateDomainsBtn) {
     result.innerHTML =
       "<h4>Checking Domain Availability...</h4>";
 
-    const checkedDomains = [];
-
-    for (const domain of domains) {
-
+    
+ const checkedDomains = await Promise.all(
+  domains.map(async (domain) => {
+    try {
       const { data, error } =
         await client.functions.invoke(
           "check-domain",
@@ -755,15 +755,25 @@ if (generateDomainsBtn) {
         );
 
       if (error) {
-        checkedDomains.push({
+        return {
           domain,
           status: "error",
           available: null
-        });
-      } else {
-        checkedDomains.push(data);
+        };
       }
+
+      return data;
+    } catch (error) {
+      console.error("Domain check failed:", domain, error);
+
+      return {
+        domain,
+        status: "error",
+        available: null
+      };
     }
+  })
+);
 
     result.innerHTML =
   "<h4>Domain Availability</h4>" +
