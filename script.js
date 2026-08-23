@@ -770,19 +770,13 @@ if (generateDomainsBtn) {
   checkedDomains
     .map(item => {
 
-      let price = 0;
+      const matchedExtension = Object.keys(DOMAIN_PRICES)
+  .sort((a, b) => b.length - a.length)
+  .find(extension => item.domain.endsWith(extension));
 
-      if (item.domain.endsWith(".co.in")) {
-        price = DOMAIN_PRICES[".co.in"];
-      } else if (item.domain.endsWith(".com")) {
-        price = DOMAIN_PRICES[".com"];
-      } else if (item.domain.endsWith(".in")) {
-        price = DOMAIN_PRICES[".in"];
-      } else if (item.domain.endsWith(".net")) {
-        price = DOMAIN_PRICES[".net"];
-      } else if (item.domain.endsWith(".org")) {
-        price = DOMAIN_PRICES[".org"];
-      }
+const price = matchedExtension
+  ? DOMAIN_PRICES[matchedExtension]
+  : 0;
 
       if (item.available === true) {
         return `
