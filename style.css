@@ -126,3 +126,36 @@
     margin-top: 28px;
   }
 }
+/* ===== PROFILE PREMIUM BOXES ===== */
+
+#profileEmail,
+#profilePhone,
+#profileId {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+
+  margin: 12px 0 20px;
+  padding: 16px 18px;
+
+  background: #090d14;
+  border: 1px solid #2c3444;
+  border-radius: 14px;
+
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+/* Mobile profile */
+@media (max-width: 600px) {
+  #profileEmail,
+  #profilePhone,
+  #profileId {
+    padding: 15px 16px;
+    margin-bottom: 18px;
+    font-size: 15px;
+  }
+}
