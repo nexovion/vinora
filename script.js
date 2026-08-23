@@ -717,7 +717,6 @@ razorpay.open();
 
 if (generateDomainsBtn) {
   generateDomainsBtn.addEventListener("click", async () => {
-
     const input =
       document.getElementById("domainSearchInput");
 
@@ -735,100 +734,102 @@ if (generateDomainsBtn) {
       return;
     }
 
-    const domains = Object.keys(DOMAIN_PRICES).map(
-  extension => `${name}${extension}`
-);
+    const domains = Object.entries(DOMAIN_PRICES).map(
+      ([extension, price]) => ({
+        domain: `${name}${extension}`,
+        price
+      })
+    );
 
     result.innerHTML =
       "<h4>Checking Domain Availability...</h4>";
 
-    
- const checkedDomains = await Promise.all(
-  domains.map(async (domain) => {
-    try {
-      const { data, error } =
-        await client.functions.invoke(
-          "check-domain",
-          {
-            body: { domain }
+    const checkedDomains = await Promise.all(
+      domains.map(async (item) => {
+        try {
+          const { data, error } =
+            await client.functions.invoke(
+              "check-domain",
+              {
+                body: {
+                  domain: item.domain
+                }
+              }
+            );
+
+          if (error) {
+            return {
+              domain: item.domain,
+              price: item.price,
+              available: null
+            };
           }
-        );
 
-      if (error) {
-        return {
-          domain,
-          status: "error",
-          available: null
-        };
-      }
+          return {
+            ...data,
+            domain: item.domain,
+            price: item.price
+          };
 
-      return data;
-    } catch (error) {
-      console.error("Domain check failed:", domain, error);
+        } catch (error) {
+          console.error(
+            "Domain check failed:",
+            item.domain,
+            error
+          );
 
-      return {
-        domain,
-        status: "error",
-        available: null
-      };
-    }
-  })
-);
+          return {
+            domain: item.domain,
+            price: item.price,
+            available: null
+          };
+        }
+      })
+    );
 
     result.innerHTML =
-  "<h4>Domain Availability</h4>" +
-  checkedDomains
-    .map(item => {
+      "<h4>Domain Availability</h4>" +
+      checkedDomains
+        .map((item) => {
+          if (item.available === true) {
+            return `
+              <div class="domain-result">
+                <span>${item.domain}</span>
+                <strong>₹${item.price}/year</strong>
+                <strong>✅ Available</strong>
+                <button
+                  type="button"
+                  class="select-domain-btn"
+                  data-domain="${item.domain}"
+                  data-price="${item.price}">
+                  Select
+                </button>
+              </div>
+            `;
+          }
 
-      const matchedExtension = Object.keys(DOMAIN_PRICES)
-  .sort((a, b) => b.length - a.length)
-  .find(extension => item.domain.endsWith(extension));
+          if (item.available === false) {
+            return `
+              <div class="domain-result">
+                <span>${item.domain}</span>
+                <strong>❌ Registered</strong>
+              </div>
+            `;
+          }
 
-const price = matchedExtension
-  ? DOMAIN_PRICES[matchedExtension]
-  : 0;
-
-      if (item.available === true) {
-        return `
-          <div class="domain-result">
-            <span>${item.domain}</span>
-            <strong>₹${price}/year</strong>
-            <strong>✅ Available</strong>
-            <button
-              type="button"
-              class="select-domain-btn"
-              data-domain="${item.domain}">
-              Select
-            </button>
-          </div>
-        `;
-      }
-
-      if (item.available === false) {
-        return `
-          <div class="domain-result">
-            <span>${item.domain}</span>
-            <strong>❌ Registered</strong>
-          </div>
-        `;
-      }
-
-      return `
-        <div class="domain-result">
-          <span>${item.domain}</span>
-          <strong>⚠️ Unable to check</strong>
-        </div>
-      `;
-    })
-    .join("");
-    
+          return `
+            <div class="domain-result">
+              <span>${item.domain}</span>
+              <strong>⚠️ Unable to check</strong>
+            </div>
+          `;
+        })
+        .join("");
 
     document
       .querySelectorAll(".select-domain-btn")
-      .forEach(button => {
-
+      .forEach((button) => {
         button.addEventListener("click", () => {
-
           document.getElementById("serviceType").value =
             "domain";
 
@@ -841,10 +842,7 @@ const price = matchedExtension
               behavior: "smooth"
             });
         });
-
-      }); 
+      });
   });
 }
-});
-
   
