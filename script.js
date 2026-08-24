@@ -113,15 +113,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     const { data: profile } =
-      await client
-        .from("profiles")
-        .select(
-          "full_name, phone, user_id"
-        )
-        .eq("id", user.id)
-        .maybeSingle();
+  await client
+    .from("profiles")
+    .select("full_name, phone, customer_number, user_id")
+    .eq("id", user.id)
+    .maybeSingle();
+
 if (profileId) {
-  profileId.textContent = profile?.user_id || "-";
+  profileId.textContent =
+    profile?.user_id ||
+    (profile?.customer_number ? `VIO${profile.customer_number}` : "-");
 }
 
     const welcomeName =
