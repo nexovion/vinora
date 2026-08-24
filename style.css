@@ -724,3 +724,67 @@ footer .container {
     font-size: 14px;
   }
 }
+
+/* FORCE FIX PROFILE ALIGNMENT */
+
+.profile-card {
+  display: block !important;
+  width: 100% !important;
+  padding: 18px 20px !important;
+  background: #080d14 !important;
+  border: 1px solid #293548 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.profile-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 8px 0 !important;
+  margin: 0 !important;
+  gap: 6px !important;
+  border: none !important;
+}
+
+.profile-label {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #aab4c3 !important;
+  white-space: nowrap !important;
+}
+
+.profile-label::after {
+  content: ":" !important;
+}
+
+.profile-item span:last-child {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: 0 1 auto !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  text-align: left !important;
+}
