@@ -788,3 +788,46 @@ footer .container {
   overflow-wrap: normal !important;
   text-align: left !important;
 }
+/* VIONORA NEW PROFILE */
+
+.vionora-profile {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.vionora-profile h3 {
+  font-size: 26px;
+  margin: 0 0 18px 0;
+  color: #ffffff;
+}
+
+.vionora-profile-box {
+  width: 100%;
+  box-sizing: border-box;
+  background: #080d14;
+  border: 1px solid #293548;
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+
+.vionora-profile-box p {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 0;
+  color: #aab4c3;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.vionora-profile-box strong {
+  display: inline;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+}
