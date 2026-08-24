@@ -403,3 +403,33 @@
   text-align: right;
   word-break: break-word;
 }
+/* FINAL PROFILE SINGLE BOX FIX */
+
+.profile-card {
+  background: #080d14 !important;
+  border: 1px solid #293446 !important;
+  border-radius: 18px !important;
+  padding: 18px 22px !important;
+  margin-top: 20px !important;
+}
+
+.profile-item {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 0 !important;
+  border: none !important;
+}
+
+.profile-label {
+  min-width: 125px;
+  color: #9da9ba !important;
+  font-weight: 600 !important;
+}
+
+.profile-item span:last-child {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+}
