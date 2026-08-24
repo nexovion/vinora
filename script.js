@@ -109,21 +109,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         user.email || "-";
     }
 
-    if (profileId) {
-      profileId.textContent =
-        user.id || "-";
-    }
+    
 
 
     const { data: profile } =
       await client
         .from("profiles")
         .select(
-          "full_name, phone"
+          "full_name, phone, user_id"
         )
         .eq("id", user.id)
         .maybeSingle();
-
+if (profileId) {
+  profileId.textContent = profile?.user_id || "-";
+}
 
     const welcomeName =
       document.getElementById(
