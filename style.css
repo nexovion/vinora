@@ -642,3 +642,85 @@ footer .container {
     grid-template-columns: 1fr;
   }
 }
+/* ===== FINAL PROFILE COMPACT STYLE ===== */
+
+.profile {
+  margin: 28px 0 32px;
+}
+
+.profile h3 {
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.profile-card {
+  width: 100%;
+  background: #080d14;
+  border: 1px solid #293548;
+  border-radius: 16px;
+  padding: 18px 20px;
+  overflow: visible;
+}
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 0;
+  padding: 7px 0;
+  margin: 0;
+  border: none;
+  gap: 5px;
+}
+
+.profile-label {
+  min-width: auto;
+  color: #aab4c3;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.profile-label::after {
+  content: ":";
+}
+
+.profile-item span:last-child {
+  display: inline;
+  width: auto;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 16px;
+  }
+
+  .profile-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 0;
+  }
+
+  .profile-label,
+  .profile-item span:last-child {
+    font-size: 14px;
+  }
+}
