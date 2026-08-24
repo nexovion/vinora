@@ -2,154 +2,2536 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIONORA — Real Login Starter</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="container">
-      <strong>VIONORA™</strong>
-      <span>Support: +91 87781 91458</span>
-    </div>
-  </header>
 
-  <main class="container main">
-    <section class="hero">
-      <p class="eyebrow">VIONORA Production Starter</p>
-      <h1>Real customer login + database foundation</h1>
-      <p>This version is prepared for Supabase Auth + PostgreSQL with Row Level Security.</p>
-    </section>
-
-    <section class="grid">
-      <div class="card" id="authCard">
-        <div class="tabs">
-          <button id="loginTab" class="tab active">Login</button>
-          <button id="signupTab" class="tab">Sign Up</button>
-        </div>
-
-        <form id="loginForm">
-          <input
-  id="loginEmail"
-  name="email"
-  type="email"
-  placeholder="Email"
-  autocomplete="username"
-  required
->
-
-<input
-  id="loginPassword"
-  name="password"
-  type="password"
-  placeholder="Password"
-  autocomplete="current-password"
-  required
->
-          <button class="btn primary" type="submit">Login</button>
-        </form>
-
-        <form id="signupForm" class="hidden">
-          <input id="signupName" type="text" placeholder="Full name" required>
-          <input id="signupEmail" type="email" placeholder="Email" required>
-          <input id="signupPhone" type="tel" placeholder="Phone number" required>
-          <input id="signupPassword" type="password" placeholder="Create password" required minlength="8">
-          <button class="btn primary" type="submit">Create Account</button>
-        </form>
-
-        <button id="forgotBtn" class="link-btn">Forgot password?</button>
-        <p id="authMessage" class="message"></p>
-      </div>
-
-      <div class="card hidden" id="dashboardCard">
-        <div class="dash-head">
-          <div>
-            <p class="eyebrow">Customer Dashboard</p>
-            <h2 id="welcomeName">Welcome</h2>
-          </div>
-          <button id="logoutBtn" class="btn">Logout</button>
-        </div>
-
-        <div class="stats">
-          <div><span>Domains</span><strong id="domainCount">0</strong></div>
-          <div><span>Hosting</span><strong id="hostingCount">0</strong></div>
-          <div><span>Trademark Orders</span><strong id="tmCount">0</strong></div>
-          <div><span>Orders</span><strong id="orderCount">0</strong></div>
-        </div>
-
-        <div class="vionora-profile">
-  <h3>Profile</h3>
-
-  <div class="vionora-profile-box">
-    <p>Email: <strong id="profileEmail"></strong></p>
-    <p>Phone Number: <strong id="profilePhone"></strong></p>
-    <p>User ID: <strong id="profileId"></strong></p>
-  </div>
-</div>
-<div class="domain-search-box">
-    
- 
-
-  <h3>Find Your Domain</h3>
-
-  <input
-    id="domainSearchInput"
-    type="text"
-    placeholder="Enter business or brand name"
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
   >
 
-  <button id="generateDomainsBtn" class="btn primary" type="button">
-    Generate Domains
-  </button>
+  <meta
+    name="description"
+    content="VIONORA - Domains, Hosting and Trademark Services"
+  >
 
-  <div id="domainSuggestions"></div>
-</div>     
-     <input
-  id="serviceName"
-  type="text"
-  placeholder="Enter domain / hosting / trademark"
-/>
+  <title>VIONORA™ — Digital Business Platform</title>
 
-<div class="order-actions">
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <button id="createOrderBtn" class="primary">
-    Create Order
-  </button>
+<body>
 
-  <select id="serviceType">
-    <option value="">Select Service</option>
-    <option value="domain">Domain</option>
-    <option value="hosting">Hosting</option>
-    <option value="trademark">Trademark</option>
-  </select>
+<!-- =====================================================
+     VIONORA APP HEADER
+===================================================== -->
 
-</div>
-      <p id="orderMessage" class="message"></p>
+<header class="topbar">
+
+  <div class="container topbar-inner">
+
+    <a href="#" class="brand" id="brandHome">
+      <span class="brand-mark">V</span>
+      <span class="brand-name">VIONORA™</span>
+    </a>
+
+    <nav class="desktop-nav" id="mainNav">
+
+      <button
+        type="button"
+        class="nav-link"
+        data-page="domainPage"
+      >
+        Domains
+      </button>
+
+      <button
+        type="button"
+        class="nav-link"
+        data-page="hostingPage"
+      >
+        Hosting
+      </button>
+
+      <button
+        type="button"
+        class="nav-link"
+        data-page="trademarkPage"
+      >
+        Trademark
+      </button>
+
+      <button
+        type="button"
+        class="nav-link"
+        data-page="logoTrademarkPage"
+      >
+        Logo Trademark
+      </button>
+
+    </nav>
+
+    <div class="header-actions">
+
+      <span class="support-number">
+        +91 87781 91458
+      </span>
+
+      <button
+        id="headerLoginBtn"
+        class="header-login-btn"
+        type="button"
+      >
+        Login
+      </button>
+
+      <button
+        id="mobileMenuBtn"
+        class="mobile-menu-btn"
+        type="button"
+        aria-label="Open Menu"
+      >
+        ☰
+      </button>
+
     </div>
 
-  </div>  <!-- Dashboard ends -->
+  </div>
+
+  <div
+    id="mobileNav"
+    class="mobile-nav hidden"
+  >
+
+    <button type="button" data-page="domainPage">
+      Domains
+    </button>
+
+    <button type="button" data-page="hostingPage">
+      Hosting
+    </button>
+
+    <button type="button" data-page="trademarkPage">
+      Trademark
+    </button>
+
+    <button type="button" data-page="logoTrademarkPage">
+      Logo Trademark
+    </button>
+
+  </div>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     01 — LOGIN / SIGNUP PAGE
+===================================================== -->
+
+<section
+  id="authPage"
+  class="app-page auth-page"
+>
+
+  <div class="container auth-layout">
+
+    <!-- LEFT HERO -->
+
+    <div class="auth-hero">
+
+      <p class="eyebrow">
+        YOUR DIGITAL BUSINESS STARTS HERE
+      </p>
+
+      <h1>
+        Build. Protect.
+        <span>Grow.</span>
+      </h1>
+
+      <p class="auth-description">
+        Everything you need to launch and manage
+        your online business in one trusted platform.
+      </p>
+
+      <div class="auth-service-list">
+
+        <div class="auth-service-item">
+          <div class="service-icon">🌐</div>
+
+          <div>
+            <strong>Domains</strong>
+            <span>
+              Find and register the perfect domain.
+            </span>
+          </div>
+        </div>
+
+        <div class="auth-service-item">
+          <div class="service-icon">☁</div>
+
+          <div>
+            <strong>Hosting</strong>
+            <span>
+              Fast and reliable hosting solutions.
+            </span>
+          </div>
+        </div>
+
+        <div class="auth-service-item">
+          <div class="service-icon">™</div>
+
+          <div>
+            <strong>Trademark</strong>
+            <span>
+              Protect your brand identity.
+            </span>
+          </div>
+        </div>
+
+        <div class="auth-service-item">
+          <div class="service-icon">◈</div>
+
+          <div>
+            <strong>Logo Trademark</strong>
+            <span>
+              Protect your visual brand identity.
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT LOGIN CARD -->
+
+    <div
+      class="auth-card"
+      id="authCard"
+    >
+
+      <div class="tabs">
+
+        <button
+          id="loginTab"
+          class="tab active"
+          type="button"
+        >
+          Login
+        </button>
+
+        <button
+          id="signupTab"
+          class="tab"
+          type="button"
+        >
+          Create Account
+        </button>
+
+      </div>
+
+
+      <!-- LOGIN -->
+
+      <form id="loginForm">
+
+        <div class="form-heading">
+          <h2>Welcome Back</h2>
+
+          <p>
+            Sign in to manage your VIONORA account.
+          </p>
+        </div>
+
+        <label class="field-label" for="loginEmail">
+          Email Address
+        </label>
+
+        <input
+          id="loginEmail"
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="username"
+          required
+        >
+
+        <label class="field-label" for="loginPassword">
+          Password
+        </label>
+
+        <div class="password-field">
+
+          <input
+            id="loginPassword"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            class="password-toggle"
+            data-target="loginPassword"
+            aria-label="Show Password"
+          >
+            ◉
+          </button>
+
+        </div>
+
+        <div class="login-options">
+
+          <label class="remember-label">
+            <input
+              id="rememberMe"
+              type="checkbox"
+            >
+            Remember me
+          </label>
+
+          <button
+            id="forgotBtn"
+            class="text-button"
+            type="button"
+          >
+            Forgot password?
+          </button>
+
+        </div>
+
+        <button
+          class="primary-btn full-btn"
+          type="submit"
+        >
+          Login to VIONORA
+        </button>
+
+      </form>
+
+
+      <!-- SIGNUP -->
+
+      <form
+        id="signupForm"
+        class="hidden"
+      >
+
+        <div class="form-heading">
+          <h2>Create Account</h2>
+
+          <p>
+            Start your VIONORA journey.
+          </p>
+        </div>
+
+        <label class="field-label" for="signupName">
+          Full Name
+        </label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="Enter full name"
+          required
+        >
+
+        <label class="field-label" for="signupEmail">
+          Email Address
+        </label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          placeholder="you@example.com"
+          required
+        >
+
+        <label class="field-label" for="signupPhone">
+          Phone Number
+        </label>
+
+        <input
+          id="signupPhone"
+          type="tel"
+          placeholder="+91"
+          required
+        >
+
+        <label class="field-label" for="signupPassword">
+          Create Password
+        </label>
+
+        <div class="password-field">
+
+          <input
+            id="signupPassword"
+            type="password"
+            placeholder="Minimum 8 characters"
+            minlength="8"
+            required
+          >
+
+          <button
+            type="button"
+            class="password-toggle"
+            data-target="signupPassword"
+            aria-label="Show Password"
+          >
+            ◉
+          </button>
+
+        </div>
+
+        <button
+          class="primary-btn full-btn"
+          type="submit"
+        >
+          Create VIONORA Account
+        </button>
+
+      </form>
+
+      <p
+        id="authMessage"
+        class="message"
+      ></p>
+
+      <div class="auth-security">
+        🔒 Secure authentication powered by encrypted technology
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="container trust-strip">
+
+    <div>
+      <strong>50,000+</strong>
+      <span>Domains Registered</span>
+    </div>
+
+    <div>
+      <strong>99.9%</strong>
+      <span>Uptime</span>
+    </div>
+
+    <div>
+      <strong>24/7</strong>
+      <span>Support</span>
+    </div>
+
+    <div>
+      <strong>100%</strong>
+      <span>Secure</span>
+    </div>
+
+  </div>
+
 </section>
-      
 
-    <section class="card security">
-      <p class="eyebrow">Security</p>
-      <h2>Production rules included</h2>
-      <ul>
-        <li>Passwords handled by Supabase Auth — never stored in your JavaScript.</li>
-        <li>Customer profile data protected with Row Level Security.</li>
-        <li>Users can read/update only their own records.</li>
-        <li>Admin/service-role key must never be placed in GitHub Pages code.</li>
-      </ul>
-    </section>
-  </main>
 
-  <footer>
-    <div class="container">© <span id="year"></span> VIONORA™. All Rights Reserved.</div>
-  </footer>
+<!-- =====================================================
+     02 — CUSTOMER DASHBOARD
+===================================================== -->
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js"></script>
-  <script src="script.js"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<section
+  id="dashboardPage"
+  class="app-page hidden"
+>
+
+  <div class="container dashboard-container">
+
+    <div class="dashboard-header">
+
+      <div>
+        <p class="eyebrow">
+          CUSTOMER DASHBOARD
+        </p>
+
+        <h1 id="welcomeName">
+          Welcome
+        </h1>
+
+        <p>
+          Manage your digital business from one place.
+        </p>
+      </div>
+
+      <button
+        id="logoutBtn"
+        class="secondary-btn"
+        type="button"
+      >
+        Logout
+      </button>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+      <button
+        type="button"
+        class="stat-card"
+        data-page="domainPage"
+      >
+        <span>Domains</span>
+        <strong id="domainCount">0</strong>
+      </button>
+
+      <button
+        type="button"
+        class="stat-card"
+        data-page="hostingPage"
+      >
+        <span>Hosting</span>
+        <strong id="hostingCount">0</strong>
+      </button>
+
+      <button
+        type="button"
+        class="stat-card"
+        data-page="trademarkPage"
+      >
+        <span>Trademark Orders</span>
+        <strong id="tmCount">0</strong>
+      </button>
+
+      <div class="stat-card">
+        <span>Orders</span>
+        <strong id="orderCount">0</strong>
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="dashboard-section">
+
+      <h2>Profile</h2>
+
+      <div class="profile-box">
+
+        <p>
+          Email:
+          <strong id="profileEmail">-</strong>
+        </p>
+
+        <p>
+          Phone Number:
+          <strong id="profilePhone">-</strong>
+        </p>
+
+        <p>
+          User ID:
+          <strong id="profileId">-</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- SERVICES -->
+
+    <div class="dashboard-section">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">
+            VIONORA SERVICES
+          </p>
+
+          <h2>
+            Start Your Business
+          </h2>
+        </div>
+
+      </div>
+
+
+      <div class="service-grid">
+
+        <button
+          class="service-card"
+          type="button"
+          data-page="domainPage"
+        >
+          <span class="service-card-icon">🌐</span>
+          <strong>Domain</strong>
+          <small>Search & Register</small>
+        </button>
+
+        <button
+          class="service-card"
+          type="button"
+          data-page="hostingPage"
+        >
+          <span class="service-card-icon">☁</span>
+          <strong>Hosting</strong>
+          <small>Choose Hosting Plan</small>
+        </button>
+
+        <button
+          class="service-card"
+          type="button"
+          data-page="trademarkPage"
+        >
+          <span class="service-card-icon">™</span>
+          <strong>Trademark</strong>
+          <small>Protect Brand Name</small>
+        </button>
+
+        <button
+          class="service-card"
+          type="button"
+          data-page="logoTrademarkPage"
+        >
+          <span class="service-card-icon">◈</span>
+          <strong>Logo Trademark</strong>
+          <small>Protect Your Logo</small>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- RECENT ORDERS -->
+
+    <div class="dashboard-section">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">
+            ORDER MANAGEMENT
+          </p>
+
+          <h2>My Orders</h2>
+        </div>
+
+      </div>
+
+      <div
+        id="customerOrders"
+        class="orders-container"
+      >
+        <p class="empty-state">
+          Your orders will appear here.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     03 — DOMAIN PAGE
+===================================================== -->
+
+<section
+  id="domainPage"
+  class="app-page hidden"
+>
+
+  <div class="container">
+
+    <div class="page-breadcrumb">
+      Home / Domains / Search
+    </div>
+
+
+    <div class="domain-hero">
+
+      <div class="domain-hero-content">
+
+        <p class="eyebrow">
+          FIND YOUR PERFECT DOMAIN
+        </p>
+
+        <h1>
+          Your idea deserves
+          <span>the perfect domain.</span>
+        </h1>
+
+        <p>
+          Search, secure and launch your brand
+          with VIONORA.
+        </p>
+
+
+        <div class="domain-search-panel">
+
+          <div class="domain-search-row">
+
+            <input
+              id="domainSearchInput"
+              type="text"
+              placeholder="Enter your brand or business name"
+            >
+
+            <select id="domainPrimaryExtension">
+              <option value=".com">.com</option>
+              <option value=".in">.in</option>
+              <option value=".net">.net</option>
+              <option value=".co.in">.co.in</option>
+              <option value=".org">.org</option>
+              <option value=".ai">.ai</option>
+              <option value=".tech">.tech</option>
+            </select>
+
+            <button
+              id="generateDomainsBtn"
+              class="primary-btn"
+              type="button"
+            >
+              Search Domain
+            </button>
+
+          </div>
+
+
+          <div class="domain-search-features">
+
+            <span>✓ Instant Search</span>
+            <span>✓ Secure Checkout</span>
+            <span>✓ Easy Management</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="domain-globe-card">
+
+        <div class="domain-globe">
+          <span class="globe-main">.com</span>
+          <span>.in</span>
+          <span>.net</span>
+          <span>.org</span>
+          <span>.ai</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- POPULAR EXTENSIONS -->
+
+    <div class="domain-extension-section">
+
+      <div class="section-heading centered">
+
+        <p class="eyebrow">
+          POPULAR EXTENSIONS
+        </p>
+
+        <h2>
+          Choose the right extension
+        </h2>
+
+      </div>
+
+
+      <div class="extension-grid">
+
+        <div class="extension-card">
+          <strong>.com</strong>
+          <span>Global business</span>
+          <b>₹799/year</b>
+        </div>
+
+        <div class="extension-card">
+          <strong>.in</strong>
+          <span>Made for India</span>
+          <b>₹599/year</b>
+        </div>
+
+        <div class="extension-card">
+          <strong>.net</strong>
+          <span>Technology & networks</span>
+          <b>₹899/year</b>
+        </div>
+
+        <div class="extension-card">
+          <strong>.co.in</strong>
+          <span>Indian business</span>
+          <b>₹699/year</b>
+        </div>
+
+        <div class="extension-card">
+          <strong>.org</strong>
+          <span>Organizations</span>
+          <b>₹899/year</b>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div class="domain-results-section">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">
+            DOMAIN RESULTS
+          </p>
+
+          <h2>
+            Available Domains
+          </h2>
+        </div>
+
+      </div>
+
+      <div id="domainSuggestions">
+
+        <div class="domain-empty-state">
+          Search for a domain to see suggestions.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- DOMAIN BENEFITS -->
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <span>⚡</span>
+        <strong>Instant Setup</strong>
+        <p>
+          Simple domain ordering experience.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>🔒</span>
+        <strong>Secure</strong>
+        <p>
+          Secure account and checkout process.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>🛡</span>
+        <strong>Domain Protection</strong>
+        <p>
+          Manage your domain safely.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>↗</span>
+        <strong>Easy Management</strong>
+        <p>
+          Manage services from your dashboard.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     04 — HOSTING PAGE
+===================================================== -->
+
+<section
+  id="hostingPage"
+  class="app-page hidden"
+>
+
+  <div class="container">
+
+    <div class="page-breadcrumb">
+      Home / Hosting
+    </div>
+
+
+    <div class="service-page-hero">
+
+      <div>
+
+        <p class="eyebrow">
+          WEB HOSTING
+        </p>
+
+        <h1>
+          Fast. Secure.
+          <span>Built for growth.</span>
+        </h1>
+
+        <p>
+          Reliable hosting plans designed for
+          websites, businesses and growing brands.
+        </p>
+
+        <button
+          class="primary-btn"
+          type="button"
+          data-scroll="hostingPlans"
+        >
+          View Hosting Plans
+        </button>
+
+      </div>
+
+
+      <div class="hosting-visual">
+
+        <div class="server-stack">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="hostingPlans"
+      class="pricing-section"
+    >
+
+      <div class="section-heading centered">
+
+        <p class="eyebrow">
+          SIMPLE PRICING
+        </p>
+
+        <h2>
+          Choose your hosting plan
+        </h2>
+
+        <p>
+          Select the plan that fits your website.
+        </p>
+
+      </div>
+
+
+      <div class="pricing-grid">
+
+
+        <!-- BASIC -->
+
+        <article
+          class="pricing-card"
+          data-plan="Basic Hosting"
+        >
+
+          <p class="plan-name">
+            BASIC
+          </p>
+
+          <h3>
+            Starter Hosting
+          </h3>
+
+          <p class="plan-description">
+            For personal and starter websites.
+          </p>
+
+          <div class="plan-price">
+            <strong>₹199</strong>
+            <span>/month</span>
+          </div>
+
+          <ul>
+            <li>1 Website</li>
+            <li>10 GB Storage</li>
+            <li>SSL Support</li>
+            <li>Email Support</li>
+            <li>Basic Support</li>
+          </ul>
+
+          <button
+            class="hosting-buy-btn primary-btn"
+            type="button"
+            data-plan="Basic Hosting"
+            data-price="199"
+          >
+            Get Started
+          </button>
+
+        </article>
+
+
+        <!-- BUSINESS -->
+
+        <article
+          class="pricing-card featured"
+          data-plan="Business Hosting"
+        >
+
+          <div class="popular-badge">
+            MOST POPULAR
+          </div>
+
+          <p class="plan-name">
+            BUSINESS
+          </p>
+
+          <h3>
+            Business Hosting
+          </h3>
+
+          <p class="plan-description">
+            For growing business websites.
+          </p>
+
+          <div class="plan-price">
+            <strong>₹399</strong>
+            <span>/month</span>
+          </div>
+
+          <ul>
+            <li>10 Websites</li>
+            <li>50 GB Storage</li>
+            <li>SSL Support</li>
+            <li>Business Email Support</li>
+            <li>Priority Support</li>
+          </ul>
+
+          <button
+            class="hosting-buy-btn primary-btn"
+            type="button"
+            data-plan="Business Hosting"
+            data-price="399"
+          >
+            Choose Business
+          </button>
+
+        </article>
+
+
+        <!-- PREMIUM -->
+
+        <article
+          class="pricing-card"
+          data-plan="Premium Hosting"
+        >
+
+          <p class="plan-name">
+            PREMIUM
+          </p>
+
+          <h3>
+            Premium Hosting
+          </h3>
+
+          <p class="plan-description">
+            For high-growth online businesses.
+          </p>
+
+          <div class="plan-price">
+            <strong>₹699</strong>
+            <span>/month</span>
+          </div>
+
+          <ul>
+            <li>Multiple Websites</li>
+            <li>100 GB Storage</li>
+            <li>SSL Support</li>
+            <li>Email Support</li>
+            <li>Priority Assistance</li>
+          </ul>
+
+          <button
+            class="hosting-buy-btn primary-btn"
+            type="button"
+            data-plan="Premium Hosting"
+            data-price="699"
+          >
+            Go Premium
+          </button>
+
+        </article>
+
+      </div>
+
+    </div>
+
+
+    <div class="feature-grid hosting-features">
+
+      <div class="feature-card">
+        <span>⚡</span>
+        <strong>Fast Performance</strong>
+        <p>
+          Hosting designed for reliable performance.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>🔒</span>
+        <strong>SSL Ready</strong>
+        <p>
+          Help protect website connections.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>☁</span>
+        <strong>Easy Management</strong>
+        <p>
+          Manage hosting through VIONORA.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>🎧</span>
+        <strong>Support</strong>
+        <p>
+          Get assistance when required.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     05 — TRADEMARK PAGE
+===================================================== -->
+
+<section
+  id="trademarkPage"
+  class="app-page hidden"
+>
+
+  <div class="container">
+
+    <div class="page-breadcrumb">
+      Home / Trademark Registration
+    </div>
+
+
+    <div class="trademark-hero">
+
+      <div>
+
+        <p class="eyebrow">
+          TRADEMARK REGISTRATION SERVICE
+        </p>
+
+        <h1>
+          Protect your brand.
+          <span>Secure your identity.</span>
+        </h1>
+
+        <p>
+          Start your trademark service request through
+          VIONORA with a simple guided process.
+        </p>
+
+        <button
+          class="primary-btn"
+          type="button"
+          data-scroll="trademarkApplication"
+        >
+          Start Application
+        </button>
+
+      </div>
+
+
+      <div class="trademark-shield">
+        <div>™</div>
+      </div>
+
+    </div>
+
+
+    <!-- PROCESS -->
+
+    <div class="process-section">
+
+      <div class="section-heading centered">
+
+        <p class="eyebrow">
+          HOW IT WORKS
+        </p>
+
+        <h2>
+          Simple trademark process
+        </h2>
+
+      </div>
+
+
+      <div class="process-grid">
+
+        <div>
+          <span>01</span>
+          <strong>Submit Details</strong>
+          <p>
+            Enter applicant and brand information.
+          </p>
+        </div>
+
+        <div>
+          <span>02</span>
+          <strong>Review</strong>
+          <p>
+            Details are reviewed before processing.
+          </p>
+        </div>
+
+        <div>
+          <span>03</span>
+          <strong>Application Support</strong>
+          <p>
+            Proceed according to the selected service.
+          </p>
+        </div>
+
+        <div>
+          <span>04</span>
+          <strong>Track Status</strong>
+          <p>
+            Follow your VIONORA service order.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- APPLICATION -->
+
+    <div
+      id="trademarkApplication"
+      class="application-layout"
+    >
+
+      <form
+        id="trademarkForm"
+        class="application-card"
+      >
+
+        <p class="eyebrow">
+          APPLICATION
+        </p>
+
+        <h2>
+          Trademark Details
+        </h2>
+
+
+        <label class="field-label">
+          Applicant Type
+        </label>
+
+        <select
+          id="tmApplicantType"
+          required
+        >
+          <option value="">
+            Select applicant type
+          </option>
+
+          <option value="individual">
+            Individual
+          </option>
+
+          <option value="proprietorship">
+            Proprietorship
+          </option>
+
+          <option value="partnership">
+            Partnership
+          </option>
+
+          <option value="company">
+            Company
+          </option>
+
+          <option value="llp">
+            LLP
+          </option>
+        </select>
+
+
+        <label class="field-label">
+          Applicant / Business Name
+        </label>
+
+        <input
+          id="tmApplicantName"
+          type="text"
+          placeholder="Enter applicant or business name"
+          required
+        >
+
+
+        <label class="field-label">
+          Trademark / Brand Name
+        </label>
+
+        <input
+          id="tmBrandName"
+          type="text"
+          placeholder="Enter brand name"
+          required
+        >
+
+
+        <label class="field-label">
+          Trademark Class
+        </label>
+
+        <select
+          id="tmClass"
+          required
+        >
+          <option value="">
+            Select trademark class
+          </option>
+
+          <option value="1">Class 1</option>
+          <option value="2">Class 2</option>
+          <option value="3">Class 3</option>
+          <option value="4">Class 4</option>
+          <option value="5">Class 5</option>
+          <option value="6">Class 6</option>
+          <option value="7">Class 7</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
+          <option value="11">Class 11</option>
+          <option value="12">Class 12</option>
+          <option value="13">Class 13</option>
+          <option value="14">Class 14</option>
+          <option value="15">Class 15</option>
+          <option value="16">Class 16</option>
+          <option value="17">Class 17</option>
+          <option value="18">Class 18</option>
+          <option value="19">Class 19</option>
+          <option value="20">Class 20</option>
+          <option value="21">Class 21</option>
+          <option value="22">Class 22</option>
+          <option value="23">Class 23</option>
+          <option value="24">Class 24</option>
+          <option value="25">Class 25</option>
+          <option value="26">Class 26</option>
+          <option value="27">Class 27</option>
+          <option value="28">Class 28</option>
+          <option value="29">Class 29</option>
+          <option value="30">Class 30</option>
+          <option value="31">Class 31</option>
+          <option value="32">Class 32</option>
+          <option value="33">Class 33</option>
+          <option value="34">Class 34</option>
+          <option value="35">Class 35</option>
+          <option value="36">Class 36</option>
+          <option value="37">Class 37</option>
+          <option value="38">Class 38</option>
+          <option value="39">Class 39</option>
+          <option value="40">Class 40</option>
+          <option value="41">Class 41</option>
+          <option value="42">Class 42</option>
+          <option value="43">Class 43</option>
+          <option value="44">Class 44</option>
+          <option value="45">Class 45</option>
+        </select>
+
+
+        <label class="field-label">
+          Business Description
+        </label>
+
+        <textarea
+          id="tmDescription"
+          rows="5"
+          placeholder="Describe your products or services"
+          required
+        ></textarea>
+
+
+        <button
+          class="primary-btn full-btn"
+          type="submit"
+        >
+          Continue to Payment
+        </button>
+
+        <p
+          id="trademarkMessage"
+          class="message"
+        ></p>
+
+      </form>
+
+
+      <aside class="application-sidebar">
+
+        <div class="info-card">
+
+          <p class="eyebrow">
+            SERVICE SUMMARY
+          </p>
+
+          <h3>
+            Trademark Service
+          </h3>
+
+          <div class="summary-line">
+            <span>VIONORA Service Fee</span>
+            <strong id="tmServiceFee">
+              ₹999
+            </strong>
+          </div>
+
+          <div class="summary-line">
+            <span>Government Fee</span>
+            <strong>
+              As applicable
+            </strong>
+          </div>
+
+          <p class="small-note">
+            Government/statutory fees are separate
+            and depend on the applicable filing category.
+          </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <p class="eyebrow">
+            DOCUMENT CHECKLIST
+          </p>
+
+          <ul>
+            <li>Applicant details</li>
+            <li>Brand / trademark name</li>
+            <li>Business information</li>
+            <li>Required supporting documents</li>
+          </ul>
+
+        </div>
+
+
+        <div class="info-card support-card">
+
+          <strong>
+            Need Help?
+          </strong>
+
+          <p>
+            Contact VIONORA support for assistance.
+          </p>
+
+          <a href="tel:+918778191458">
+            +91 87781 91458
+          </a>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     06 — LOGO TRADEMARK PAGE
+===================================================== -->
+
+<section
+  id="logoTrademarkPage"
+  class="app-page hidden"
+>
+
+  <div class="container">
+
+    <div class="page-breadcrumb">
+      Home / Logo Trademark Registration
+    </div>
+
+
+    <div class="logo-trademark-hero">
+
+      <div>
+
+        <p class="eyebrow">
+          LOGO TRADEMARK SERVICE
+        </p>
+
+        <h1>
+          Your logo is your identity.
+          <span>Protect it.</span>
+        </h1>
+
+        <p>
+          Submit your logo trademark service request
+          through the VIONORA platform.
+        </p>
+
+        <button
+          class="primary-btn"
+          type="button"
+          data-scroll="logoTrademarkApplication"
+        >
+          Start Logo Application
+        </button>
+
+      </div>
+
+
+      <div class="logo-protection-visual">
+
+        <div class="logo-shield">
+          ◈
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROCESS -->
+
+    <div class="process-section">
+
+      <div class="section-heading centered">
+
+        <p class="eyebrow">
+          SIMPLE PROCESS
+        </p>
+
+        <h2>
+          Protect your visual identity
+        </h2>
+
+      </div>
+
+
+      <div class="process-grid">
+
+        <div>
+          <span>01</span>
+          <strong>Upload Logo</strong>
+          <p>
+            Upload your logo artwork.
+          </p>
+        </div>
+
+        <div>
+          <span>02</span>
+          <strong>Enter Details</strong>
+          <p>
+            Add applicant and business information.
+          </p>
+        </div>
+
+        <div>
+          <span>03</span>
+          <strong>Review</strong>
+          <p>
+            Review the submitted information.
+          </p>
+        </div>
+
+        <div>
+          <span>04</span>
+          <strong>Track Order</strong>
+          <p>
+            Track your VIONORA service request.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOGO FORM -->
+
+    <div
+      id="logoTrademarkApplication"
+      class="application-layout"
+    >
+
+      <form
+        id="logoTrademarkForm"
+        class="application-card"
+      >
+
+        <p class="eyebrow">
+          LOGO APPLICATION
+        </p>
+
+        <h2>
+          Logo Trademark Details
+        </h2>
+
+
+        <label class="field-label">
+          Upload Logo
+        </label>
+
+        <div class="upload-box">
+
+          <input
+            id="logoTrademarkFile"
+            type="file"
+            accept=".png,.jpg,.jpeg,.pdf"
+            required
+          >
+
+          <p>
+            PNG, JPG, JPEG or PDF
+          </p>
+
+        </div>
+
+
+        <label class="field-label">
+          Applicant Type
+        </label>
+
+        <select
+          id="logoApplicantType"
+          required
+        >
+          <option value="">
+            Select applicant type
+          </option>
+
+          <option value="individual">
+            Individual
+          </option>
+
+          <option value="proprietorship">
+            Proprietorship
+          </option>
+
+          <option value="partnership">
+            Partnership
+          </option>
+
+          <option value="company">
+            Company
+          </option>
+
+          <option value="llp">
+            LLP
+          </option>
+        </select>
+
+
+        <label class="field-label">
+          Applicant / Business Name
+        </label>
+
+        <input
+          id="logoApplicantName"
+          type="text"
+          placeholder="Enter applicant or business name"
+          required
+        >
+
+
+        <label class="field-label">
+          Logo / Brand Name
+        </label>
+
+        <input
+          id="logoBrandName"
+          type="text"
+          placeholder="Enter logo or brand name"
+          required
+        >
+
+
+        <label class="field-label">
+          Trademark Class
+        </label>
+
+        <select
+          id="logoTrademarkClass"
+          required
+        >
+          <option value="">
+            Select trademark class
+          </option>
+
+          <option value="1">Class 1</option>
+          <option value="2">Class 2</option>
+          <option value="3">Class 3</option>
+          <option value="4">Class 4</option>
+          <option value="5">Class 5</option>
+          <option value="6">Class 6</option>
+          <option value="7">Class 7</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
+          <option value="11">Class 11</option>
+          <option value="12">Class 12</option>
+          <option value="13">Class 13</option>
+          <option value="14">Class 14</option>
+          <option value="15">Class 15</option>
+          <option value="16">Class 16</option>
+          <option value="17">Class 17</option>
+          <option value="18">Class 18</option>
+          <option value="19">Class 19</option>
+          <option value="20">Class 20</option>
+          <option value="21">Class 21</option>
+          <option value="22">Class 22</option>
+          <option value="23">Class 23</option>
+          <option value="24">Class 24</option>
+          <option value="25">Class 25</option>
+          <option value="26">Class 26</option>
+          <option value="27">Class 27</option>
+          <option value="28">Class 28</option>
+          <option value="29">Class 29</option>
+          <option value="30">Class 30</option>
+          <option value="31">Class 31</option>
+          <option value="32">Class 32</option>
+          <option value="33">Class 33</option>
+          <option value="34">Class 34</option>
+          <option value="35">Class 35</option>
+          <option value="36">Class 36</option>
+          <option value="37">Class 37</option>
+          <option value="38">Class 38</option>
+          <option value="39">Class 39</option>
+          <option value="40">Class 40</option>
+          <option value="41">Class 41</option>
+          <option value="42">Class 42</option>
+          <option value="43">Class 43</option>
+          <option value="44">Class 44</option>
+          <option value="45">Class 45</option>
+        </select>
+
+
+        <label class="field-label">
+          Logo Description
+        </label>
+
+        <textarea
+          id="logoDescription"
+          rows="5"
+          placeholder="Describe the logo and its use"
+          required
+        ></textarea>
+
+
+        <button
+          class="primary-btn full-btn"
+          type="submit"
+        >
+          Continue to Payment
+        </button>
+
+        <p
+          id="logoTrademarkMessage"
+          class="message"
+        ></p>
+
+      </form>
+
+
+      <aside class="application-sidebar">
+
+        <div class="info-card">
+
+          <p class="eyebrow">
+            SERVICE SUMMARY
+          </p>
+
+          <h3>
+            Logo Trademark Service
+          </h3>
+
+          <div class="summary-line">
+            <span>VIONORA Service Fee</span>
+            <strong id="logoTmServiceFee">
+              ₹999
+            </strong>
+          </div>
+
+          <div class="summary-line">
+            <span>Government Fee</span>
+            <strong>
+              As applicable
+            </strong>
+          </div>
+
+          <p class="small-note">
+            Government/statutory charges are separate
+            and depend on the applicable filing category.
+          </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <p class="eyebrow">
+            LOGO FILE
+          </p>
+
+          <ul>
+            <li>Clear logo image</li>
+            <li>PNG/JPG/PDF format</li>
+            <li>Applicant information</li>
+            <li>Business details</li>
+          </ul>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     07 — PAYMENT PAGE
+===================================================== -->
+
+<section
+  id="paymentPage"
+  class="app-page hidden"
+>
+
+  <div class="container payment-container">
+
+    <div class="payment-progress">
+
+      <div class="complete">
+        <span>✓</span>
+        <strong>Order</strong>
+      </div>
+
+      <div class="active">
+        <span>2</span>
+        <strong>Payment</strong>
+      </div>
+
+      <div>
+        <span>3</span>
+        <strong>Complete</strong>
+      </div>
+
+    </div>
+
+
+    <div class="payment-heading">
+
+      <p class="eyebrow">
+        SECURE CHECKOUT
+      </p>
+
+      <h1>
+        Complete your payment
+      </h1>
+
+      <p>
+        Choose your preferred payment method.
+      </p>
+
+    </div>
+
+
+    <div class="payment-layout">
+
+
+      <!-- PAYMENT METHODS -->
+
+      <div class="payment-method-card">
+
+        <h2>
+          Payment Method
+        </h2>
+
+
+        <label class="payment-option">
+
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="upi"
+            checked
+          >
+
+          <span class="payment-option-icon">
+            UPI
+          </span>
+
+          <span>
+            <strong>UPI</strong>
+            <small>
+              Google Pay, PhonePe, Paytm and supported UPI apps
+            </small>
+          </span>
+
+        </label>
+
+
+        <label class="payment-option">
+
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="card"
+          >
+
+          <span class="payment-option-icon">
+            CARD
+          </span>
+
+          <span>
+            <strong>
+              Debit / Credit Card
+            </strong>
+
+            <small>
+              Supported cards through payment gateway
+            </small>
+          </span>
+
+        </label>
+
+
+        <label class="payment-option">
+
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="netbanking"
+          >
+
+          <span class="payment-option-icon">
+            BANK
+          </span>
+
+          <span>
+            <strong>
+              Net Banking
+            </strong>
+
+            <small>
+              Pay using supported online banking
+            </small>
+          </span>
+
+        </label>
+
+
+        <button
+          id="payNowBtn"
+          class="primary-btn full-btn payment-button"
+          type="button"
+        >
+          Pay Securely
+        </button>
+
+        <p
+          id="paymentMessage"
+          class="message"
+        ></p>
+
+        <div class="secure-payment-note">
+          🔒 Secure encrypted checkout
+        </div>
+
+      </div>
+
+
+      <!-- ORDER SUMMARY -->
+
+      <aside class="order-summary-card">
+
+        <p class="eyebrow">
+          ORDER SUMMARY
+        </p>
+
+        <h2>
+          Your Order
+        </h2>
+
+
+        <div class="summary-line">
+          <span>Service</span>
+          <strong id="paymentService">
+            -
+          </strong>
+        </div>
+
+        <div class="summary-line">
+          <span>Item</span>
+          <strong id="paymentItem">
+            -
+          </strong>
+        </div>
+
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <strong id="paymentSubtotal">
+            ₹0
+          </strong>
+        </div>
+
+        <div class="summary-line">
+          <span>Tax / Charges</span>
+          <strong id="paymentTax">
+            ₹0
+          </strong>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <strong id="paymentTotal">
+            ₹0
+          </strong>
+        </div>
+
+
+        <div class="payment-benefits">
+
+          <p>✓ Secure Payment</p>
+          <p>✓ Order Tracking</p>
+          <p>✓ VIONORA Support</p>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     08 — PAYMENT SUCCESS PAGE
+===================================================== -->
+
+<section
+  id="successPage"
+  class="app-page hidden"
+>
+
+  <div class="container success-container">
+
+    <div class="success-card">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <p class="eyebrow">
+        PAYMENT SUCCESSFUL
+      </p>
+
+      <h1>
+        Thank you!
+      </h1>
+
+      <p>
+        Your payment has been received successfully.
+      </p>
+
+
+      <div class="success-details">
+
+        <div>
+          <span>Order ID</span>
+          <strong id="successOrderId">
+            -
+          </strong>
+        </div>
+
+        <div>
+          <span>Payment ID</span>
+          <strong id="successPaymentId">
+            -
+          </strong>
+        </div>
+
+        <div>
+          <span>Service</span>
+          <strong id="successService">
+            -
+          </strong>
+        </div>
+
+        <div>
+          <span>Amount</span>
+          <strong id="successAmount">
+            -
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="success-actions">
+
+        <button
+          id="viewCertificateBtn"
+          class="primary-btn"
+          type="button"
+        >
+          View VIONORA Certificate
+        </button>
+
+        <button
+          id="backDashboardBtn"
+          class="secondary-btn"
+          type="button"
+        >
+          Go to Dashboard
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     09 — VIONORA CERTIFICATE PAGE
+===================================================== -->
+
+<section
+  id="certificatePage"
+  class="app-page hidden"
+>
+
+  <div class="container certificate-page-container">
+
+    <div class="certificate-actions">
+
+      <button
+        id="certificateBackBtn"
+        class="secondary-btn"
+        type="button"
+      >
+        ← Dashboard
+      </button>
+
+      <button
+        id="downloadCertificateBtn"
+        class="primary-btn"
+        type="button"
+      >
+        Download Certificate
+      </button>
+
+    </div>
+
+
+    <article
+      id="vionoraCertificate"
+      class="certificate"
+    >
+
+      <div class="certificate-top">
+
+        <div class="certificate-brand">
+          <span class="certificate-logo">
+            V
+          </span>
+
+          <div>
+            <strong>VIONORA™</strong>
+            <small>
+              DIGITAL BUSINESS PLATFORM
+            </small>
+          </div>
+        </div>
+
+        <div class="certificate-badge">
+          VERIFIED
+        </div>
+
+      </div>
+
+
+      <div class="certificate-body">
+
+        <p class="certificate-kicker">
+          VIONORA SERVICE DOCUMENT
+        </p>
+
+        <h1>
+          Certificate of Service Confirmation
+        </h1>
+
+        <p class="certificate-intro">
+          This document confirms that the following
+          VIONORA service order has been recorded
+          successfully.
+        </p>
+
+
+        <div class="certificate-customer">
+
+          <span>Issued To</span>
+
+          <h2 id="certificateCustomerName">
+            Customer Name
+          </h2>
+
+          <p>
+            User ID:
+            <strong id="certificateUserId">
+              -
+            </strong>
+          </p>
+
+        </div>
+
+
+        <div class="certificate-service-box">
+
+          <div>
+            <span>Service</span>
+            <strong id="certificateService">
+              -
+            </strong>
+          </div>
+
+          <div>
+            <span>Service Item</span>
+            <strong id="certificateItem">
+              -
+            </strong>
+          </div>
+
+          <div>
+            <span>Order ID</span>
+            <strong id="certificateOrderId">
+              -
+            </strong>
+          </div>
+
+          <div>
+            <span>Issue Date</span>
+            <strong id="certificateIssueDate">
+              -
+            </strong>
+          </div>
+
+          <div>
+            <span>Certificate ID</span>
+            <strong id="certificateId">
+              -
+            </strong>
+          </div>
+
+          <div>
+            <span>Payment Status</span>
+            <strong id="certificatePaymentStatus">
+              PAID
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="certificate-verification">
+
+          <div
+            id="certificateQr"
+            class="certificate-qr"
+          >
+            QR
+          </div>
+
+          <div>
+            <strong>
+              Verify this VIONORA document
+            </strong>
+
+            <p>
+              Use the Certificate ID or QR verification
+              when the verification service is enabled.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="certificate-disclaimer">
+
+          <strong>
+            Important
+          </strong>
+
+          <p>
+            This is a VIONORA service confirmation
+            document. It is not a government-issued
+            registration certificate and does not replace
+            any statutory certificate issued by the
+            relevant authority.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="certificate-footer">
+
+        <div>
+          <span>VIONORA™</span>
+          <small>
+            Build • Protect • Grow
+          </small>
+        </div>
+
+        <div class="certificate-signature">
+          <span>Authorized by</span>
+          <strong>VIONORA</strong>
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     GLOBAL SERVICE ORDER MODAL
+===================================================== -->
+
+<div
+  id="orderModal"
+  class="modal hidden"
+  aria-hidden="true"
+>
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-card">
+
+    <button
+      id="closeOrderModal"
+      class="modal-close"
+      type="button"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <p class="eyebrow">
+      CREATE ORDER
+    </p>
+
+    <h2>
+      Confirm Your Service
+    </h2>
+
+
+    <div class="modal-summary">
+
+      <div>
+        <span>Service</span>
+        <strong id="modalService">
+          -
+        </strong>
+      </div>
+
+      <div>
+        <span>Item</span>
+        <strong id="modalItem">
+          -
+        </strong>
+      </div>
+
+      <div>
+        <span>Price</span>
+        <strong id="modalPrice">
+          -
+        </strong>
+      </div>
+
+    </div>
+
+
+    <button
+      id="createOrderBtn"
+      class="primary-btn full-btn"
+      type="button"
+    >
+      Create Order & Continue
+    </button>
+
+    <p
+      id="orderMessage"
+      class="message"
+    ></p>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+  <div class="container footer-grid">
+
+    <div class="footer-brand">
+
+      <strong>
+        VIONORA™
+      </strong>
+
+      <p>
+        Your trusted digital business platform for
+        domains, hosting and brand protection services.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h3>Services</h3>
+
+      <button type="button" data-page="domainPage">
+        Domains
+      </button>
+
+      <button type="button" data-page="hostingPage">
+        Hosting
+      </button>
+
+      <button type="button" data-page="trademarkPage">
+        Trademark
+      </button>
+
+      <button type="button" data-page="logoTrademarkPage">
+        Logo Trademark
+      </button>
+
+    </div>
+
+
+    <div>
+
+      <h3>Support</h3>
+
+      <a href="tel:+918778191458">
+        +91 87781 91458
+      </a>
+
+      <span>
+        Customer Support
+      </span>
+
+    </div>
+
+
+    <div>
+
+      <h3>Security</h3>
+
+      <span>
+        Secure Authentication
+      </span>
+
+      <span>
+        Protected Customer Data
+      </span>
+
+      <span>
+        Secure Payments
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="container footer-bottom">
+
+    <span>
+      © <span id="year"></span> VIONORA™.
+      All Rights Reserved.
+    </span>
+
+    <span>
+      Privacy • Terms • Security
+    </span>
+
+  </div>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="config.js"></script>
+
+<script src="script.js"></script>
+
+<script
+  src="https://checkout.razorpay.com/v1/checkout.js"
+></script>
+
 </body>
 </html>
