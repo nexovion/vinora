@@ -3619,3 +3619,56 @@ button.stat-card:hover {
     display: none !important;
   }
 }
+/* =========================================================
+   VIONORA PAGE BACK BUTTON
+   ========================================================= */
+
+.page-back-btn {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 0 18px 0;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+
+  background: rgba(15, 23, 42, 0.88);
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.page-back-btn:hover {
+  transform: translateX(-2px);
+  background: rgba(30, 41, 59, 0.98);
+  border-color: rgba(69, 201, 255, 0.35);
+  box-shadow: 0 0 18px rgba(69, 201, 255, 0.08);
+}
+
+.page-back-btn:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 650px) {
+  .page-back-btn {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 14px;
+    font-size: 23px;
+  }
+}
