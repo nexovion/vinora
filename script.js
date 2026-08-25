@@ -2866,7 +2866,94 @@ async function initialiseVionora() {
   }
 
 }
+/* =========================================================
+   VIONORA BACK PAGE NAVIGATION
+   ========================================================= */
 
+let vionoraCurrentPage = null;
+let vionoraPageHistory = [];
+
+/* Existing showPage function-ஐ பாதுகாப்பாக wrap செய்கிறோம் */
+const originalShowPage = showPage;
+
+showPage = function(pageId, scrollTop = true) {
+
+  if (
+    vionoraCurrentPage &&
+    vionoraCurrentPage !== pageId
+  ) {
+
+    const lastPage =
+      vionoraPageHistory[
+        vionoraPageHistory.length - 1
+      ];
+
+    if (lastPage !== vionoraCurrentPage) {
+      vionoraPageHistory.push(
+        vionoraCurrentPage
+      );
+    }
+  }
+
+  originalShowPage(
+    pageId,
+    scrollTop
+  );
+
+  vionoraCurrentPage = pageId;
+};
+
+
+/* Back arrow button */
+function goBackPage() {
+
+  let previousPage =
+    vionoraPageHistory.pop();
+
+  /* Logged-in customer login page-க்கு திரும்ப வேண்டாம் */
+  while (
+    currentUser &&
+    previousPage === "authPage"
+  ) {
+    previousPage =
+      vionoraPageHistory.pop();
+  }
+
+  if (previousPage) {
+
+    originalShowPage(
+      previousPage,
+      true
+    );
+
+    vionoraCurrentPage =
+      previousPage;
+
+    return;
+  }
+
+  /* Safe fallback */
+  if (currentUser) {
+
+    originalShowPage(
+      "dashboardPage",
+      true
+    );
+
+    vionoraCurrentPage =
+      "dashboardPage";
+
+  } else {
+
+    originalShowPage(
+      "authPage",
+      true
+    );
+
+    vionoraCurrentPage =
+      "authPage";
+  }
+}
 initialiseVionora();
 
 
