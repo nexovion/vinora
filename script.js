@@ -2871,7 +2871,7 @@ async function initialiseVionora() {
    Temporary test only
    ========================================================= */
 
-document.getElementById("testPaymentBtn")?.addEventListener("click", () => {
+function openTestPayment() {
   openOrderModal({
     serviceType: "other",
     displayService: "Test Payment",
@@ -2884,7 +2884,7 @@ document.getElementById("testPaymentBtn")?.addEventListener("click", () => {
       test_payment: true
     }
   });
-});
+}
 /* =========================================================
    VIONORA BACK PAGE NAVIGATION
    ========================================================= */
