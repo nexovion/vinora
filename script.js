@@ -2390,9 +2390,16 @@ async function startRazorpayPayment() {
    31. PAYMENT VERIFICATION
    ========================================================= */
 
-async function handleRazorpaySuccess(
-  response
-) {
+async function handleRazorpaySuccess(response) {
+
+  if (!activeDbOrder?.id) {
+    showMessage(
+      "paymentMessage",
+      "Order information is missing. Please do not retry payment.",
+      true
+    );
+    return;
+  }
 
   showMessage(
     "paymentMessage",
@@ -2401,109 +2408,97 @@ async function handleRazorpaySuccess(
 
   try {
 
-    /*
-     A secure server-side verification function
-     is required before marking an order PAID.
+    if (
+      !response?.razorpay_order_id ||
+      !response?.razorpay_payment_id ||
+      !response?.razorpay_signature
+    ) {
+      throw new Error(
+        "Incomplete Razorpay payment response."
+      );
+    }
 
-     Expected function:
-     verify-razorpay-payment
-    */
-
-    const {
-      data,
-      error
-    } =
+    const { data, error } =
       await client.functions.invoke(
         "verify-razorpay-payment",
         {
           body: {
-
-            vionora_order_id:
-              activeDbOrder.id,
-
-            razorpay_order_id:
-              response.razorpay_order_id,
-
-            razorpay_payment_id:
-              response.razorpay_payment_id,
-
-            razorpay_signature:
-              response.razorpay_signature
-
+            vionora_order_id: activeDbOrder.id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature
           }
         }
       );
 
-    if (error) throw error;
+    if (error) {
+      console.error(
+        "Verification function error:",
+        error
+      );
+      throw error;
+    }
+
+    console.log(
+      "Verification response:",
+      data
+    );
 
     const verified =
       data?.verified === true ||
       data?.success === true ||
-      data?.payment_status ===
-        "paid";
+      String(
+        data?.payment_status || ""
+      ).toLowerCase() === "paid";
 
     if (!verified) {
-
       throw new Error(
+        data?.message ||
         "Payment could not be verified."
       );
-
     }
 
-    /*
-     Refresh DB order after secure backend
-     verification.
-    */
-
     const {
-      data: refreshedOrder
+      data: refreshedOrder,
+      error: refreshError
     } =
       await client
         .from("orders")
         .select("*")
-        .eq(
-          "id",
-          activeDbOrder.id
-        )
+        .eq("id", activeDbOrder.id)
         .maybeSingle();
 
+    if (refreshError) {
+      console.warn(
+        "Order refresh warning:",
+        refreshError
+      );
+    }
+
     if (refreshedOrder) {
-
-      activeDbOrder =
-        refreshedOrder;
-
+      activeDbOrder = refreshedOrder;
     }
 
     lastSuccessfulPayment = {
-
-      orderId:
-        activeDbOrder.id,
-
+      orderId: activeDbOrder.id,
       paymentId:
-        response
-          .razorpay_payment_id,
-
+        response.razorpay_payment_id,
       razorpayOrderId:
-        response
-          .razorpay_order_id,
-
+        response.razorpay_order_id,
       amount:
         paymentState.totalAmount,
-
       service:
-        paymentState
-          .displayService,
-
+        paymentState.displayService,
       item:
         paymentState.item,
-
-      verified:
-        true,
-
-      verifiedData:
-        data
-
+      verified: true,
+      verifiedData: data
     };
+
+    showMessage(
+      "paymentMessage",
+      "Payment verified successfully."
+    );
 
     renderSuccessPage();
 
@@ -2516,27 +2511,18 @@ async function handleRazorpaySuccess(
   } catch (error) {
 
     console.error(
-      "Verification error:",
+      "Payment verification error:",
       error
     );
 
-    /*
-     IMPORTANT:
-     We never falsely mark payment as paid
-     from frontend-only callback.
-    */
-
     showMessage(
       "paymentMessage",
-      "Payment response received, but secure verification is not complete. Please do not retry payment until status is confirmed.",
+      error?.message ||
+      "Payment was received, but secure verification could not be completed. Please do not pay again until the order status is checked.",
       true
     );
-
   }
-
 }
-
-
 /* =========================================================
    32. SUCCESS PAGE
    ========================================================= */
