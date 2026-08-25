@@ -2867,6 +2867,25 @@ async function initialiseVionora() {
 
 }
 /* =========================================================
+   VIONORA ₹5 TEST PAYMENT
+   Temporary test only
+   ========================================================= */
+
+document.getElementById("testPaymentBtn")?.addEventListener("click", () => {
+  openOrderModal({
+    serviceType: "other",
+    displayService: "Test Payment",
+    serviceName: "VIONORA Test Payment",
+    item: "₹5 Payment Test",
+    externalFee: 5,
+    vionoraFee: 0,
+    taxAmount: 0,
+    metadata: {
+      test_payment: true
+    }
+  });
+});
+/* =========================================================
    VIONORA BACK PAGE NAVIGATION
    ========================================================= */
 
