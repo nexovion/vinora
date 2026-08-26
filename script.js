@@ -2702,7 +2702,7 @@ if (qrBox && certificateId) {
 
   qrBox.appendChild(qrImg);
 } 
-
+}
 
 /* =========================================================
    35. CERTIFICATE BUTTONS
