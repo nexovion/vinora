@@ -2677,21 +2677,31 @@ function renderCertificate() {
         "PAID • VERIFIED";
   }
 
-  /*
-   Placeholder visual only.
-   Real QR verification can be added
-   after verification URL endpoint exists.
-  */
+ /* REAL QR CODE */
+const qrBox = $("certificateQr");
 
-  if ($("certificateQr")) {
+if (qrBox && certificateId) {
+  const verifyUrl =
+    window.location.origin +
+    window.location.pathname +
+    "?verify=" +
+    encodeURIComponent(certificateId);
 
-    $("certificateQr")
-      .title =
-        certificateId;
+  qrBox.innerHTML = "";
 
-  }
+  const qrImg = document.createElement("img");
+  qrImg.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+    encodeURIComponent(verifyUrl);
 
-}
+  qrImg.alt = "VIONORA Certificate Verification QR";
+  qrImg.width = 180;
+  qrImg.height = 180;
+  qrImg.style.display = "block";
+  qrImg.style.margin = "0 auto";
+
+  qrBox.appendChild(qrImg);
+} 
 
 
 /* =========================================================
