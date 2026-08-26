@@ -2805,7 +2805,15 @@ button.stat-card:hover {
 
   color: transparent;
 }
-
+.certificate-qr img {
+  width: 76px !important;
+  height: 76px !important;
+  min-width: 76px !important;
+  max-width: 76px !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+}
 .certificate-verification strong {
   color: #172642;
 }
