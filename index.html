@@ -176,12 +176,27 @@
     <div class="field"><label data-i18n="experience">Licence / Experience</label><input id="workExperience" placeholder="Example: Electrical Contractor Licence, 5 Years" /></div>
     <div class="field"><label data-i18n="turnover">Turnover / Work Capacity</label><input id="workCapacity" placeholder="Example: ₹25,00,000" /></div>
     <div class="field"><label data-i18n="projectValue">வேண்டிய Project Value</label><input id="workValue" placeholder="Example: ₹5L - ₹50L" /></div>
-    <div class="field"><label data-i18n="opportunityType">Opportunity Type</label><select id="workType"><option>All</option><option>Railway</option><option>Central Government</option><option>State Government</option><option>GeM</option><option>PSU / Industrial</option><option>Subcontract Work</option><option>Vendor Opportunity</option></select></div>
+    <div class="field"><label data-i18n="opportunityType">Opportunity Type</label><select id="workType"><option>All</option><option>Railway Tender</option><option>Central Government Tender</option><option>State Government Tender</option><option>GeM Tender</option><option>PSU Tender</option><option>Industrial Tender</option><option>Private Company Tender</option><option>Subcontract Work</option><option>Vendor Opportunity</option></select></div>
     <button class="btn btn-primary" style="width:100%" onclick="findSuitableWork()" data-i18n="findMyWork">எனக்கு பொருத்தமான வேலை தேடு</button>
     <div id="workNotice" class="notice" style="display:none"></div>
   </div>
 </section>
 
+
+
+<section id="workcategory" class="page">
+  <div class="panel">
+    <h2 id="categoryTitle">Tender / Work Type</h2>
+    <p id="categoryIntro" style="color:var(--muted)"></p>
+
+    <div id="categorySourceBox" class="notice" style="margin-top:12px"></div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn btn-primary" onclick="openCategoryResults()">View Opportunities</button>
+      <button class="btn btn-light" onclick="openOfficialSource()">Open Official / Source Portal</button>
+    </div>
+  </div>
+</section>
 
 <section id="workresults" class="page">
   <div class="top-title"><h2>Suitable Work Results</h2></div>
@@ -455,7 +470,95 @@ function findSuitableWork(){
     list.appendChild(div);
   });
   window.vionoraSampleWorks=samples;
+  const selectedType = profile.type;
+  if(selectedType !== "All"){
+    openWorkCategory(selectedType);
+  } else {
+    openPage("workresults");
+  }
+}
+
+
+const categoryMeta = {
+  "Railway Tender":{
+    intro:"Indian Railways tender / procurement opportunities.",
+    source:"Official Railway procurement is handled through IREPS and related Railway procurement systems.",
+    url:"https://www.ireps.gov.in/"
+  },
+  "Central Government Tender":{
+    intro:"Central Government departments and organisations tender opportunities.",
+    source:"Central Public Procurement Portal / eProcure is a major official source.",
+    url:"https://eprocure.gov.in/eprocure/app"
+  },
+  "State Government Tender":{
+    intro:"State Government department tender opportunities.",
+    source:"Each state can have its own e-Procurement portal. Tamil Nadu example: TN Tenders.",
+    url:"https://tntenders.gov.in/"
+  },
+  "GeM Tender":{
+    intro:"Government e-Marketplace bids and procurement opportunities.",
+    source:"Official GeM portal.",
+    url:"https://gem.gov.in/"
+  },
+  "PSU Tender":{
+    intro:"Public Sector Undertaking procurement and tender opportunities.",
+    source:"PSU tenders may appear on CPPP and/or each PSU's own procurement portal.",
+    url:"https://eprocure.gov.in/epublish/app?page=FrontEndParticipatingSites&service=page"
+  },
+  "Industrial Tender":{
+    intro:"Industrial company RFQ / tender opportunities.",
+    source:"No single official portal. VIONORA can aggregate user-uploaded or permitted sources later.",
+    url:""
+  },
+  "Private Company Tender":{
+    intro:"Private company RFQ, contract and tender opportunities.",
+    source:"No single government portal. VIONORA can support invited RFQ / uploaded tender workflows.",
+    url:""
+  },
+  "Subcontract Work":{
+    intro:"Main Contractor → Subcontractor work packages and RFQs.",
+    source:"VIONORA internal subcontract opportunity workflow.",
+    url:""
+  },
+  "Vendor Opportunity":{
+    intro:"Material supply, service supply and vendor RFQ opportunities.",
+    source:"VIONORA internal vendor/RFQ workflow plus permitted external sources later.",
+    url:""
+  }
+};
+
+let currentCategory = null;
+
+function openWorkCategory(type){
+  currentCategory = type;
+  sessionStorage.setItem("vionoraCategory", type);
+  const meta = categoryMeta[type] || {intro:type,source:"VIONORA opportunity workflow.",url:""};
+  document.getElementById("categoryTitle").textContent = type;
+  document.getElementById("categoryIntro").textContent = meta.intro;
+  document.getElementById("categorySourceBox").innerHTML =
+    `<b>Source:</b> ${meta.source}<br><br><b>VIONORA flow:</b> Opportunity → View Details → Eligibility → BOQ/Costing → Prepare Quotation`;
+  openPage("workcategory");
+}
+
+function openCategoryResults(){
+  const profile = JSON.parse(sessionStorage.getItem("vionoraWorkProfile") || "{}");
+  if(!window.vionoraSampleWorks || !window.vionoraSampleWorks.length){
+    findSuitableWork();
+    return;
+  }
+  document.getElementById("workProfileSummary").textContent =
+    `${profile.trade || "Work"} • ${profile.location || "India"} • ${currentCategory || profile.type || "All"}`;
   openPage("workresults");
+}
+
+function openOfficialSource(){
+  const type = currentCategory || sessionStorage.getItem("vionoraCategory");
+  const meta = categoryMeta[type] || {};
+  if(meta.url){
+    window.open(meta.url,"_blank","noopener");
+  } else {
+    alert("இந்த category-க்கு ஒரே official portal இல்லை. VIONORA internal opportunity/RFQ workflow பயன்படுத்தப்படும்.");
+  }
 }
 
 function viewWorkDetail(i){
