@@ -66,9 +66,50 @@
     header{padding:10px}.wrap{padding:14px 12px 30px}.hero{padding:20px}
     .header-actions .btn-light{display:none}
   }
+
+  /* First-visit language screen */
+  .language-gate{
+    position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f2f57,#245b9b);
+    display:flex;align-items:center;justify-content:center;padding:20px
+  }
+  .language-gate.hidden{display:none}
+  .language-box{
+    width:min(520px,100%);background:#fff;border-radius:24px;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.25);
+    text-align:center
+  }
+  .language-logo{font-size:30px;font-weight:900;color:#153b6f;letter-spacing:1px;margin-bottom:8px}
+  .language-box h2{margin:8px 0 6px;font-size:23px}
+  .language-box p{margin:0 0 18px;color:#667085;line-height:1.5}
+  .language-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .language-choice{
+    border:1px solid #dbe3ee;background:#f8fafc;border-radius:14px;padding:14px 10px;font-weight:800;
+    cursor:pointer;color:#172033
+  }
+  .language-choice:first-child{grid-column:1/-1;background:#153b6f;color:#fff;border-color:#153b6f}
+  .language-choice:hover{transform:translateY(-1px)}
+  @media(max-width:480px){.language-list{grid-template-columns:1fr}.language-choice:first-child{grid-column:auto}}
+
 </style>
 </head>
 <body>
+
+<div id="languageGate" class="language-gate" aria-modal="true" role="dialog">
+  <div class="language-box">
+    <div class="language-logo">VIONORA</div>
+    <h2>உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</h2>
+    <p>Choose your language • अपनी भाषा चुनें</p>
+    <div class="language-list">
+      <button class="language-choice" onclick="selectFirstLanguage('ta')">தமிழ்</button>
+      <button class="language-choice" onclick="selectFirstLanguage('en')">English</button>
+      <button class="language-choice" onclick="selectFirstLanguage('hi')">हिन्दी</button>
+      <button class="language-choice" onclick="selectFirstLanguage('te')">తెలుగు</button>
+      <button class="language-choice" onclick="selectFirstLanguage('kn')">ಕನ್ನಡ</button>
+      <button class="language-choice" onclick="selectFirstLanguage('ml')">മലയാളം</button>
+      <button class="language-choice" onclick="selectFirstLanguage('mr')">मराठी</button>
+    </div>
+  </div>
+</div>
+
 
 <header>
   <div style="display:flex;gap:10px;align-items:center">
@@ -86,7 +127,6 @@
       <option value="mr">मराठी</option>
     </select>
     <button class="btn btn-light" onclick="openPage('support')">💬 <span data-i18n="help">உதவி</span></button>
-    <button class="btn btn-primary" onclick="openPage('login')"><span data-i18n="login">Google Login</span></button>
   </div>
 </header>
 
@@ -141,7 +181,29 @@
 
 <section id="eligibility" class="page"><div class="panel"><h2 data-i18n="eligibility">Eligibility Check</h2><p data-i18n="eligibilityDesc">Licence, experience, turnover மற்றும் documents அடிப்படையில் check.</p><button class="btn btn-primary" data-i18n="start">Start</button></div></section>
 
-<section id="quotation" class="page"><div class="panel"><h2 data-i18n="quotation">Quotation உருவாக்கு</h2><div class="field"><label>Material Cost</label><input type="number" id="material" value="0"></div><div class="field"><label>Labour Cost</label><input type="number" id="labour" value="0"></div><div class="field"><label>Other Cost</label><input type="number" id="other" value="0"></div><div class="field"><label>Profit %</label><input type="number" id="profit" value="10"></div><button class="btn btn-primary" onclick="calcQuote()" data-i18n="calculate">Calculate</button><div id="quoteResult" class="notice" style="display:none"></div></div></section>
+<section id="quotation" class="page">
+  <div class="panel">
+    <h2 data-i18n="quotation">Quotation உருவாக்கு</h2>
+    <p style="color:var(--muted);margin-top:0" data-i18n="quoteFlowInfo">
+      முதலில் quotation preview பாருங்கள். Final PDF save/download செய்யும்போது மட்டும் Google Login + Payment கேட்கப்படும்.
+    </p>
+    <div class="field"><label>Material Cost</label><input type="number" id="material" value="0"></div>
+    <div class="field"><label>Labour Cost</label><input type="number" id="labour" value="0"></div>
+    <div class="field"><label>Other Cost</label><input type="number" id="other" value="0"></div>
+    <div class="field"><label>Profit %</label><input type="number" id="profit" value="10"></div>
+    <button class="btn btn-primary" onclick="calcQuote()" data-i18n="previewQuote">Preview Quotation</button>
+    <div id="quoteResult" class="notice" style="display:none"></div>
+
+    <div id="finalQuoteActions" style="display:none;margin-top:14px">
+      <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="startFinalQuoteFlow()" data-i18n="continueFinal">
+        Continue for Final Quotation
+      </button>
+      <div style="font-size:13px;color:var(--muted);text-align:center" data-i18n="finalNote">
+        Google Login → Payment → Final Quotation PDF + Dashboard Save
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="maincontractor" class="page"><div class="panel"><h2 data-i18n="mainContractor">Main Contractor</h2><p>Project Packages • RFQ • Subcontract Comparison • Work Order</p></div></section>
 <section id="subcontractor" class="page"><div class="panel"><h2 data-i18n="subContractor">Subcontractor</h2><p>Scope • BOQ • Costing • Private Quotation</p></div></section>
@@ -160,8 +222,30 @@
 <section id="login" class="page">
   <div class="panel">
     <h2 data-i18n="loginTitle">VIONORA Account</h2>
-    <p data-i18n="loginInfo">Google Login integration அடுத்த backend step-ல் connect செய்யப்படும்.</p>
-    <button class="btn btn-primary" style="width:100%" onclick="alert('Google OAuth Client ID connect செய்ய வேண்டும்.')">G Continue with Google</button>
+    <p data-i18n="loginInfoFinal">Final quotation save/download செய்ய Google Login தேவை.</p>
+    <button class="btn btn-primary" style="width:100%;margin-bottom:12px" onclick="simulateGoogleLogin()">G Continue with Google</button>
+    <div id="loginState" class="notice" style="display:none"></div>
+    <button id="goPaymentBtn" class="btn btn-primary" style="display:none;width:100%;margin-top:12px" onclick="openPage('payment')" data-i18n="goPayment">Continue to Payment</button>
+  </div>
+</section>
+
+<section id="payment" class="page">
+  <div class="panel">
+    <h2 data-i18n="paymentTitle">Payment</h2>
+    <p data-i18n="paymentInfo">Final quotation service fee payment இங்கே connect செய்யப்படும்.</p>
+    <div class="notice" style="margin-bottom:12px" data-i18n="paymentDemoNote">
+      இப்போது payment gateway connect செய்யப்படவில்லை. அடுத்த backend step-ல் Razorpay/approved gateway இணைப்போம்.
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="finishQuoteDemo()" data-i18n="paymentCompleteDemo">Payment Complete Demo</button>
+  </div>
+</section>
+
+<section id="finalquote" class="page">
+  <div class="panel">
+    <h2 data-i18n="finalQuoteTitle">Final Quotation</h2>
+    <div id="finalQuoteSummary" class="notice"></div>
+    <p data-i18n="finalQuoteInfo">Backend connect ஆன பிறகு இங்கிருந்து PDF download + Dashboard save செயல்படும்.</p>
+    <button class="btn btn-light" style="width:100%" onclick="openPage('home')" data-i18n="backHome">Back to Home</button>
   </div>
 </section>
 
@@ -188,7 +272,7 @@ experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectVal
 opportunityType:"Opportunity Type",findMyWork:"எனக்கு பொருத்தமான வேலை தேடு",
 foundationNotice:"இந்த முதல் கட்டத்தில் உங்கள் profile தகவல் save ஆகும். அடுத்த கட்டத்தில் live tender matching இணைப்போம்.",
 save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"உங்கள் கேள்வி",send:"Send",
-loginTitle:"VIONORA Account",loginInfo:"Google Login integration அடுத்த backend step-ல் connect செய்யப்படும்."
+loginTitle:"VIONORA Account",loginInfo:"Google Login integration அடுத்த backend step-ல் connect செய்யப்படும்.",quoteFlowInfo:"முதலில் quotation preview பாருங்கள். Final PDF save/download செய்யும்போது மட்டும் Google Login + Payment கேட்கப்படும்.",previewQuote:"Quotation Preview",continueFinal:"Final Quotation தொடரவும்",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",loginInfoFinal:"Final quotation save/download செய்ய Google Login தேவை.",goPayment:"Payment-க்கு தொடரவும்",paymentTitle:"Payment",paymentInfo:"Final quotation service fee payment இங்கே connect செய்யப்படும்.",paymentDemoNote:"இப்போது payment gateway connect செய்யப்படவில்லை. அடுத்த backend step-ல் Razorpay/approved gateway இணைப்போம்.",paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"Backend connect ஆன பிறகு இங்கிருந்து PDF download + Dashboard save செயல்படும்.",backHome:"Home-க்கு திரும்பு"
 },
 en:{
 back:"Back",help:"Help",login:"Google Login",heroTitle:"From Tender to Payment",
@@ -204,13 +288,35 @@ trademarkDesc:"Trademark / Logo Trademark official service access.",trade:"Trade
 turnover:"Turnover / Work Capacity",projectValue:"Desired Project Value",opportunityType:"Opportunity Type",findMyWork:"Find Suitable Work",
 foundationNotice:"Your profile can be saved in this foundation version. Live tender matching will be connected in the next stage.",
 save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"Your Question",send:"Send",loginTitle:"VIONORA Account",
-loginInfo:"Google Login will be connected in the next backend step."
+loginInfo:"Google Login will be connected in the next backend step.",quoteFlowInfo:"Preview the quotation first. Google Login and payment are required only when saving/downloading the final PDF.",previewQuote:"Preview Quotation",continueFinal:"Continue for Final Quotation",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",loginInfoFinal:"Google Login is required to save/download the final quotation.",goPayment:"Continue to Payment",paymentTitle:"Payment",paymentInfo:"The final quotation service fee payment will be connected here.",paymentDemoNote:"Payment gateway is not connected yet. Razorpay/approved gateway will be connected in the backend step.",paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"After backend connection, PDF download and Dashboard save will work here.",backHome:"Back to Home"
 }
 };
 
+
+// Full core UI labels for additional Indian languages.
+// Any technical description without a translation safely falls back to English.
+Object.assign(translations,{
+hi:{back:"पीछे",help:"सहायता",login:"Google Login",heroTitle:"टेंडर से भुगतान तक",heroText:"रेलवे, केंद्र, राज्य, GeM, PSU, औद्योगिक टेंडर, मुख्य ठेकेदार, उपठेकेदार और विक्रेता के लिए सरल प्लेटफ़ॉर्म।",wantWork:"I WANT WORK - मुझे काम चाहिए",mainServices:"मुख्य सेवाएँ",findTender:"टेंडर खोजें",uploadTender:"टेंडर अपलोड",eligibility:"पात्रता जाँच",quotation:"कोटेशन बनाएँ",mainContractor:"मुख्य ठेकेदार",subContractor:"उपठेकेदार",vendor:"विक्रेता / सप्लायर",billing:"बिलिंग और भुगतान",businessLinks:"व्यावसायिक सेवाएँ",trade:"काम / ट्रेड",location:"स्थान",experience:"लाइसेंस / अनुभव",turnover:"टर्नओवर / कार्य क्षमता",projectValue:"आवश्यक प्रोजेक्ट मूल्य",opportunityType:"अवसर का प्रकार",findMyWork:"मेरे लिए काम खोजें",save:"सेव करें",start:"शुरू करें",calculate:"गणना करें",yourQuestion:"आपका प्रश्न",send:"भेजें",loginTitle:"VIONORA खाता"},
+te:{back:"వెనుకకు",help:"సహాయం",login:"Google Login",heroTitle:"టెండర్ నుండి చెల్లింపు వరకు",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor మరియు Vendor కోసం సులభమైన ప్లాట్‌ఫారం.",wantWork:"I WANT WORK - నాకు పని కావాలి",mainServices:"ప్రధాన సేవలు",findTender:"టెండర్ వెతకండి",uploadTender:"టెండర్ అప్‌లోడ్",eligibility:"అర్హత తనిఖీ",quotation:"కొటేషన్ తయారు చేయండి",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"బిల్లింగ్ & చెల్లింపు",businessLinks:"వ్యాపార సేవలు",trade:"పని రకం / Trade",location:"ప్రాంతం",experience:"లైసెన్స్ / అనుభవం",turnover:"Turnover / Work Capacity",projectValue:"కావలసిన Project Value",opportunityType:"Opportunity Type",findMyWork:"నాకు సరిపోయే పని వెతకండి",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"మీ ప్రశ్న",send:"Send",loginTitle:"VIONORA Account"},
+kn:{back:"ಹಿಂದೆ",help:"ಸಹಾಯ",login:"Google Login",heroTitle:"ಟೆಂಡರ್‌ನಿಂದ ಪಾವತಿವರೆಗೆ",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor ಮತ್ತು Vendor ಗಾಗಿ ಸರಳ ವೇದಿಕೆ.",wantWork:"I WANT WORK - ನನಗೆ ಕೆಲಸ ಬೇಕು",mainServices:"ಮುಖ್ಯ ಸೇವೆಗಳು",findTender:"ಟೆಂಡರ್ ಹುಡುಕಿ",uploadTender:"ಟೆಂಡರ್ ಅಪ್‌ಲೋಡ್",eligibility:"ಅರ್ಹತೆ ಪರಿಶೀಲನೆ",quotation:"ಕೊಟೇಶನ್ ರಚಿಸಿ",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"ಬಿಲ್ಲಿಂಗ್ & ಪಾವತಿ",businessLinks:"ವ್ಯಾಪಾರ ಸೇವೆಗಳು",trade:"ಕೆಲಸದ ಪ್ರಕಾರ / Trade",location:"ಸ್ಥಳ",experience:"ಲೈಸೆನ್ಸ್ / ಅನುಭವ",turnover:"Turnover / Work Capacity",projectValue:"ಬೇಕಾದ Project Value",opportunityType:"Opportunity Type",findMyWork:"ನನಗೆ ಸೂಕ್ತ ಕೆಲಸ ಹುಡುಕಿ",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"ನಿಮ್ಮ ಪ್ರಶ್ನೆ",send:"Send",loginTitle:"VIONORA Account"},
+ml:{back:"പിന്നിലേക്ക്",help:"സഹായം",login:"Google Login",heroTitle:"ടെൻഡർ മുതൽ പേയ്മെന്റ് വരെ",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor, Vendor എന്നിവയ്ക്കുള്ള ലളിതമായ പ്ലാറ്റ്ഫോം.",wantWork:"I WANT WORK - എനിക്ക് ജോലി വേണം",mainServices:"പ്രധാന സേവനങ്ങൾ",findTender:"ടെൻഡർ കണ്ടെത്തുക",uploadTender:"ടെൻഡർ അപ്‌ലോഡ്",eligibility:"യോഗ്യത പരിശോധിക്കുക",quotation:"ക്വട്ടേഷൻ തയ്യാറാക്കുക",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"ബില്ലിംഗ് & പേയ്മെന്റ്",businessLinks:"ബിസിനസ് സേവനങ്ങൾ",trade:"ജോലി / Trade",location:"സ്ഥലം",experience:"ലൈസൻസ് / അനുഭവം",turnover:"Turnover / Work Capacity",projectValue:"ആവശ്യമായ Project Value",opportunityType:"Opportunity Type",findMyWork:"എനിക്ക് അനുയോജ്യമായ ജോലി കണ്ടെത്തുക",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"നിങ്ങളുടെ ചോദ്യം",send:"Send",loginTitle:"VIONORA Account"},
+mr:{back:"मागे",help:"मदत",login:"Google Login",heroTitle:"टेंडरपासून पेमेंटपर्यंत",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor आणि Vendor साठी सोपे प्लॅटफॉर्म.",wantWork:"I WANT WORK - मला काम हवे आहे",mainServices:"मुख्य सेवा",findTender:"टेंडर शोधा",uploadTender:"टेंडर अपलोड",eligibility:"पात्रता तपासा",quotation:"कोटेशन तयार करा",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"बिलिंग आणि पेमेंट",businessLinks:"व्यवसाय सेवा",trade:"काम / Trade",location:"ठिकाण",experience:"लायसन्स / अनुभव",turnover:"Turnover / Work Capacity",projectValue:"हवे असलेले Project Value",opportunityType:"Opportunity Type",findMyWork:"माझ्यासाठी योग्य काम शोधा",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"तुमचा प्रश्न",send:"Send",loginTitle:"VIONORA Account"}
+});
+
 const fallback = translations.en;
-let currentLang = localStorage.getItem("vionoraLang") || "ta";
+const savedLanguage = localStorage.getItem("vionoraLang");
+let currentLang = savedLanguage || "ta";
 document.getElementById("langSelect").value=currentLang;
+if(savedLanguage){
+  document.getElementById("languageGate").classList.add("hidden");
+}
+
+function selectFirstLanguage(lang){
+  localStorage.setItem("vionoraLang",lang);
+  document.getElementById("langSelect").value=lang;
+  changeLanguage(lang);
+  document.getElementById("languageGate").classList.add("hidden");
+}
 
 function changeLanguage(lang){
   currentLang=lang; localStorage.setItem("vionoraLang",lang);
@@ -239,15 +345,43 @@ function goBack(){
   document.getElementById("backBtn").style.display=prev==="home"?"none":"inline-block";
 }
 function showNotice(id){document.getElementById(id).style.display="block";}
+let latestQuote = null;
 function calcQuote(){
   const m=+document.getElementById("material").value||0;
   const l=+document.getElementById("labour").value||0;
   const o=+document.getElementById("other").value||0;
   const p=+document.getElementById("profit").value||0;
   const cost=m+l+o, total=cost+(cost*p/100);
+  latestQuote={material:m,labour:l,other:o,profit:p,cost,total};
+  sessionStorage.setItem("vionoraQuote",JSON.stringify(latestQuote));
   const box=document.getElementById("quoteResult");
   box.style.display="block";
-  box.textContent=`Cost: ₹${cost.toLocaleString("en-IN")} | Final Quote: ₹${total.toLocaleString("en-IN",{maximumFractionDigits:2})}`;
+  box.textContent=`Cost: ₹${cost.toLocaleString("en-IN")} | Preview Quote: ₹${total.toLocaleString("en-IN",{maximumFractionDigits:2})}`;
+  document.getElementById("finalQuoteActions").style.display="block";
+}
+function startFinalQuoteFlow(){
+  if(!latestQuote){
+    const saved=sessionStorage.getItem("vionoraQuote");
+    if(saved) latestQuote=JSON.parse(saved);
+  }
+  openPage("login");
+}
+function simulateGoogleLogin(){
+  // Front-end placeholder only. Real Google OAuth will replace this in backend phase.
+  sessionStorage.setItem("vionoraLoggedIn","yes");
+  const box=document.getElementById("loginState");
+  box.style.display="block";
+  box.textContent="Google Login UI flow ready. Real OAuth Client ID will be connected next.";
+  document.getElementById("goPaymentBtn").style.display="block";
+}
+function finishQuoteDemo(){
+  const saved=sessionStorage.getItem("vionoraQuote");
+  const q=saved?JSON.parse(saved):null;
+  const summary=document.getElementById("finalQuoteSummary");
+  summary.textContent=q
+    ? `Final Quote: ₹${q.total.toLocaleString("en-IN",{maximumFractionDigits:2})} | Profit: ${q.profit}%`
+    : "Quotation details not found.";
+  openPage("finalquote");
 }
 function supportSend(){
   const msg=document.getElementById("supportMsg").value.trim();
