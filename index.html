@@ -102,6 +102,15 @@
   @media(max-width:700px){
     .swipe-hint{display:block;text-align:center;color:var(--muted);font-size:12px;margin:8px 0 0}
   }
+
+  #boqTable input,#boqTable select{
+    width:100%;min-width:80px;padding:8px;border:1px solid var(--border);border-radius:8px;background:#fff
+  }
+  #boqTable td{padding:8px;border:1px solid var(--border);vertical-align:middle}
+  .remove-btn{background:#fff1f1;color:#b42318;border:1px solid #f1c7c7;border-radius:8px;padding:7px 10px;cursor:pointer}
+  .preview-table{width:100%;border-collapse:collapse;margin-top:10px}
+  .preview-table th,.preview-table td{border:1px solid var(--border);padding:8px;text-align:left}
+  .preview-table th{background:#eef3f9}
 </style>
 </head>
 <body>
@@ -225,28 +234,158 @@
 
 <section id="findtender" class="page"><div class="panel"><h2 data-i18n="findTender">Tender தேடுங்கள்</h2><p data-i18n="findTenderDesc">Railway, Central, State, GeM, PSU, Industrial வாய்ப்புகள்.</p><div class="quick-row"><button class="btn btn-light">Railway</button><button class="btn btn-light">Central / State</button><button class="btn btn-light">GeM / PSU</button></div></div></section>
 
-<section id="upload" class="page"><div class="panel"><h2 data-i18n="uploadTender">Tender Upload</h2><div class="field"><label>PDF / BOQ</label><input type="file" accept=".pdf,.xls,.xlsx,.csv"/></div><button class="btn btn-primary" data-i18n="save">Save</button></div></section>
+
+<section id="upload" class="page">
+  <div class="panel">
+    <h2 data-i18n="uploadTender">Tender Upload</h2>
+    <p style="color:var(--muted);margin-top:0">
+      Tender PDF / BOQ upload செய்து basic tender details save செய்யுங்கள்.
+    </p>
+
+    <div class="field">
+      <label>Tender PDF / BOQ File</label>
+      <input id="tenderFile" type="file" accept=".pdf,.xls,.xlsx,.csv" onchange="showTenderFileInfo()" />
+    </div>
+
+    <div id="tenderFileInfo" class="notice" style="display:none"></div>
+
+    <div class="field">
+      <label>Tender / Project Name</label>
+      <input id="tenderName" placeholder="Example: LT Electrical Maintenance Work" />
+    </div>
+
+    <div class="field">
+      <label>Department / Company</label>
+      <input id="tenderDepartment" placeholder="Example: Railways / PWD / PSU / Private Company" />
+    </div>
+
+    <div class="field">
+      <label>Tender Type</label>
+      <select id="tenderTypeManual">
+        <option>Railway Tender</option>
+        <option>Central Government Tender</option>
+        <option>State Government Tender</option>
+        <option>GeM Tender</option>
+        <option>PSU Tender</option>
+        <option>Industrial Tender</option>
+        <option>Private Company Tender</option>
+        <option>Subcontract Work</option>
+        <option>Vendor Opportunity</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Location</label>
+      <input id="tenderLocation" placeholder="Example: Chennai, Tamil Nadu" />
+    </div>
+
+    <div class="field">
+      <label>Estimated Project Value</label>
+      <input id="tenderEstimatedValue" placeholder="Example: ₹25,00,000" />
+    </div>
+
+    <div class="field">
+      <label>Last Date</label>
+      <input id="tenderLastDate" type="date" />
+    </div>
+
+    <button class="btn btn-primary" style="width:100%" onclick="saveTenderDraft()">Save Tender Details</button>
+    <div id="tenderSaveNotice" class="notice" style="display:none"></div>
+  </div>
+</section>
 
 <section id="eligibility" class="page"><div class="panel"><h2 data-i18n="eligibility">Eligibility Check</h2><p data-i18n="eligibilityDesc">Licence, experience, turnover மற்றும் documents அடிப்படையில் check.</p><button class="btn btn-primary" data-i18n="start">Start</button></div></section>
+
 
 <section id="quotation" class="page">
   <div class="panel">
     <h2 data-i18n="quotation">Quotation உருவாக்கு</h2>
-    <p style="color:var(--muted);margin-top:0" data-i18n="quoteFlowInfo">
-      முதலில் quotation preview பாருங்கள். Final PDF save/download செய்யும்போது மட்டும் Google Login + Payment கேட்கப்படும்.
+    <p style="color:var(--muted);margin-top:0">
+      Trade select செய்து material library-லிருந்து items add செய்யுங்கள். Quantity, material rate, labour rate, other cost மற்றும் profit வைத்து quotation preview உருவாகும்.
     </p>
-    <div class="field"><label>Material Cost</label><input type="number" id="material" value="0"></div>
-    <div class="field"><label>Labour Cost</label><input type="number" id="labour" value="0"></div>
-    <div class="field"><label>Other Cost</label><input type="number" id="other" value="0"></div>
-    <div class="field"><label>Profit %</label><input type="number" id="profit" value="10"></div>
-    <button class="btn btn-primary" onclick="calcQuote()" data-i18n="previewQuote">Preview Quotation</button>
-    <div id="quoteResult" class="notice" style="display:none"></div>
 
-    <div id="finalQuoteActions" style="display:none;margin-top:14px">
-      <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="startFinalQuoteFlow()" data-i18n="continueFinal">
+    <div class="field">
+      <label>Trade Select</label>
+      <select id="quoteTrade" onchange="loadMaterialLibrary()">
+        <option>Electrical</option>
+        <option>Civil</option>
+        <option>Mechanical</option>
+        <option>HVAC</option>
+        <option>Plumbing</option>
+        <option>Fire & Safety</option>
+        <option>Solar</option>
+        <option>Instrumentation</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Material Library</label>
+      <select id="materialLibrary"></select>
+    </div>
+
+    <div class="quick-row">
+      <button class="btn btn-primary" onclick="addLibraryMaterial()">+ Add Material</button>
+      <button class="btn btn-light" onclick="showCustomMaterial()">+ Add Custom Material</button>
+      <button class="btn btn-light" onclick="clearBOQ()">Clear BOQ</button>
+    </div>
+
+    <div id="customMaterialBox" style="display:none;margin-top:14px">
+      <div class="field"><label>Custom Material Name</label><input id="customMaterialName" placeholder="Enter material / work item" /></div>
+      <div class="field"><label>Unit</label>
+        <select id="customMaterialUnit">
+          <option>Nos</option><option>Meter</option><option>Sq.m</option><option>Kg</option>
+          <option>Set</option><option>Lot</option><option>Job</option><option>LS</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="addCustomMaterial()">Add Custom Item</button>
+    </div>
+
+    <div class="section-title" style="margin-top:22px">BOQ Items</div>
+    <div style="overflow-x:auto">
+      <table id="boqTable" style="width:100%;border-collapse:collapse;min-width:860px">
+        <thead>
+          <tr style="background:#eef3f9">
+            <th style="padding:10px;border:1px solid var(--border)">#</th>
+            <th style="padding:10px;border:1px solid var(--border)">Item</th>
+            <th style="padding:10px;border:1px solid var(--border)">Unit</th>
+            <th style="padding:10px;border:1px solid var(--border)">Qty</th>
+            <th style="padding:10px;border:1px solid var(--border)">Material Rate</th>
+            <th style="padding:10px;border:1px solid var(--border)">Labour Rate</th>
+            <th style="padding:10px;border:1px solid var(--border)">Other / Unit</th>
+            <th style="padding:10px;border:1px solid var(--border)">Amount</th>
+            <th style="padding:10px;border:1px solid var(--border)">Action</th>
+          </tr>
+        </thead>
+        <tbody id="boqBody"></tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Quotation Summary</div>
+    <div class="field">
+      <label>Additional Other Cost</label>
+      <input id="quoteOtherCost" type="number" value="0" min="0" oninput="recalcBOQ()" />
+    </div>
+
+    <div class="field">
+      <label>Profit Margin %</label>
+      <input id="quoteProfit" type="number" value="10" min="0" step="0.1" oninput="recalcBOQ()" />
+    </div>
+
+    <div id="boqSummary" class="notice">
+      BOQ Total: ₹0 | Other Cost: ₹0 | Profit: ₹0 | Final Quote: ₹0
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="previewFullQuotation()">
+      Preview Quotation
+    </button>
+
+    <div id="quotePreviewBox" class="panel" style="display:none;margin-top:14px;background:#fbfcfe">
+      <h3 style="margin-top:0">Quotation Preview</h3>
+      <div id="quotePreviewContent"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="startFinalQuoteFlow()">
         Continue for Final Quotation
       </button>
-      <div style="font-size:13px;color:var(--muted);text-align:center" data-i18n="finalNote">
+      <div style="font-size:13px;color:var(--muted);text-align:center;margin-top:8px">
         Google Login → Payment → Final Quotation PDF + Dashboard Save
       </div>
     </div>
@@ -376,6 +515,7 @@ function changeLanguage(lang){
   });
 }
 changeLanguage(currentLang);
+setTimeout(()=>{ if(document.getElementById("materialLibrary")) loadMaterialLibrary(); },0);
 
 let historyStack=["home"];
 function openPage(id){
@@ -430,6 +570,203 @@ function finishQuoteDemo(){
     ? `Final Quote: ₹${q.total.toLocaleString("en-IN",{maximumFractionDigits:2})} | Profit: ${q.profit}%`
     : "Quotation details not found.";
   openPage("finalquote");
+}
+
+
+const materialLibraries = {
+  Electrical:[
+    ["1.5 sq.mm FRLS Copper Wire","Meter"],["2.5 sq.mm FRLS Copper Wire","Meter"],["4 sq.mm Copper Wire","Meter"],
+    ["6 sq.mm Copper Wire","Meter"],["10 sq.mm Copper Cable","Meter"],["16 sq.mm Copper Cable","Meter"],
+    ["25 sq.mm Copper Cable","Meter"],["35 sq.mm Copper Cable","Meter"],["50 sq.mm Copper Cable","Meter"],
+    ["70 sq.mm Copper Cable","Meter"],["95 sq.mm Copper Cable","Meter"],["120 sq.mm Copper Cable","Meter"],
+    ["PVC Conduit 20mm","Meter"],["PVC Conduit 25mm","Meter"],["GI Conduit 25mm","Meter"],
+    ["Cable Tray","Meter"],["MCB SP","Nos"],["MCB DP","Nos"],["MCCB","Nos"],["RCCB","Nos"],
+    ["Distribution Board","Nos"],["Switch","Nos"],["Socket","Nos"],["LED Light","Nos"],
+    ["Cable Gland","Nos"],["Cable Lug","Nos"],["Earthing Electrode","Nos"],["GI Earth Strip","Meter"],
+    ["LT Panel","Nos"],["APFC Panel","Nos"],["Contactor","Nos"],["Relay","Nos"],["Transformer","Nos"]
+  ],
+  Civil:[
+    ["Cement","Bag"],["M-Sand","Cu.ft"],["P-Sand","Cu.ft"],["20mm Aggregate","Cu.ft"],["40mm Aggregate","Cu.ft"],
+    ["TMT Steel","Kg"],["Bricks","Nos"],["AAC Block","Nos"],["Concrete M20","Cu.m"],["Concrete M25","Cu.m"],
+    ["Shuttering","Sq.m"],["Plastering","Sq.m"],["Floor Tile","Sq.m"],["Wall Tile","Sq.m"],["Paint","Sq.m"]
+  ],
+  Mechanical:[
+    ["MS Pipe","Meter"],["SS Pipe","Meter"],["GI Pipe","Meter"],["Flange","Nos"],["Valve","Nos"],
+    ["Bearing","Nos"],["Pump","Nos"],["Motor","Nos"],["Coupling","Nos"],["Gasket","Nos"],["Fasteners","Set"]
+  ],
+  HVAC:[
+    ["Copper Refrigerant Pipe","Meter"],["Duct","Sq.m"],["Insulation","Sq.m"],["Diffuser","Nos"],["Grille","Nos"],
+    ["AHU","Nos"],["FCU","Nos"],["VRF Indoor Unit","Nos"],["VRF Outdoor Unit","Nos"],["Drain Pipe","Meter"]
+  ],
+  Plumbing:[
+    ["CPVC Pipe","Meter"],["UPVC Pipe","Meter"],["PVC Pipe","Meter"],["GI Pipe","Meter"],["Elbow","Nos"],
+    ["Tee","Nos"],["Valve","Nos"],["Water Tank","Nos"],["Pump","Nos"],["Sanitary Fixture","Nos"]
+  ],
+  "Fire & Safety":[
+    ["Fire Extinguisher","Nos"],["Fire Alarm Panel","Nos"],["Smoke Detector","Nos"],["Heat Detector","Nos"],
+    ["Manual Call Point","Nos"],["Hooter","Nos"],["Fire Hydrant Pipe","Meter"],["Sprinkler","Nos"],["Fire Hose Reel","Nos"]
+  ],
+  Solar:[
+    ["Solar PV Module","Nos"],["Solar Inverter","Nos"],["DC Cable","Meter"],["AC Cable","Meter"],["MC4 Connector","Pair"],
+    ["Module Mounting Structure","Set"],["DCDB","Nos"],["ACDB","Nos"],["Earthing Kit","Set"],["Lightning Arrester","Nos"]
+  ],
+  Instrumentation:[
+    ["Pressure Transmitter","Nos"],["Temperature Transmitter","Nos"],["Flow Transmitter","Nos"],["Level Transmitter","Nos"],
+    ["Control Cable","Meter"],["Instrument Cable","Meter"],["Junction Box","Nos"],["Cable Gland","Nos"],["Impulse Tube","Meter"]
+  ]
+};
+
+let boqItems = [];
+
+function loadMaterialLibrary(){
+  const trade=document.getElementById("quoteTrade").value;
+  const lib=document.getElementById("materialLibrary");
+  lib.innerHTML="";
+  (materialLibraries[trade]||[]).forEach((item,idx)=>{
+    const opt=document.createElement("option");
+    opt.value=idx;
+    opt.textContent=item[0];
+    lib.appendChild(opt);
+  });
+}
+function addLibraryMaterial(){
+  const trade=document.getElementById("quoteTrade").value;
+  const idx=+document.getElementById("materialLibrary").value;
+  const item=(materialLibraries[trade]||[])[idx];
+  if(!item) return;
+  boqItems.push({name:item[0],unit:item[1],qty:1,materialRate:0,labourRate:0,otherRate:0});
+  renderBOQ();
+}
+function showCustomMaterial(){
+  const box=document.getElementById("customMaterialBox");
+  box.style.display=box.style.display==="none"?"block":"none";
+}
+function addCustomMaterial(){
+  const name=document.getElementById("customMaterialName").value.trim();
+  const unit=document.getElementById("customMaterialUnit").value;
+  if(!name){ alert("Material / Work Item name enter செய்யுங்கள்."); return; }
+  boqItems.push({name,unit,qty:1,materialRate:0,labourRate:0,otherRate:0});
+  document.getElementById("customMaterialName").value="";
+  document.getElementById("customMaterialBox").style.display="none";
+  renderBOQ();
+}
+function updateBOQ(index,key,value){
+  if(!boqItems[index]) return;
+  boqItems[index][key]=(key==="name"||key==="unit")?value:(+value||0);
+  recalcBOQ();
+}
+function removeBOQ(index){
+  boqItems.splice(index,1);
+  renderBOQ();
+}
+function clearBOQ(){
+  if(boqItems.length && !confirm("Clear all BOQ items?")) return;
+  boqItems=[];
+  renderBOQ();
+}
+function renderBOQ(){
+  const body=document.getElementById("boqBody");
+  body.innerHTML="";
+  boqItems.forEach((it,i)=>{
+    const tr=document.createElement("tr");
+    const amount=it.qty*((+it.materialRate||0)+(+it.labourRate||0)+(+it.otherRate||0));
+    tr.innerHTML=`
+      <td>${i+1}</td>
+      <td><input value="${escapeHtml(it.name)}" oninput="updateBOQ(${i},'name',this.value)"></td>
+      <td><input value="${escapeHtml(it.unit)}" oninput="updateBOQ(${i},'unit',this.value)"></td>
+      <td><input type="number" min="0" step="0.01" value="${it.qty}" oninput="updateBOQ(${i},'qty',this.value)"></td>
+      <td><input type="number" min="0" step="0.01" value="${it.materialRate}" oninput="updateBOQ(${i},'materialRate',this.value)"></td>
+      <td><input type="number" min="0" step="0.01" value="${it.labourRate}" oninput="updateBOQ(${i},'labourRate',this.value)"></td>
+      <td><input type="number" min="0" step="0.01" value="${it.otherRate}" oninput="updateBOQ(${i},'otherRate',this.value)"></td>
+      <td>₹${amount.toLocaleString("en-IN",{maximumFractionDigits:2})}</td>
+      <td><button class="remove-btn" onclick="removeBOQ(${i})">Remove</button></td>`;
+    body.appendChild(tr);
+  });
+  recalcBOQ();
+}
+function recalcBOQ(){
+  let boqTotal=0;
+  boqItems.forEach(it=>{
+    boqTotal+=(+it.qty||0)*((+it.materialRate||0)+(+it.labourRate||0)+(+it.otherRate||0));
+  });
+  const other=+document.getElementById("quoteOtherCost")?.value||0;
+  const profitPct=+document.getElementById("quoteProfit")?.value||0;
+  const base=boqTotal+other;
+  const profit=base*profitPct/100;
+  const finalQuote=base+profit;
+  latestQuote={
+    boqItems:JSON.parse(JSON.stringify(boqItems)),
+    boqTotal,other,profitPct,profit,total:finalQuote,
+    tender:JSON.parse(sessionStorage.getItem("vionoraTenderDraft")||"null"),
+    selectedWork:JSON.parse(sessionStorage.getItem("vionoraSelectedWork")||"null")
+  };
+  sessionStorage.setItem("vionoraQuote",JSON.stringify(latestQuote));
+  const box=document.getElementById("boqSummary");
+  if(box){
+    box.textContent=`BOQ Total: ₹${boqTotal.toLocaleString("en-IN",{maximumFractionDigits:2})} | Other Cost: ₹${other.toLocaleString("en-IN",{maximumFractionDigits:2})} | Profit: ₹${profit.toLocaleString("en-IN",{maximumFractionDigits:2})} | Final Quote: ₹${finalQuote.toLocaleString("en-IN",{maximumFractionDigits:2})}`;
+  }
+}
+function previewFullQuotation(){
+  recalcBOQ();
+  if(!boqItems.length){ alert("குறைந்தது ஒரு BOQ item add செய்யுங்கள்."); return; }
+  const q=latestQuote;
+  let rows="";
+  q.boqItems.forEach((it,i)=>{
+    const amt=it.qty*(it.materialRate+it.labourRate+it.otherRate);
+    rows+=`<tr>
+      <td>${i+1}</td><td>${escapeHtml(it.name)}</td><td>${escapeHtml(it.unit)}</td>
+      <td>${it.qty}</td><td>₹${it.materialRate.toLocaleString("en-IN")}</td>
+      <td>₹${it.labourRate.toLocaleString("en-IN")}</td>
+      <td>₹${it.otherRate.toLocaleString("en-IN")}</td>
+      <td>₹${amt.toLocaleString("en-IN",{maximumFractionDigits:2})}</td>
+    </tr>`;
+  });
+  const tender=q.tender;
+  const tenderTitle=tender?.name || q.selectedWork?.title || "Tender / Project Quotation";
+  document.getElementById("quotePreviewContent").innerHTML=`
+    <div><b>Project:</b> ${escapeHtml(tenderTitle)}</div>
+    <div><b>Trade:</b> ${escapeHtml(document.getElementById("quoteTrade").value)}</div>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table class="preview-table" style="min-width:780px">
+        <thead><tr><th>#</th><th>Item</th><th>Unit</th><th>Qty</th><th>Material</th><th>Labour</th><th>Other</th><th>Amount</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;line-height:1.8">
+      <b>BOQ Total:</b> ₹${q.boqTotal.toLocaleString("en-IN",{maximumFractionDigits:2})}<br>
+      <b>Additional Other Cost:</b> ₹${q.other.toLocaleString("en-IN",{maximumFractionDigits:2})}<br>
+      <b>Profit (${q.profitPct}%):</b> ₹${q.profit.toLocaleString("en-IN",{maximumFractionDigits:2})}<br>
+      <b>Final Quotation:</b> ₹${q.total.toLocaleString("en-IN",{maximumFractionDigits:2})}
+    </div>`;
+  document.getElementById("quotePreviewBox").style.display="block";
+  document.getElementById("quotePreviewBox").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function escapeHtml(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+}
+
+function showTenderFileInfo(){
+  const f=document.getElementById("tenderFile").files[0];
+  const box=document.getElementById("tenderFileInfo");
+  if(!f){box.style.display="none";return;}
+  box.style.display="block";
+  box.textContent=`Selected File: ${f.name} | Size: ${(f.size/1024/1024).toFixed(2)} MB`;
+}
+function saveTenderDraft(){
+  const data={
+    fileName:document.getElementById("tenderFile").files[0]?.name || "",
+    name:document.getElementById("tenderName").value.trim(),
+    department:document.getElementById("tenderDepartment").value.trim(),
+    type:document.getElementById("tenderTypeManual").value,
+    location:document.getElementById("tenderLocation").value.trim(),
+    estimatedValue:document.getElementById("tenderEstimatedValue").value.trim(),
+    lastDate:document.getElementById("tenderLastDate").value
+  };
+  sessionStorage.setItem("vionoraTenderDraft",JSON.stringify(data));
+  const box=document.getElementById("tenderSaveNotice");
+  box.style.display="block";
+  box.textContent="Tender details saved for this browser session. Next, BOQ / Quotation page-க்கு போகலாம்.";
+  setTimeout(()=>openPage("quotation"),700);
 }
 
 let selectedWork = null;
