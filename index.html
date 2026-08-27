@@ -139,7 +139,7 @@
     <div class="brand">VIONORA</div>
   </div>
   <div class="header-actions">
-    <select id="langSelect" onchange="changeLanguage(this.value)">
+    <select id="langSelect"  onchange="changeLanguage(this.value)">
       <option value="ta">தமிழ்</option>
       <option value="en">English</option>
       <option value="hi">हिन्दी</option>
@@ -243,24 +243,24 @@
     </p>
 
     <div class="field">
-      <label>Tender PDF / BOQ File</label>
+      <label data-i18n="tenderFileLabel">Tender PDF / BOQ File</label>
       <input id="tenderFile" type="file" accept=".pdf,.xls,.xlsx,.csv" onchange="showTenderFileInfo()" />
     </div>
 
     <div id="tenderFileInfo" class="notice" style="display:none"></div>
 
     <div class="field">
-      <label>Tender / Project Name</label>
+      <label data-i18n="tenderProjectName">Tender / Project Name</label>
       <input id="tenderName" placeholder="Example: LT Electrical Maintenance Work" />
     </div>
 
     <div class="field">
-      <label>Department / Company</label>
+      <label data-i18n="departmentCompany">Department / Company</label>
       <input id="tenderDepartment" placeholder="Example: Railways / PWD / PSU / Private Company" />
     </div>
 
     <div class="field">
-      <label>Tender Type</label>
+      <label data-i18n="tenderTypeLabel">Tender Type</label>
       <select id="tenderTypeManual">
         <option>Railway Tender</option>
         <option>Central Government Tender</option>
@@ -275,21 +275,21 @@
     </div>
 
     <div class="field">
-      <label>Location</label>
+      <label data-i18n="location">Location</label>
       <input id="tenderLocation" placeholder="Example: Chennai, Tamil Nadu" />
     </div>
 
     <div class="field">
-      <label>Estimated Project Value</label>
+      <label data-i18n="estimatedProjectValue">Estimated Project Value</label>
       <input id="tenderEstimatedValue" placeholder="Example: ₹25,00,000" />
     </div>
 
     <div class="field">
-      <label>Last Date</label>
+      <label data-i18n="lastDate">Last Date</label>
       <input id="tenderLastDate" type="date" />
     </div>
 
-    <button class="btn btn-primary" style="width:100%" onclick="saveTenderDraft()">Save Tender Details</button>
+    <button class="btn btn-primary" style="width:100%" onclick="saveTenderDraft()"> <span data-i18n="saveTenderDetails">Save Tender Details</span></button>
     <div id="tenderSaveNotice" class="notice" style="display:none"></div>
   </div>
 </section>
@@ -305,7 +305,7 @@
     </p>
 
     <div class="field">
-      <label>Trade Select</label>
+      <label data-i18n="tradeSelect">Trade Select</label>
       <select id="quoteTrade" onchange="loadMaterialLibrary()">
         <option>Electrical</option>
         <option>Civil</option>
@@ -319,28 +319,28 @@
     </div>
 
     <div class="field">
-      <label>Material Library</label>
+      <label data-i18n="materialLibraryLabel">Material Library</label>
       <select id="materialLibrary"></select>
     </div>
 
     <div class="quick-row">
-      <button class="btn btn-primary" onclick="addLibraryMaterial()">+ Add Material</button>
-      <button class="btn btn-light" onclick="showCustomMaterial()">+ Add Custom Material</button>
-      <button class="btn btn-light" onclick="clearBOQ()">Clear BOQ</button>
+      <button class="btn btn-primary" onclick="addLibraryMaterial()">+ <span data-i18n="addMaterial">Add Material</span></button>
+      <button class="btn btn-light" onclick="showCustomMaterial()">+ <span data-i18n="addCustomMaterial">Add Custom Material</span></button>
+      <button class="btn btn-light" onclick="clearBOQ()"> <span data-i18n="clearBOQ">Clear BOQ</span></button>
     </div>
 
     <div id="customMaterialBox" style="display:none;margin-top:14px">
-      <div class="field"><label>Custom Material Name</label><input id="customMaterialName" placeholder="Enter material / work item" /></div>
-      <div class="field"><label>Unit</label>
+      <div class="field"><label data-i18n="customMaterialNameLabel">Custom Material Name</label><input id="customMaterialName" placeholder="Enter material / work item" /></div>
+      <div class="field"><label data-i18n="unitLabel">Unit</label>
         <select id="customMaterialUnit">
           <option>Nos</option><option>Meter</option><option>Sq.m</option><option>Kg</option>
           <option>Set</option><option>Lot</option><option>Job</option><option>LS</option>
         </select>
       </div>
-      <button class="btn btn-primary" style="width:100%" onclick="addCustomMaterial()">Add Custom Item</button>
+      <button class="btn btn-primary" style="width:100%" onclick="addCustomMaterial()"> <span data-i18n="addCustomItem">Add Custom Item</span></button>
     </div>
 
-    <div class="section-title" style="margin-top:22px">BOQ Items</div>
+    <div class="section-title" style="margin-top:22px"> <span data-i18n="boqItems">BOQ Items</span></div>
     <div style="overflow-x:auto">
       <table id="boqTable" style="width:100%;border-collapse:collapse;min-width:860px">
         <thead>
@@ -360,14 +360,14 @@
       </table>
     </div>
 
-    <div class="section-title">Quotation Summary</div>
+    <div class="section-title"> <span data-i18n="quotationSummary">Quotation Summary</span></div>
     <div class="field">
-      <label>Additional Other Cost</label>
+      <label data-i18n="additionalOtherCost">Additional Other Cost</label>
       <input id="quoteOtherCost" type="number" value="0" min="0" oninput="recalcBOQ()" />
     </div>
 
     <div class="field">
-      <label>Profit Margin %</label>
+      <label data-i18n="profitMargin">Profit Margin %</label>
       <input id="quoteProfit" type="number" value="10" min="0" step="0.1" oninput="recalcBOQ()" />
     </div>
 
@@ -380,7 +380,7 @@
     </button>
 
     <div id="quotePreviewBox" class="panel" style="display:none;margin-top:14px;background:#fbfcfe">
-      <h3 style="margin-top:0">Quotation Preview</h3>
+      <h3 style="margin-top:0" data-i18n="quotationPreviewTitle">Quotation Preview</h3>
       <div id="quotePreviewContent"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="startFinalQuoteFlow()">
         Continue for Final Quotation
@@ -392,10 +392,10 @@
   </div>
 </section>
 
-<section id="maincontractor" class="page"><div class="panel"><h2 data-i18n="mainContractor">Main Contractor</h2><p>Project Packages • RFQ • Subcontract Comparison • Work Order</p></div></section>
-<section id="subcontractor" class="page"><div class="panel"><h2 data-i18n="subContractor">Subcontractor</h2><p>Scope • BOQ • Costing • Private Quotation</p></div></section>
-<section id="vendor" class="page"><div class="panel"><h2 data-i18n="vendor">Vendor / Supplier</h2><p>Material RFQ • Rate • Make/Brand • Delivery • Warranty</p></div></section>
-<section id="billing" class="page"><div class="panel"><h2 data-i18n="billing">Billing & Payment</h2><p>Work Order • Measurement • RA Bill • Invoice • Payment Tracking</p></div></section>
+<section id="maincontractor" class="page"><div class="panel"><h2 data-i18n="mainContractor">Main Contractor</h2><p data-i18n="mainContractorPageDesc">Project Packages • RFQ • Subcontract Comparison • Work Order</p></div></section>
+<section id="subcontractor" class="page"><div class="panel"><h2 data-i18n="subContractor">Subcontractor</h2><p data-i18n="subContractorPageDesc">Scope • BOQ • Costing • Private Quotation</p></div></section>
+<section id="vendor" class="page"><div class="panel"><h2 data-i18n="vendor">Vendor / Supplier</h2><p data-i18n="vendorPageDesc">Material RFQ • Rate • Make/Brand • Delivery • Warranty</p></div></section>
+<section id="billing" class="page"><div class="panel"><h2 data-i18n="billing">Billing & Payment</h2><p data-i18n="billingPageDesc">Work Order • Measurement • RA Bill • Invoice • Payment Tracking</p></div></section>
 
 <section id="support" class="page">
   <div class="panel">
@@ -445,21 +445,32 @@ ta:{
 back:"பின்",help:"உதவி",login:"Google Login",heroTitle:"டெண்டர் முதல் பணம் பெறும் வரை",
 heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor மற்றும் Vendor வேலைகளை ஒரே இடத்தில் எளிதாக நிர்வகிக்க உதவும் தளம்.",
 wantWork:"I WANT WORK - எனக்கு வேலை வேண்டும்",mainServices:"முக்கிய சேவைகள்",findTender:"Tender தேடுங்கள்",
-findTenderDesc:"Railway, Central, State, GeM, PSU, Industrial வாய்ப்புகள்.",uploadTender:"Tender Upload",
-uploadTenderDesc:"PDF / BOQ upload செய்து வேலை விவரங்களைப் பதிவு செய்யுங்கள்.",eligibility:"Eligibility Check",
+findTenderDesc:"Railway, Central, State, GeM, PSU மற்றும் Industrial வாய்ப்புகள்.",uploadTender:"Tender Upload",
+uploadTenderDesc:"PDF / BOQ upload செய்து tender விவரங்களை save செய்யுங்கள்.",eligibility:"Eligibility Check",
 eligibilityDesc:"Licence, experience, turnover மற்றும் documents அடிப்படையில் check.",quotation:"Quotation உருவாக்கு",
 quotationDesc:"BOQ + Costing + Profit Margin வைத்து quotation தயாரிக்க.",mainContractor:"Main Contractor",
 mainContractorDesc:"Project package, RFQ, subcontract work.",subContractor:"Subcontractor",
 subContractorDesc:"Scope, costing மற்றும் private quotation.",vendor:"Vendor / Supplier",
-vendorDesc:"Material quotation, delivery, warranty.",billing:"Billing & Payment",
-billingDesc:"Work Order, RA Bill, Invoice, Payment Tracking.",businessLinks:"Business Services",
-gemDesc:"Official GeM portal access.",domainDesc:"Domain provider/reseller access.",hostingDesc:"Hosting provider access.",
+vendorDesc:"Material quotation, delivery மற்றும் warranty.",billing:"Billing & Payment",
+billingDesc:"Work Order, RA Bill, Invoice மற்றும் Payment Tracking.",businessLinks:"Business Services",
+gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",
 trademarkDesc:"Trademark / Logo Trademark official service access.",trade:"வேலை வகை / Trade",location:"இடம் / Location",
 experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectValue:"வேண்டிய Project Value",
-opportunityType:"Opportunity Type",findMyWork:"எனக்கு பொருத்தமான வேலை தேடு",
-foundationNotice:"இந்த முதல் கட்டத்தில் உங்கள் profile தகவல் save ஆகும். அடுத்த கட்டத்தில் live tender matching இணைப்போம்.",
+opportunityType:"Tender / Work Type",findMyWork:"எனக்கு பொருத்தமான வேலை தேடு",
 save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"உங்கள் கேள்வி",send:"Send",
-loginTitle:"VIONORA Account",loginInfo:"Google Login integration அடுத்த backend step-ல் connect செய்யப்படும்.",quoteFlowInfo:"முதலில் quotation preview பாருங்கள். Final PDF save/download செய்யும்போது மட்டும் Google Login + Payment கேட்கப்படும்.",previewQuote:"Quotation Preview",continueFinal:"Final Quotation தொடரவும்",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",loginInfoFinal:"Final quotation save/download செய்ய Google Login தேவை.",goPayment:"Payment-க்கு தொடரவும்",paymentTitle:"Payment",paymentInfo:"Final quotation service fee payment இங்கே connect செய்யப்படும்.",paymentDemoNote:"இப்போது payment gateway connect செய்யப்படவில்லை. அடுத்த backend step-ல் Razorpay/approved gateway இணைப்போம்.",paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"Backend connect ஆன பிறகு இங்கிருந்து PDF download + Dashboard save செயல்படும்.",backHome:"Home-க்கு திரும்பு"
+loginTitle:"VIONORA Account",quoteFlowInfo:"முதலில் quotation preview பாருங்கள். Final PDF save/download செய்யும்போது மட்டும் Google Login + Payment கேட்கப்படும்.",
+previewQuote:"Quotation Preview",continueFinal:"Final Quotation தொடரவும்",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",
+loginInfoFinal:"Final quotation save/download செய்ய Google Login தேவை.",goPayment:"Payment-க்கு தொடரவும்",paymentTitle:"Payment",
+paymentInfo:"Final quotation service fee payment இங்கே connect செய்யப்படும்.",paymentDemoNote:"இப்போது payment gateway connect செய்யப்படவில்லை. அடுத்த backend step-ல் approved gateway இணைப்போம்.",
+paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"Backend connect ஆன பிறகு இங்கிருந்து PDF download + Dashboard save செயல்படும்.",backHome:"Home-க்கு திரும்பு",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",
+subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",
+billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Tender Details Save",tradeSelect:"Trade Select",
+materialLibraryLabel:"Material Library",addMaterial:"Material சேர்க்க",addCustomMaterial:"Custom Material சேர்க்க",clearBOQ:"BOQ Clear",
+customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",addCustomItem:"Custom Item சேர்க்க",boqItems:"BOQ Items",
+quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
 },
 en:{
 back:"Back",help:"Help",login:"Google Login",heroTitle:"From Tender to Payment",
@@ -467,28 +478,128 @@ heroText:"A simple platform for Railway, Central, State, GeM, PSU, Industrial te
 wantWork:"I WANT WORK",mainServices:"Main Services",findTender:"Find Tender",findTenderDesc:"Railway, Central, State, GeM, PSU and Industrial opportunities.",
 uploadTender:"Upload Tender",uploadTenderDesc:"Upload PDF / BOQ and save tender details.",eligibility:"Eligibility Check",
 eligibilityDesc:"Check licence, experience, turnover and documents.",quotation:"Create Quotation",
-quotationDesc:"Prepare quotation using BOQ, costing and profit margin.",mainContractor:"Main Contractor",mainContractorDesc:"Project packages, RFQ and subcontract work.",
+quotationDesc:"Prepare quotation using BOQ, costing and profit margin.",mainContractor:"Main Contractor",mainContractorDesc:"Project package, RFQ and subcontract work.",
 subContractor:"Subcontractor",subContractorDesc:"Scope, costing and private quotation.",vendor:"Vendor / Supplier",
 vendorDesc:"Material quotation, delivery and warranty.",billing:"Billing & Payment",billingDesc:"Work Order, RA Bill, Invoice and Payment Tracking.",
-businessLinks:"Business Services",gemDesc:"Official GeM portal access.",domainDesc:"Domain provider/reseller access.",hostingDesc:"Hosting provider access.",
+businessLinks:"Business Services",gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",
 trademarkDesc:"Trademark / Logo Trademark official service access.",trade:"Trade / Work Type",location:"Location",experience:"Licence / Experience",
-turnover:"Turnover / Work Capacity",projectValue:"Desired Project Value",opportunityType:"Opportunity Type",findMyWork:"Find Suitable Work",
-foundationNotice:"Your profile can be saved in this foundation version. Live tender matching will be connected in the next stage.",
+turnover:"Turnover / Work Capacity",projectValue:"Desired Project Value",opportunityType:"Tender / Work Type",findMyWork:"Find Suitable Work",
 save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"Your Question",send:"Send",loginTitle:"VIONORA Account",
-loginInfo:"Google Login will be connected in the next backend step.",quoteFlowInfo:"Preview the quotation first. Google Login and payment are required only when saving/downloading the final PDF.",previewQuote:"Preview Quotation",continueFinal:"Continue for Final Quotation",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",loginInfoFinal:"Google Login is required to save/download the final quotation.",goPayment:"Continue to Payment",paymentTitle:"Payment",paymentInfo:"The final quotation service fee payment will be connected here.",paymentDemoNote:"Payment gateway is not connected yet. Razorpay/approved gateway will be connected in the backend step.",paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"After backend connection, PDF download and Dashboard save will work here.",backHome:"Back to Home"
+quoteFlowInfo:"Preview the quotation first. Google Login and payment are required only when saving/downloading the final PDF.",
+previewQuote:"Preview Quotation",continueFinal:"Continue for Final Quotation",finalNote:"Google Login → Payment → Final Quotation PDF + Dashboard Save",
+loginInfoFinal:"Google Login is required to save/download the final quotation.",goPayment:"Continue to Payment",paymentTitle:"Payment",
+paymentInfo:"The final quotation service fee payment will be connected here.",paymentDemoNote:"Payment gateway is not connected yet. An approved gateway will be connected in the backend step.",
+paymentCompleteDemo:"Payment Complete Demo",finalQuoteTitle:"Final Quotation",finalQuoteInfo:"After backend connection, PDF download and Dashboard save will work here.",backHome:"Back to Home",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",
+subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",
+billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Save Tender Details",tradeSelect:"Trade Select",
+materialLibraryLabel:"Material Library",addMaterial:"Add Material",addCustomMaterial:"Add Custom Material",clearBOQ:"Clear BOQ",
+customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",addCustomItem:"Add Custom Item",boqItems:"BOQ Items",
+quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
+},
+hi:{
+back:"पीछे",help:"सहायता",login:"Google Login",heroTitle:"टेंडर से भुगतान तक",
+heroText:"रेलवे, केंद्र, राज्य, GeM, PSU, औद्योगिक टेंडर, मुख्य ठेकेदार, उपठेकेदार और विक्रेता के लिए सरल प्लेटफ़ॉर्म।",
+wantWork:"I WANT WORK - मुझे काम चाहिए",mainServices:"मुख्य सेवाएँ",findTender:"टेंडर खोजें",findTenderDesc:"रेलवे, केंद्र, राज्य, GeM, PSU और औद्योगिक अवसर।",
+uploadTender:"टेंडर अपलोड",uploadTenderDesc:"PDF / BOQ अपलोड करके टेंडर विवरण सेव करें।",eligibility:"पात्रता जाँच",eligibilityDesc:"लाइसेंस, अनुभव, टर्नओवर और दस्तावेज़ जाँचें।",
+quotation:"कोटेशन बनाएँ",quotationDesc:"BOQ, लागत और लाभ मार्जिन से कोटेशन तैयार करें।",mainContractor:"मुख्य ठेकेदार",mainContractorDesc:"प्रोजेक्ट पैकेज, RFQ और सबकॉन्ट्रैक्ट कार्य।",
+subContractor:"उपठेकेदार",subContractorDesc:"स्कोप, लागत और निजी कोटेशन।",vendor:"विक्रेता / सप्लायर",vendorDesc:"सामग्री कोटेशन, डिलीवरी और वारंटी।",
+billing:"बिलिंग और भुगतान",billingDesc:"वर्क ऑर्डर, RA बिल, इनवॉइस और पेमेंट ट्रैकिंग।",businessLinks:"व्यावसायिक सेवाएँ",
+gemDesc:"आधिकारिक GeM पोर्टल एक्सेस।",domainDesc:"डोमेन प्रोवाइडर / रिसेलर एक्सेस।",hostingDesc:"होस्टिंग प्रोवाइडर एक्सेस।",trademarkDesc:"ट्रेडमार्क / लोगो ट्रेडमार्क आधिकारिक सेवा एक्सेस।",
+trade:"काम / ट्रेड",location:"स्थान",experience:"लाइसेंस / अनुभव",turnover:"टर्नओवर / कार्य क्षमता",projectValue:"चाहिए प्रोजेक्ट वैल्यू",
+opportunityType:"टेंडर / कार्य प्रकार",findMyWork:"मेरे लिए उपयुक्त काम खोजें",yourQuestion:"आपका प्रश्न",send:"भेजें",loginTitle:"VIONORA खाता",
+quoteFlowInfo:"पहले कोटेशन प्रीव्यू देखें। Final PDF सेव/डाउनलोड करते समय ही Google Login और Payment पूछा जाएगा।",previewQuote:"कोटेशन प्रीव्यू",
+continueFinal:"Final Quotation जारी रखें",loginInfoFinal:"Final quotation सेव/डाउनलोड करने के लिए Google Login आवश्यक है।",goPayment:"पेमेंट पर जाएँ",paymentTitle:"पेमेंट",
+mainContractorPageDesc:"प्रोजेक्ट पैकेज • RFQ • सबकॉन्ट्रैक्ट तुलना • वर्क ऑर्डर",subContractorPageDesc:"स्कोप • BOQ • लागत • निजी कोटेशन",
+vendorPageDesc:"मटेरियल RFQ • रेट • ब्रांड • डिलीवरी • वारंटी",billingPageDesc:"वर्क ऑर्डर • माप • RA बिल • इनवॉइस • पेमेंट ट्रैकिंग",
+tenderFileLabel:"टेंडर PDF / BOQ फ़ाइल",tenderProjectName:"टेंडर / प्रोजेक्ट नाम",departmentCompany:"विभाग / कंपनी",tenderTypeLabel:"टेंडर प्रकार",
+estimatedProjectValue:"अनुमानित प्रोजेक्ट मूल्य",lastDate:"अंतिम तिथि",saveTenderDetails:"टेंडर विवरण सेव करें",tradeSelect:"ट्रेड चुनें",materialLibraryLabel:"मटेरियल लाइब्रेरी",
+addMaterial:"मटेरियल जोड़ें",addCustomMaterial:"कस्टम मटेरियल जोड़ें",clearBOQ:"BOQ साफ करें",customMaterialNameLabel:"कस्टम मटेरियल नाम",unitLabel:"यूनिट",
+addCustomItem:"कस्टम आइटम जोड़ें",boqItems:"BOQ आइटम",quotationSummary:"कोटेशन सारांश",additionalOtherCost:"अतिरिक्त अन्य लागत",profitMargin:"लाभ मार्जिन %",quotationPreviewTitle:"कोटेशन प्रीव्यू"
+},
+te:{
+back:"వెనుకకు",help:"సహాయం",login:"Google Login",heroTitle:"టెండర్ నుండి చెల్లింపు వరకు",
+heroText:"Railway, Central, State, GeM, PSU, Industrial tenders, Main Contractor, Subcontractor మరియు Vendor కోసం సులభమైన ప్లాట్‌ఫారం.",
+wantWork:"I WANT WORK - నాకు పని కావాలి",mainServices:"ప్రధాన సేవలు",findTender:"టెండర్ వెతకండి",findTenderDesc:"Railway, Central, State, GeM, PSU మరియు Industrial అవకాశాలు.",
+uploadTender:"టెండర్ అప్‌లోడ్",uploadTenderDesc:"PDF / BOQ అప్‌లోడ్ చేసి టెండర్ వివరాలు save చేయండి.",eligibility:"అర్హత తనిఖీ",eligibilityDesc:"Licence, experience, turnover మరియు documents తనిఖీ చేయండి.",
+quotation:"కొటేషన్ తయారు చేయండి",quotationDesc:"BOQ, costing మరియు profit margin తో quotation తయారు చేయండి.",mainContractor:"Main Contractor",mainContractorDesc:"Project package, RFQ మరియు subcontract work.",
+subContractor:"Subcontractor",subContractorDesc:"Scope, costing మరియు private quotation.",vendor:"Vendor / Supplier",vendorDesc:"Material quotation, delivery మరియు warranty.",
+billing:"బిల్లింగ్ & చెల్లింపు",billingDesc:"Work Order, RA Bill, Invoice మరియు Payment Tracking.",businessLinks:"వ్యాపార సేవలు",
+gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",trademarkDesc:"Trademark / Logo Trademark official service access.",
+trade:"పని రకం / Trade",location:"ప్రాంతం",experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectValue:"కావలసిన Project Value",
+opportunityType:"Tender / Work Type",findMyWork:"నాకు సరిపోయే పని వెతకండి",yourQuestion:"మీ ప్రశ్న",send:"పంపండి",loginTitle:"VIONORA Account",
+quoteFlowInfo:"ముందుగా quotation preview చూడండి. Final PDF save/download సమయంలో మాత్రమే Google Login + Payment అడుగుతుంది.",previewQuote:"Quotation Preview",
+continueFinal:"Final Quotation కొనసాగించండి",loginInfoFinal:"Final quotation save/download చేయడానికి Google Login అవసరం.",goPayment:"Payment కు కొనసాగండి",paymentTitle:"Payment",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",
+vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Tender వివరాలు Save",tradeSelect:"Trade Select",materialLibraryLabel:"Material Library",
+addMaterial:"Material జోడించండి",addCustomMaterial:"Custom Material జోడించండి",clearBOQ:"BOQ Clear",customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",
+addCustomItem:"Custom Item జోడించండి",boqItems:"BOQ Items",quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
+},
+kn:{
+back:"ಹಿಂದೆ",help:"ಸಹಾಯ",login:"Google Login",heroTitle:"ಟೆಂಡರ್‌ನಿಂದ ಪಾವತಿವರೆಗೆ",
+heroText:"Railway, Central, State, GeM, PSU, Industrial tenders, Main Contractor, Subcontractor ಮತ್ತು Vendor ಗಾಗಿ ಸರಳ ವೇದಿಕೆ.",
+wantWork:"I WANT WORK - ನನಗೆ ಕೆಲಸ ಬೇಕು",mainServices:"ಮುಖ್ಯ ಸೇವೆಗಳು",findTender:"ಟೆಂಡರ್ ಹುಡುಕಿ",findTenderDesc:"Railway, Central, State, GeM, PSU ಮತ್ತು Industrial ಅವಕಾಶಗಳು.",
+uploadTender:"ಟೆಂಡರ್ ಅಪ್‌ಲೋಡ್",uploadTenderDesc:"PDF / BOQ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಟೆಂಡರ್ ವಿವರಗಳನ್ನು save ಮಾಡಿ.",eligibility:"ಅರ್ಹತೆ ಪರಿಶೀಲನೆ",eligibilityDesc:"Licence, experience, turnover ಮತ್ತು documents ಪರಿಶೀಲಿಸಿ.",
+quotation:"ಕೊಟೇಶನ್ ರಚಿಸಿ",quotationDesc:"BOQ, costing ಮತ್ತು profit margin ಬಳಸಿ quotation ತಯಾರಿಸಿ.",mainContractor:"Main Contractor",mainContractorDesc:"Project package, RFQ ಮತ್ತು subcontract work.",
+subContractor:"Subcontractor",subContractorDesc:"Scope, costing ಮತ್ತು private quotation.",vendor:"Vendor / Supplier",vendorDesc:"Material quotation, delivery ಮತ್ತು warranty.",
+billing:"ಬಿಲ್ಲಿಂಗ್ & ಪಾವತಿ",billingDesc:"Work Order, RA Bill, Invoice ಮತ್ತು Payment Tracking.",businessLinks:"ವ್ಯಾಪಾರ ಸೇವೆಗಳು",
+gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",trademarkDesc:"Trademark / Logo Trademark official service access.",
+trade:"ಕೆಲಸದ ಪ್ರಕಾರ / Trade",location:"ಸ್ಥಳ",experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectValue:"ಬೇಕಾದ Project Value",
+opportunityType:"Tender / Work Type",findMyWork:"ನನಗೆ ಸೂಕ್ತ ಕೆಲಸ ಹುಡುಕಿ",yourQuestion:"ನಿಮ್ಮ ಪ್ರಶ್ನೆ",send:"ಕಳುಹಿಸಿ",loginTitle:"VIONORA Account",
+quoteFlowInfo:"ಮೊದಲು quotation preview ನೋಡಿ. Final PDF save/download ಸಮಯದಲ್ಲಿ ಮಾತ್ರ Google Login + Payment ಕೇಳಲಾಗುತ್ತದೆ.",previewQuote:"Quotation Preview",
+continueFinal:"Final Quotation ಮುಂದುವರಿಸಿ",loginInfoFinal:"Final quotation save/download ಮಾಡಲು Google Login ಅಗತ್ಯ.",goPayment:"Payment ಗೆ ಮುಂದುವರಿಸಿ",paymentTitle:"Payment",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",
+vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Tender ವಿವರ Save",tradeSelect:"Trade Select",materialLibraryLabel:"Material Library",
+addMaterial:"Material ಸೇರಿಸಿ",addCustomMaterial:"Custom Material ಸೇರಿಸಿ",clearBOQ:"BOQ Clear",customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",
+addCustomItem:"Custom Item ಸೇರಿಸಿ",boqItems:"BOQ Items",quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
+},
+ml:{
+back:"പിന്നിലേക്ക്",help:"സഹായം",login:"Google Login",heroTitle:"ടെൻഡർ മുതൽ പേയ്മെന്റ് വരെ",
+heroText:"Railway, Central, State, GeM, PSU, Industrial tenders, Main Contractor, Subcontractor, Vendor എന്നിവയ്ക്കുള്ള ലളിതമായ പ്ലാറ്റ്ഫോം.",
+wantWork:"I WANT WORK - എനിക്ക് ജോലി വേണം",mainServices:"പ്രധാന സേവനങ്ങൾ",findTender:"ടെൻഡർ കണ്ടെത്തുക",findTenderDesc:"Railway, Central, State, GeM, PSU, Industrial അവസരങ്ങൾ.",
+uploadTender:"ടെൻഡർ അപ്‌ലോഡ്",uploadTenderDesc:"PDF / BOQ അപ്‌ലോഡ് ചെയ്ത് ടെൻഡർ വിവരങ്ങൾ save ചെയ്യുക.",eligibility:"യോഗ്യത പരിശോധിക്കുക",eligibilityDesc:"Licence, experience, turnover, documents പരിശോധിക്കുക.",
+quotation:"ക്വട്ടേഷൻ തയ്യാറാക്കുക",quotationDesc:"BOQ, costing, profit margin ഉപയോഗിച്ച് quotation തയ്യാറാക്കുക.",mainContractor:"Main Contractor",mainContractorDesc:"Project package, RFQ, subcontract work.",
+subContractor:"Subcontractor",subContractorDesc:"Scope, costing, private quotation.",vendor:"Vendor / Supplier",vendorDesc:"Material quotation, delivery, warranty.",
+billing:"ബില്ലിംഗ് & പേയ്മെന്റ്",billingDesc:"Work Order, RA Bill, Invoice, Payment Tracking.",businessLinks:"ബിസിനസ് സേവനങ്ങൾ",
+gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",trademarkDesc:"Trademark / Logo Trademark official service access.",
+trade:"ജോലി / Trade",location:"സ്ഥലം",experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectValue:"ആവശ്യമായ Project Value",
+opportunityType:"Tender / Work Type",findMyWork:"എനിക്ക് അനുയോജ്യമായ ജോലി കണ്ടെത്തുക",yourQuestion:"നിങ്ങളുടെ ചോദ്യം",send:"അയയ്ക്കുക",loginTitle:"VIONORA Account",
+quoteFlowInfo:"ആദ്യം quotation preview കാണുക. Final PDF save/download സമയത്ത് മാത്രം Google Login + Payment ചോദിക്കും.",previewQuote:"Quotation Preview",
+continueFinal:"Final Quotation തുടരുക",loginInfoFinal:"Final quotation save/download ചെയ്യാൻ Google Login ആവശ്യമാണ്.",goPayment:"Payment ലേക്ക് തുടരുക",paymentTitle:"Payment",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",
+vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Tender വിവരങ്ങൾ Save",tradeSelect:"Trade Select",materialLibraryLabel:"Material Library",
+addMaterial:"Material ചേർക്കുക",addCustomMaterial:"Custom Material ചേർക്കുക",clearBOQ:"BOQ Clear",customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",
+addCustomItem:"Custom Item ചേർക്കുക",boqItems:"BOQ Items",quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
+},
+mr:{
+back:"मागे",help:"मदत",login:"Google Login",heroTitle:"टेंडरपासून पेमेंटपर्यंत",
+heroText:"Railway, Central, State, GeM, PSU, Industrial tenders, Main Contractor, Subcontractor आणि Vendor साठी सोपे प्लॅटफॉर्म.",
+wantWork:"I WANT WORK - मला काम हवे आहे",mainServices:"मुख्य सेवा",findTender:"टेंडर शोधा",findTenderDesc:"Railway, Central, State, GeM, PSU आणि Industrial संधी.",
+uploadTender:"टेंडर अपलोड",uploadTenderDesc:"PDF / BOQ अपलोड करून टेंडर तपशील save करा.",eligibility:"पात्रता तपासा",eligibilityDesc:"Licence, experience, turnover आणि documents तपासा.",
+quotation:"कोटेशन तयार करा",quotationDesc:"BOQ, costing आणि profit margin वापरून quotation तयार करा.",mainContractor:"Main Contractor",mainContractorDesc:"Project package, RFQ आणि subcontract work.",
+subContractor:"Subcontractor",subContractorDesc:"Scope, costing आणि private quotation.",vendor:"Vendor / Supplier",vendorDesc:"Material quotation, delivery आणि warranty.",
+billing:"बिलिंग आणि पेमेंट",billingDesc:"Work Order, RA Bill, Invoice आणि Payment Tracking.",businessLinks:"व्यवसाय सेवा",
+gemDesc:"Official GeM portal access.",domainDesc:"Domain provider / reseller access.",hostingDesc:"Hosting provider access.",trademarkDesc:"Trademark / Logo Trademark official service access.",
+trade:"काम / Trade",location:"ठिकाण",experience:"Licence / Experience",turnover:"Turnover / Work Capacity",projectValue:"हवे असलेले Project Value",
+opportunityType:"Tender / Work Type",findMyWork:"माझ्यासाठी योग्य काम शोधा",yourQuestion:"तुमचा प्रश्न",send:"पाठवा",loginTitle:"VIONORA Account",
+quoteFlowInfo:"आधी quotation preview पाहा. Final PDF save/download करताना फक्त Google Login + Payment विचारले जाईल.",previewQuote:"Quotation Preview",
+continueFinal:"Final Quotation पुढे सुरू ठेवा",loginInfoFinal:"Final quotation save/download करण्यासाठी Google Login आवश्यक आहे.",goPayment:"Payment कडे जा",paymentTitle:"Payment",
+mainContractorPageDesc:"Project Packages • RFQ • Subcontract Comparison • Work Order",subContractorPageDesc:"Scope • BOQ • Costing • Private Quotation",
+vendorPageDesc:"Material RFQ • Rate • Make/Brand • Delivery • Warranty",billingPageDesc:"Work Order • Measurement • RA Bill • Invoice • Payment Tracking",
+tenderFileLabel:"Tender PDF / BOQ File",tenderProjectName:"Tender / Project Name",departmentCompany:"Department / Company",tenderTypeLabel:"Tender Type",
+estimatedProjectValue:"Estimated Project Value",lastDate:"Last Date",saveTenderDetails:"Tender तपशील Save",tradeSelect:"Trade Select",materialLibraryLabel:"Material Library",
+addMaterial:"Material जोडा",addCustomMaterial:"Custom Material जोडा",clearBOQ:"BOQ Clear",customMaterialNameLabel:"Custom Material Name",unitLabel:"Unit",
+addCustomItem:"Custom Item जोडा",boqItems:"BOQ Items",quotationSummary:"Quotation Summary",additionalOtherCost:"Additional Other Cost",profitMargin:"Profit Margin %",quotationPreviewTitle:"Quotation Preview"
 }
 };
-
-
-// Full core UI labels for additional Indian languages.
-// Any technical description without a translation safely falls back to English.
-Object.assign(translations,{
-hi:{back:"पीछे",help:"सहायता",login:"Google Login",heroTitle:"टेंडर से भुगतान तक",heroText:"रेलवे, केंद्र, राज्य, GeM, PSU, औद्योगिक टेंडर, मुख्य ठेकेदार, उपठेकेदार और विक्रेता के लिए सरल प्लेटफ़ॉर्म।",wantWork:"I WANT WORK - मुझे काम चाहिए",mainServices:"मुख्य सेवाएँ",findTender:"टेंडर खोजें",uploadTender:"टेंडर अपलोड",eligibility:"पात्रता जाँच",quotation:"कोटेशन बनाएँ",mainContractor:"मुख्य ठेकेदार",subContractor:"उपठेकेदार",vendor:"विक्रेता / सप्लायर",billing:"बिलिंग और भुगतान",businessLinks:"व्यावसायिक सेवाएँ",trade:"काम / ट्रेड",location:"स्थान",experience:"लाइसेंस / अनुभव",turnover:"टर्नओवर / कार्य क्षमता",projectValue:"आवश्यक प्रोजेक्ट मूल्य",opportunityType:"अवसर का प्रकार",findMyWork:"मेरे लिए काम खोजें",save:"सेव करें",start:"शुरू करें",calculate:"गणना करें",yourQuestion:"आपका प्रश्न",send:"भेजें",loginTitle:"VIONORA खाता"},
-te:{back:"వెనుకకు",help:"సహాయం",login:"Google Login",heroTitle:"టెండర్ నుండి చెల్లింపు వరకు",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor మరియు Vendor కోసం సులభమైన ప్లాట్‌ఫారం.",wantWork:"I WANT WORK - నాకు పని కావాలి",mainServices:"ప్రధాన సేవలు",findTender:"టెండర్ వెతకండి",uploadTender:"టెండర్ అప్‌లోడ్",eligibility:"అర్హత తనిఖీ",quotation:"కొటేషన్ తయారు చేయండి",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"బిల్లింగ్ & చెల్లింపు",businessLinks:"వ్యాపార సేవలు",trade:"పని రకం / Trade",location:"ప్రాంతం",experience:"లైసెన్స్ / అనుభవం",turnover:"Turnover / Work Capacity",projectValue:"కావలసిన Project Value",opportunityType:"Opportunity Type",findMyWork:"నాకు సరిపోయే పని వెతకండి",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"మీ ప్రశ్న",send:"Send",loginTitle:"VIONORA Account"},
-kn:{back:"ಹಿಂದೆ",help:"ಸಹಾಯ",login:"Google Login",heroTitle:"ಟೆಂಡರ್‌ನಿಂದ ಪಾವತಿವರೆಗೆ",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor ಮತ್ತು Vendor ಗಾಗಿ ಸರಳ ವೇದಿಕೆ.",wantWork:"I WANT WORK - ನನಗೆ ಕೆಲಸ ಬೇಕು",mainServices:"ಮುಖ್ಯ ಸೇವೆಗಳು",findTender:"ಟೆಂಡರ್ ಹುಡುಕಿ",uploadTender:"ಟೆಂಡರ್ ಅಪ್‌ಲೋಡ್",eligibility:"ಅರ್ಹತೆ ಪರಿಶೀಲನೆ",quotation:"ಕೊಟೇಶನ್ ರಚಿಸಿ",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"ಬಿಲ್ಲಿಂಗ್ & ಪಾವತಿ",businessLinks:"ವ್ಯಾಪಾರ ಸೇವೆಗಳು",trade:"ಕೆಲಸದ ಪ್ರಕಾರ / Trade",location:"ಸ್ಥಳ",experience:"ಲೈಸೆನ್ಸ್ / ಅನುಭವ",turnover:"Turnover / Work Capacity",projectValue:"ಬೇಕಾದ Project Value",opportunityType:"Opportunity Type",findMyWork:"ನನಗೆ ಸೂಕ್ತ ಕೆಲಸ ಹುಡುಕಿ",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"ನಿಮ್ಮ ಪ್ರಶ್ನೆ",send:"Send",loginTitle:"VIONORA Account"},
-ml:{back:"പിന്നിലേക്ക്",help:"സഹായം",login:"Google Login",heroTitle:"ടെൻഡർ മുതൽ പേയ്മെന്റ് വരെ",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor, Vendor എന്നിവയ്ക്കുള്ള ലളിതമായ പ്ലാറ്റ്ഫോം.",wantWork:"I WANT WORK - എനിക്ക് ജോലി വേണം",mainServices:"പ്രധാന സേവനങ്ങൾ",findTender:"ടെൻഡർ കണ്ടെത്തുക",uploadTender:"ടെൻഡർ അപ്‌ലോഡ്",eligibility:"യോഗ്യത പരിശോധിക്കുക",quotation:"ക്വട്ടേഷൻ തയ്യാറാക്കുക",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"ബില്ലിംഗ് & പേയ്മെന്റ്",businessLinks:"ബിസിനസ് സേവനങ്ങൾ",trade:"ജോലി / Trade",location:"സ്ഥലം",experience:"ലൈസൻസ് / അനുഭവം",turnover:"Turnover / Work Capacity",projectValue:"ആവശ്യമായ Project Value",opportunityType:"Opportunity Type",findMyWork:"എനിക്ക് അനുയോജ്യമായ ജോലി കണ്ടെത്തുക",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"നിങ്ങളുടെ ചോദ്യം",send:"Send",loginTitle:"VIONORA Account"},
-mr:{back:"मागे",help:"मदत",login:"Google Login",heroTitle:"टेंडरपासून पेमेंटपर्यंत",heroText:"Railway, Central, State, GeM, PSU, Industrial Tender, Main Contractor, Subcontractor आणि Vendor साठी सोपे प्लॅटफॉर्म.",wantWork:"I WANT WORK - मला काम हवे आहे",mainServices:"मुख्य सेवा",findTender:"टेंडर शोधा",uploadTender:"टेंडर अपलोड",eligibility:"पात्रता तपासा",quotation:"कोटेशन तयार करा",mainContractor:"Main Contractor",subContractor:"Subcontractor",vendor:"Vendor / Supplier",billing:"बिलिंग आणि पेमेंट",businessLinks:"व्यवसाय सेवा",trade:"काम / Trade",location:"ठिकाण",experience:"लायसन्स / अनुभव",turnover:"Turnover / Work Capacity",projectValue:"हवे असलेले Project Value",opportunityType:"Opportunity Type",findMyWork:"माझ्यासाठी योग्य काम शोधा",save:"Save",start:"Start",calculate:"Calculate",yourQuestion:"तुमचा प्रश्न",send:"Send",loginTitle:"VIONORA Account"}
-});
 
 const fallback = translations.en;
 const savedLanguage = localStorage.getItem("vionoraLang");
@@ -506,12 +617,17 @@ function selectFirstLanguage(lang){
 }
 
 function changeLanguage(lang){
-  currentLang=lang; localStorage.setItem("vionoraLang",lang);
-  const dict=translations[lang] || fallback;
+  currentLang=lang;
+  localStorage.setItem("vionoraLang",lang);
+  const dict=translations[lang] || translations.en;
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const key=el.dataset.i18n;
-    el.textContent=(dict[key] || translations.ta[key] || fallback[key] || el.textContent);
+    if(dict[key] !== undefined){
+      el.textContent=dict[key];
+    }else if(translations.en[key] !== undefined){
+      el.textContent=translations.en[key];
+    }
   });
 }
 changeLanguage(currentLang);
@@ -966,6 +1082,19 @@ function externalInfo(type){
   const names={gem:"GeM Portal",domain:"Domain",hosting:"Hosting",trademark:"Trademark / Logo Trademark"};
   alert(names[type]+" access button ready. Official/provider link will be connected after we lock the provider.");
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+  const langSelect = document.getElementById("langSelect");
+  const savedLang = localStorage.getItem("vionoraLang") || "ta";
+  if(langSelect){
+    langSelect.value = savedLang;
+    langSelect.addEventListener("change", function(){
+      changeLanguage(this.value);
+    });
+  }
+  changeLanguage(savedLang);
+});
+
 </script>
 </body>
 </html>
