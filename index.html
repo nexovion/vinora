@@ -96,6 +96,12 @@
   .result-actions{display:flex;gap:8px;margin-top:12px}
   .result-actions .btn{flex:1}
   @media(max-width:560px){.result-meta{grid-template-columns:1fr}.result-actions{flex-direction:column}}
+
+  .btn-back{font-size:16px;min-width:72px}
+  .swipe-hint{display:none}
+  @media(max-width:700px){
+    .swipe-hint{display:block;text-align:center;color:var(--muted);font-size:12px;margin:8px 0 0}
+  }
 </style>
 </head>
 <body>
@@ -592,6 +598,33 @@ function supportSend(){
   box.style.display="block";
   box.textContent=msg ? "Your support request has been captured. Admin chat backend will be connected next." : "Please type your question.";
 }
+
+// Mobile swipe-right = Back.
+// Starts near the left edge to avoid interfering with normal page scrolling/forms.
+let swipeStartX=0, swipeStartY=0, swipeTracking=false;
+document.addEventListener("touchstart", function(e){
+  if(e.touches.length!==1) return;
+  const t=e.touches[0];
+  swipeStartX=t.clientX; swipeStartY=t.clientY;
+  swipeTracking = swipeStartX <= 45;
+},{passive:true});
+
+document.addEventListener("touchend", function(e){
+  if(!swipeTracking || !e.changedTouches.length) return;
+  const t=e.changedTouches[0];
+  const dx=t.clientX-swipeStartX;
+  const dy=Math.abs(t.clientY-swipeStartY);
+  swipeTracking=false;
+  if(dx>90 && dy<70 && historyStack.length>1){
+    goBack();
+  }
+},{passive:true});
+
+// Android/browser hardware back should follow VIONORA internal pages first.
+window.addEventListener("popstate", function(){
+  if(historyStack.length>1) goBack();
+});
+
 function externalInfo(type){
   const names={gem:"GeM Portal",domain:"Domain",hosting:"Hosting",trademark:"Trademark / Logo Trademark"};
   alert(names[type]+" access button ready. Official/provider link will be connected after we lock the provider.");
