@@ -89,6 +89,13 @@
   .language-choice:hover{transform:translateY(-1px)}
   @media(max-width:480px){.language-list{grid-template-columns:1fr}.language-choice:first-child{grid-column:auto}}
 
+
+  .result-card{border:1px solid var(--border);border-radius:16px;padding:16px;margin:12px 0;background:#fff}
+  .result-card h3{margin:0 0 10px}
+  .result-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;color:var(--muted);font-size:14px}
+  .result-actions{display:flex;gap:8px;margin-top:12px}
+  .result-actions .btn{flex:1}
+  @media(max-width:560px){.result-meta{grid-template-columns:1fr}.result-actions{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -164,14 +171,34 @@
 <section id="wantwork" class="page">
   <div class="top-title"><h2 data-i18n="wantWork">I WANT WORK - எனக்கு வேலை வேண்டும்</h2></div>
   <div class="panel">
-    <div class="field"><label data-i18n="trade">வேலை வகை / Trade</label><select><option>Electrical</option><option>Civil</option><option>Mechanical</option><option>HVAC</option><option>Solar</option><option>Plumbing</option><option>Fire & Safety</option></select></div>
-    <div class="field"><label data-i18n="location">இடம் / Location</label><input placeholder="Tamil Nadu / India" /></div>
-    <div class="field"><label data-i18n="experience">Licence / Experience</label><input placeholder="Example: Electrical Contractor Licence, 5 Years" /></div>
-    <div class="field"><label data-i18n="turnover">Turnover / Work Capacity</label><input placeholder="Example: ₹25,00,000" /></div>
-    <div class="field"><label data-i18n="projectValue">வேண்டிய Project Value</label><input placeholder="Example: ₹5L - ₹50L" /></div>
-    <div class="field"><label data-i18n="opportunityType">Opportunity Type</label><select><option>All</option><option>Railway</option><option>Central Government</option><option>State Government</option><option>GeM</option><option>PSU / Industrial</option><option>Subcontract Work</option><option>Vendor Opportunity</option></select></div>
-    <button class="btn btn-primary" style="width:100%" onclick="showNotice('workNotice')" data-i18n="findMyWork">எனக்கு பொருத்தமான வேலை தேடு</button>
-    <div id="workNotice" class="notice" style="display:none" data-i18n="foundationNotice">இந்த முதல் கட்டத்தில் உங்கள் profile தகவல் save ஆகும். அடுத்த கட்டத்தில் live tender matching இணைப்போம்.</div>
+    <div class="field"><label data-i18n="trade">வேலை வகை / Trade</label><select id="workTrade"><option>Electrical</option><option>Civil</option><option>Mechanical</option><option>HVAC</option><option>Solar</option><option>Plumbing</option><option>Fire & Safety</option></select></div>
+    <div class="field"><label data-i18n="location">இடம் / Location</label><input id="workLocation" placeholder="Tamil Nadu / India" /></div>
+    <div class="field"><label data-i18n="experience">Licence / Experience</label><input id="workExperience" placeholder="Example: Electrical Contractor Licence, 5 Years" /></div>
+    <div class="field"><label data-i18n="turnover">Turnover / Work Capacity</label><input id="workCapacity" placeholder="Example: ₹25,00,000" /></div>
+    <div class="field"><label data-i18n="projectValue">வேண்டிய Project Value</label><input id="workValue" placeholder="Example: ₹5L - ₹50L" /></div>
+    <div class="field"><label data-i18n="opportunityType">Opportunity Type</label><select id="workType"><option>All</option><option>Railway</option><option>Central Government</option><option>State Government</option><option>GeM</option><option>PSU / Industrial</option><option>Subcontract Work</option><option>Vendor Opportunity</option></select></div>
+    <button class="btn btn-primary" style="width:100%" onclick="findSuitableWork()" data-i18n="findMyWork">எனக்கு பொருத்தமான வேலை தேடு</button>
+    <div id="workNotice" class="notice" style="display:none"></div>
+  </div>
+</section>
+
+
+<section id="workresults" class="page">
+  <div class="top-title"><h2>Suitable Work Results</h2></div>
+  <div class="panel">
+    <div id="workProfileSummary" class="notice" style="margin-top:0;margin-bottom:14px"></div>
+    <p style="color:var(--muted);margin-top:0">
+      கீழே உள்ளவை இப்போது sample matching cards. Live Railway/Central/State/GeM/PSU data அடுத்த integration step-ல் connect செய்யப்படும்.
+    </p>
+    <div id="workResultsList"></div>
+  </div>
+</section>
+
+<section id="workdetail" class="page">
+  <div class="panel">
+    <h2 id="detailTitle">Work Details</h2>
+    <div id="detailBody"></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="prepareFromWork()">Prepare Quotation</button>
   </div>
 </section>
 
@@ -383,6 +410,79 @@ function finishQuoteDemo(){
     : "Quotation details not found.";
   openPage("finalquote");
 }
+
+let selectedWork = null;
+
+function findSuitableWork(){
+  const profile={
+    trade:document.getElementById("workTrade").value,
+    location:document.getElementById("workLocation").value.trim() || "India",
+    experience:document.getElementById("workExperience").value.trim() || "Not entered",
+    capacity:document.getElementById("workCapacity").value.trim() || "Not entered",
+    value:document.getElementById("workValue").value.trim() || "Any value",
+    type:document.getElementById("workType").value
+  };
+  sessionStorage.setItem("vionoraWorkProfile",JSON.stringify(profile));
+
+  document.getElementById("workProfileSummary").textContent =
+    `${profile.trade} • ${profile.location} • ${profile.type} • Desired Value: ${profile.value}`;
+
+  const samples=[
+    {title:`${profile.trade} Works - Government Opportunity`,dept:"Government / PSU",location:profile.location,value:profile.value,last:"Check official notice",eligibility:"Licence, experience & tender-specific documents required",type:profile.type==="All"?"Government Tender":profile.type},
+    {title:`${profile.trade} Subcontract Package`,dept:"Main Contractor Opportunity",location:profile.location,value:profile.value,last:"As per RFQ",eligibility:"Relevant work experience and commercial quotation",type:"Subcontract Work"},
+    {title:`${profile.trade} Supply / Vendor RFQ`,dept:"Industrial / Vendor Opportunity",location:profile.location,value:profile.value,last:"As per RFQ",eligibility:"GST, product/service capability and quotation",type:"Vendor Opportunity"}
+  ];
+
+  const list=document.getElementById("workResultsList");
+  list.innerHTML="";
+  samples.forEach((w,i)=>{
+    const div=document.createElement("div");
+    div.className="result-card";
+    div.innerHTML=`
+      <h3>${w.title}</h3>
+      <div class="result-meta">
+        <div><b>Department:</b> ${w.dept}</div>
+        <div><b>Location:</b> ${w.location}</div>
+        <div><b>Project Value:</b> ${w.value}</div>
+        <div><b>Last Date:</b> ${w.last}</div>
+        <div><b>Type:</b> ${w.type}</div>
+        <div><b>Eligibility:</b> ${w.eligibility}</div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-light" onclick="viewWorkDetail(${i})">View Details</button>
+        <button class="btn btn-primary" onclick="quickPrepare(${i})">Prepare Quotation</button>
+      </div>`;
+    list.appendChild(div);
+  });
+  window.vionoraSampleWorks=samples;
+  openPage("workresults");
+}
+
+function viewWorkDetail(i){
+  selectedWork=window.vionoraSampleWorks[i];
+  sessionStorage.setItem("vionoraSelectedWork",JSON.stringify(selectedWork));
+  document.getElementById("detailTitle").textContent=selectedWork.title;
+  document.getElementById("detailBody").innerHTML=`
+    <div class="notice">
+      <b>Department / Company:</b> ${selectedWork.dept}<br><br>
+      <b>Location:</b> ${selectedWork.location}<br><br>
+      <b>Estimated / Desired Value:</b> ${selectedWork.value}<br><br>
+      <b>Last Date:</b> ${selectedWork.last}<br><br>
+      <b>Eligibility:</b> ${selectedWork.eligibility}<br><br>
+      <b>Opportunity Type:</b> ${selectedWork.type}
+    </div>`;
+  openPage("workdetail");
+}
+function quickPrepare(i){
+  selectedWork=window.vionoraSampleWorks[i];
+  sessionStorage.setItem("vionoraSelectedWork",JSON.stringify(selectedWork));
+  openPage("quotation");
+}
+function prepareFromWork(){
+  if(selectedWork) sessionStorage.setItem("vionoraSelectedWork",JSON.stringify(selectedWork));
+  openPage("quotation");
+}
+
 function supportSend(){
   const msg=document.getElementById("supportMsg").value.trim();
   const box=document.getElementById("supportNotice");
